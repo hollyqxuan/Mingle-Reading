@@ -1,0 +1,345 @@
+{
+  "persona_id": "persona_mark_twain",
+  "display_name": "Mark Twain",
+  "collection_policy": {
+    "objective": "Upgrade the Mark Twain persona line from a minimal demo pack to a catalog-scale source inventory that can seed temporal graph ingestion, provenance tracking, and persona evidence slicing.",
+    "selection_rules": [
+      "Prioritize public-domain primary texts for works, essays, speeches, autobiography materials, and letters.",
+      "Use metadata-only or authority references for biography and scholarly framing when full-text redistribution is not clearly open.",
+      "Favor sources that expose distinct voice phases such as early journalism, river years, lecture years, anti-imperialist turn, and late dictation/autobiography years.",
+      "Record only metadata and short analytical summaries in this catalog; do not reproduce long copyrighted passages."
+    ],
+    "minimum_targets": {
+      "total_sources_min": 20,
+      "works_min": 10,
+      "voice_sources_min": 10
+    },
+    "normalization_notes": [
+      "This catalog is the master inventory. Individual source JSON records can be derived from these entries later.",
+      "The voice_sources bucket follows the merged scope requested by the project: interviews, quotations, speeches, essays, letters, and autobiography fragments may all count if they materially expose Twain's reasoning rhythm or speaking persona."
+    ]
+  },
+  "counts": {
+    "total_sources": 30,
+    "works": 12,
+    "voice_sources": 15,
+    "biography_and_critical": 3,
+    "public_domain_sources": 24,
+    "metadata_only_or_authority_sources": 4,
+    "meets_total_sources_requirement": true,
+    "meets_works_requirement": true,
+    "meets_voice_sources_requirement": true
+  },
+  "works": [
+    {
+      "source_id": "src_mark_twain_005",
+      "title": "The Adventures of Tom Sawyer, Complete",
+      "source_type": "author_work",
+      "year_or_period": "1876",
+      "source_url": "https://www.gutenberg.org/ebooks/74",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Essential for Twain's boyhood lens, comic pacing, vernacular warmth, and his habit of mixing play with moral danger."
+    },
+    {
+      "source_id": "src_mark_twain_006",
+      "title": "Adventures of Huckleberry Finn",
+      "source_type": "author_work",
+      "year_or_period": "1884-1885",
+      "source_url": "https://www.gutenberg.org/ebooks/76",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Critical for persona construction because it captures Twain's strongest vernacular narration, irony toward social hypocrisy, and moral testing through voice."
+    },
+    {
+      "source_id": "src_mark_twain_007",
+      "title": "The Innocents Abroad",
+      "source_type": "author_work",
+      "year_or_period": "1869",
+      "source_url": "https://www.gutenberg.org/ebooks/3176",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Provides the early travel-satire persona, especially Twain's method of puncturing prestige, tourism cliche, and inherited cultural reverence."
+    },
+    {
+      "source_id": "src_mark_twain_008",
+      "title": "Roughing It",
+      "source_type": "author_work",
+      "year_or_period": "1872",
+      "source_url": "https://www.gutenberg.org/ebooks/3177",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for the frontier-adventure phase, revealing Twain's self-mythologizing humor, exaggeration mechanics, and observational storytelling."
+    },
+    {
+      "source_id": "src_mark_twain_009",
+      "title": "Life on the Mississippi",
+      "source_type": "author_work",
+      "year_or_period": "1883",
+      "source_url": "https://www.gutenberg.org/ebooks/245",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Anchors the river-pilot identity and explains the practical, technical, memory-rich layer behind Twain's later wit and authority."
+    },
+    {
+      "source_id": "src_mark_twain_003",
+      "title": "Following the Equator: A Journey Around the World",
+      "source_type": "author_work",
+      "year_or_period": "1897",
+      "source_url": "https://www.gutenberg.org/ebooks/2895",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for the later global and anti-imperial phase, where Twain's social criticism becomes more weary, sharp, and morally explicit."
+    },
+    {
+      "source_id": "src_mark_twain_010",
+      "title": "A Tramp Abroad",
+      "source_type": "author_work",
+      "year_or_period": "1880",
+      "source_url": "https://www.gutenberg.org/ebooks/119",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Strengthens the European travel-comedy layer and Twain's technique of staging naive American perception against older cultural systems."
+    },
+    {
+      "source_id": "src_mark_twain_011",
+      "title": "The Prince and the Pauper",
+      "source_type": "author_work",
+      "year_or_period": "1881",
+      "source_url": "https://www.gutenberg.org/ebooks/1837",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Shows Twain's interest in class, injustice, and role reversal, which is useful for extracting his ethical framing beyond pure humor."
+    },
+    {
+      "source_id": "src_mark_twain_012",
+      "title": "A Connecticut Yankee in King Arthur's Court",
+      "source_type": "author_work",
+      "year_or_period": "1889",
+      "source_url": "https://www.gutenberg.org/ebooks/86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Central for Twain's anti-romantic and anti-feudal satire, and for his tendency to test technology, progress, and power against moral consequences."
+    },
+    {
+      "source_id": "src_mark_twain_013",
+      "title": "The Tragedy of Pudd'nhead Wilson",
+      "source_type": "author_work",
+      "year_or_period": "1894",
+      "source_url": "https://www.gutenberg.org/ebooks/102",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for race, identity, law, and fate themes, and for building a darker Twain stance layer with stronger social critique."
+    },
+    {
+      "source_id": "src_mark_twain_014",
+      "title": "The American Claimant",
+      "source_type": "author_work",
+      "year_or_period": "1892",
+      "source_url": "https://www.gutenberg.org/ebooks/3179",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Helps represent Twain's comedy of status reversal and his running comparison between democracy, aristocracy, and performance."
+    },
+    {
+      "source_id": "src_mark_twain_015",
+      "title": "The Gilded Age: A Tale of Today",
+      "source_type": "author_work",
+      "year_or_period": "1873",
+      "source_url": "https://www.gutenberg.org/ebooks/3178",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for political corruption, speculative greed, and Twain's satirical treatment of public life and opportunism."
+    }
+  ],
+  "voice_sources": [
+    {
+      "source_id": "src_mark_twain_001",
+      "title": "What Is Man? and Other Essays",
+      "source_type": "author_work_voice",
+      "year_or_period": "1906",
+      "source_url": "https://www.gutenberg.org/ebooks/70",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "A core voice source for deterministic skepticism, argument-by-dialogue, and Twain's habit of exposing moral certainty as self-flattering illusion."
+    },
+    {
+      "source_id": "src_mark_twain_016",
+      "title": "How to Tell a Story, and Other Essays",
+      "source_type": "author_work_voice",
+      "year_or_period": "1897",
+      "source_url": "https://www.gutenberg.org/ebooks/3250",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Directly useful for modeling Twain's performance theory of humor, especially timing, indirection, deadpan buildup, and anti-overexplaining."
+    },
+    {
+      "source_id": "src_mark_twain_017",
+      "title": "Mark Twain's Speeches",
+      "source_type": "speech_collection",
+      "year_or_period": "1870s-1909",
+      "source_url": "https://www.gutenberg.org/ebooks/3188",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "This is the strongest overtly spoken-voice source for the public lecturer persona, including comic openings, social commentary, and audience-aware rhythm."
+    },
+    {
+      "source_id": "src_mark_twain_018",
+      "title": "Chapters from My Autobiography",
+      "source_type": "autobiography_fragment",
+      "year_or_period": "1906-1907",
+      "source_url": "https://www.gutenberg.org/ebooks/19987",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Captures the late dictation mode: digressive, intimate, self-correcting, memory-driven, and ideal for temporal persona modeling."
+    },
+    {
+      "source_id": "src_mark_twain_019",
+      "title": "Mark Twain's Burlesque Autobiography",
+      "source_type": "autobiography_fragment",
+      "year_or_period": "1871",
+      "source_url": "https://www.gutenberg.org/ebooks/3175",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for distinguishing Twain's mock-autobiographical voice from later reflective autobiography, especially when the persona should be more playful and self-parodic."
+    },
+    {
+      "source_id": "src_mark_twain_020",
+      "title": "Editorial Wild Oats",
+      "source_type": "essay_collection",
+      "year_or_period": "1860s materials; public edition 2006",
+      "source_url": "https://www.gutenberg.org/ebooks/19484",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for the journalism layer and for early sharp-edged comic prose that later matures into a broader narrative persona."
+    },
+    {
+      "source_id": "src_mark_twain_021",
+      "title": "Is Shakespeare Dead?",
+      "source_type": "essay_collection",
+      "year_or_period": "1909",
+      "source_url": "https://www.gutenberg.org/ebooks/2431",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "A compact specimen of late-period argumentative Twain: skeptical, performative, anecdotal, and happy to needle prestige institutions."
+    },
+    {
+      "source_id": "src_mark_twain_022",
+      "title": "Mark Twain's Letters — Volume 1 (1853-1866)",
+      "source_type": "letters_collection",
+      "year_or_period": "1853-1866",
+      "source_url": "https://www.gutenberg.org/ebooks/3193",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Covers the formative years and helps ground the young Twain voice before literary celebrity stabilized his public persona."
+    },
+    {
+      "source_id": "src_mark_twain_023",
+      "title": "Mark Twain's Letters — Volume 2 (1867-1875)",
+      "source_type": "letters_collection",
+      "year_or_period": "1867-1875",
+      "source_url": "https://www.gutenberg.org/ebooks/3194",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for the breakthrough travel-and-lecture period, showing how Twain's published wit relates to private strategy and self-positioning."
+    },
+    {
+      "source_id": "src_mark_twain_024",
+      "title": "Mark Twain's Letters — Volume 3 (1876-1885)",
+      "source_type": "letters_collection",
+      "year_or_period": "1876-1885",
+      "source_url": "https://www.gutenberg.org/ebooks/3195",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for tracing the mid-career household, publishing, and friendship network around the period of his most canonical fiction."
+    },
+    {
+      "source_id": "src_mark_twain_025",
+      "title": "Mark Twain's Letters — Volume 4 (1886-1900)",
+      "source_type": "letters_collection",
+      "year_or_period": "1886-1900",
+      "source_url": "https://www.gutenberg.org/ebooks/3196",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for financial crisis, travel, publishing pressure, and the widening gap between public wit and private strain."
+    },
+    {
+      "source_id": "src_mark_twain_026",
+      "title": "Mark Twain's Letters — Volume 5 (1901-1906)",
+      "source_type": "letters_collection",
+      "year_or_period": "1901-1906",
+      "source_url": "https://www.gutenberg.org/ebooks/3197",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Key for anti-imperial politics, late grief, and the sharper moral edge that should show up in a lead-reader persona."
+    },
+    {
+      "source_id": "src_mark_twain_027",
+      "title": "Mark Twain's Letters — Volume 6 (1907-1910)",
+      "source_type": "letters_collection",
+      "year_or_period": "1907-1910",
+      "source_url": "https://www.gutenberg.org/ebooks/3198",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Essential for the final-year register: public honors, mortality, fatigue, wit under sorrow, and late philosophical compression."
+    },
+    {
+      "source_id": "src_mark_twain_028",
+      "title": "The Letters of Mark Twain",
+      "source_type": "letters_catalog_reference",
+      "year_or_period": "1853-1910 corpus",
+      "source_url": "https://www.marktwainproject.org/letters/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": false,
+      "why_it_matters": "Authoritative scholarly index for 12,000 plus letters, useful for later date-normalized edge construction and addressee-level graph expansion."
+    },
+    {
+      "source_id": "src_mark_twain_029",
+      "title": "Autobiography of Mark Twain",
+      "source_type": "autobiography_reference",
+      "year_or_period": "1870-1909 materials",
+      "source_url": "https://www.marktwainproject.org/writings/autobiography3/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": false,
+      "why_it_matters": "Provides authoritative chronology and access structure for dictations and early attempts, which is valuable when segmenting late-voice evidence by year."
+    }
+  ],
+  "biography_and_critical": [
+    {
+      "source_id": "src_mark_twain_004",
+      "title": "Mark Twain: A Biography. Complete",
+      "source_type": "biography_reference",
+      "year_or_period": "1912",
+      "source_url": "https://www.gutenberg.org/ebooks/2988",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "The core public-domain biographical spine for connecting life events, travel phases, business crises, and family losses to persona shifts."
+    },
+    {
+      "source_id": "src_mark_twain_030",
+      "title": "Mark Twain",
+      "source_type": "authority_reference",
+      "year_or_period": "modern editorial reference",
+      "source_url": "https://www.britannica.com/biography/Mark-Twain",
+      "copyright_status": "copyrighted_reference_metadata_only",
+      "redistributable": false,
+      "why_it_matters": "Useful as a modern authority checkpoint for stable fact-layer claims and high-level summaries that should not depend on a single older biography."
+    },
+    {
+      "source_id": "src_mark_twain_031",
+      "title": "Stories about Mark Twain: Topics in Chronicling America",
+      "source_type": "critical_reference",
+      "year_or_period": "Library of Congress guide, updated 2025",
+      "source_url": "https://guides.loc.gov/chronicling-america-stories-about-mark-twain",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Useful for expanding into period newspaper evidence, reception history, and event-level temporal anchors around Twain's public presence."
+    }
+  ],
+  "notes": [
+    "This catalog intentionally overbuilds the requested minimum so later filtering can keep only the highest-confidence entries without falling below threshold.",
+    "The works bucket emphasizes fiction and travel writing because those texts reveal sustained narrative habits; the voice_sources bucket emphasizes speech rhythm, argumentative habits, and autobiographical self-fashioning.",
+    "The current inventory is strong on public-domain books, speeches, essays, and letters, but still lighter on standalone newspaper interviews and single-speech event records that could sharpen date-level temporal edges.",
+    "A good next step after this catalog is to split each entry into individual source JSON files and then derive evidence slices with fields such as time_anchor_start, time_anchor_end, stance_tags, voice_mode, and candidate_graph_edges."
+  ]
+}

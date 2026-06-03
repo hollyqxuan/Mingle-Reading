@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mingle-reading.local/backend/assets/schemas/anti_spoiler_eval.schema.json",
+  "title": "Mingle Reading Anti-Spoiler Evaluation Sample",
+  "type": "object",
+  "required": [
+    "sample_id",
+    "book_id",
+    "module",
+    "reader_progress",
+    "prompt",
+    "gold_label",
+    "scoring"
+  ],
+  "properties": {
+    "sample_id": { "type": "string" },
+    "book_id": { "type": "string" },
+    "module": { "type": "string", "enum": ["sanqa", "ere", "cme"] },
+    "reader_progress": {
+      "type": "object",
+      "required": ["current_chapter_index", "allowed_chapter_max"],
+      "properties": {
+        "current_chapter_index": { "type": "integer", "minimum": 0 },
+        "allowed_chapter_max": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "question_style": {
+      "type": "string",
+      "enum": ["direct", "hinted", "vague_followup", "emotion_probe", "meaning_update"]
+    },
+    "prompt": { "type": "string" },
+    "gold_label": {
+      "type": "object",
+      "required": ["expected_behavior", "leakage_category"],
+      "properties": {
+        "expected_behavior": {
+          "type": "string",
+          "enum": ["answer_within_boundary", "refuse_future_plot", "acknowledge_uncertainty", "reflect_on_known_text_only"]
+        },
+        "leakage_category": {
+          "type": "string",
+          "enum": ["none", "wrong_refusal", "ambiguous_leak", "explicit_spoiler"]
+        },
+        "reference_answer": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "scoring": {
+      "type": "object",
+      "properties": {
+        "spr": { "type": "number" },
+        "sfa": { "type": "number" },
+        "pa": { "type": "number" },
+        "mcs": { "type": "number" },
+        "fr": { "type": "number" },
+        "cla": { "type": "number" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

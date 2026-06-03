@@ -1,0 +1,36 @@
+{
+  "record_id": "chapter_evolution_pig_001_v001",
+  "book_id": "book_the_pig_like_maverick",
+  "chapter_id": "ch_001",
+  "chapter_summary": {
+    "summary_safe": "The opening frames human order as something possibly artificial by contrasting it with the pig's unembarrassed freedom.",
+    "key_events": [
+      "A contrast is drawn between social rules and instinctive movement.",
+      "The pig becomes a mirror for human self-discipline."
+    ],
+    "open_questions": [
+      "Is the passage mocking social order or testing its necessity?",
+      "Will the pig remain a symbol or become a plot actor later?"
+    ]
+  },
+  "progress_checkpoints": [
+    {
+      "checkpoint_id": "cp_ch_001_reader_001",
+      "reader_chapter_index": 1,
+      "understanding_state": {
+        "known_facts": [
+          "The narrator contrasts human arrangements with animal freedom."
+        ],
+        "suspected_motives": [
+          "The passage may be using absurdity to question conformity."
+        ],
+        "foreshadowing_signals": [
+          "The pig may symbolize an alternative to ordinary discipline."
+        ],
+        "causal_links": [
+          "Because the pig moves freely, the text exposes how constructed human order can feel."
+        ]
+      }
+    }
+  ]
+}

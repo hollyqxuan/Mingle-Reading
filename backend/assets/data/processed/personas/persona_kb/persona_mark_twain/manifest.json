@@ -1,0 +1,45 @@
+{
+  "kb_version": "1.0",
+  "persona_id": "persona_mark_twain",
+  "persona_name": "Mark Twain",
+  "catalog_path": "backend/assets/data/raw/persona_sources/catalog_mark_twain__v001.json",
+  "persona_pack_path": "backend/assets/data/processed/personas/persona_mark_twain__v001.json",
+  "output_dir": "backend/assets/data/processed/personas/persona_kb/persona_mark_twain",
+  "files": {
+    "documents": "backend/assets/data/processed/personas/persona_kb/persona_mark_twain/documents.jsonl",
+    "retrieval_snippets": "backend/assets/data/processed/personas/persona_kb/persona_mark_twain/retrieval_snippets.jsonl"
+  },
+  "document_counts": {
+    "total": 31,
+    "persona_profile": 1,
+    "source_documents": 30,
+    "works": 12,
+    "voice_sources": 15,
+    "biography_and_critical": 3
+  },
+  "snippet_counts": {
+    "total": 45,
+    "source_overview": 30,
+    "persona_pack": 15
+  },
+  "categories": {
+    "works": {
+      "description": "Books, collections, novellas, or major authored works that anchor subject matter and recurring themes.",
+      "count": 12
+    },
+    "voice_sources": {
+      "description": "Essays, prefaces, speeches, letters, autobiographical materials, and other sources that expose voice and reasoning style.",
+      "count": 15
+    },
+    "biography_and_critical": {
+      "description": "Biographical and critical references used to ground chronology, reception, and background claims.",
+      "count": 3
+    }
+  },
+  "retrieval_notes": [
+    "Use persona_pack snippets for style and stance priming.",
+    "Use voice_sources first when the task asks how the persona would read or comment.",
+    "Use works and biography_and_critical entries as supporting evidence, not as substitutes for the current reader-visible book context.",
+    "This KB stores metadata-rich summaries only; it does not contain full copyrighted text."
+  ]
+}

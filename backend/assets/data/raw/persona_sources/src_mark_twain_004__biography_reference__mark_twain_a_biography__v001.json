@@ -1,0 +1,15 @@
+{
+  "source_id": "src_mark_twain_004",
+  "persona_id": "persona_mark_twain",
+  "subject_name": "Mark Twain",
+  "title": "Mark Twain: A Biography. Complete",
+  "source_type": "biography_reference",
+  "author": "Albert Bigelow Paine",
+  "language": "en",
+  "source_url": "https://www.gutenberg.org/ebooks/2988",
+  "copyright_status": "public_domain",
+  "redistributable": true,
+  "evidence_summary": "Useful for factual grounding: the biography consolidates Samuel Clemens's river years, lecture career, publishing fame, bankruptcy crisis, world travel, and the public performance persona that shaped how readers heard 'Mark Twain.'",
+  "time_anchor": "1912",
+  "notes": "Public-domain biography suitable for open-source citation. Use as fact-layer evidence and as support for performance-oriented style traits; prefer original works when assigning rhetorical habits."
+}

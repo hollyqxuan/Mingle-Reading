@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mingle-reading.local/backend/assets/schemas/chapter_evolution.schema.json",
+  "title": "Mingle Reading Chapter Summary and Understanding Evolution",
+  "type": "object",
+  "required": [
+    "record_id",
+    "book_id",
+    "chapter_id",
+    "chapter_summary",
+    "progress_checkpoints"
+  ],
+  "properties": {
+    "record_id": { "type": "string" },
+    "book_id": { "type": "string" },
+    "chapter_id": { "type": "string" },
+    "chapter_summary": {
+      "type": "object",
+      "required": ["summary_safe", "key_events", "open_questions"],
+      "properties": {
+        "summary_safe": { "type": "string" },
+        "key_events": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "progress_checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["checkpoint_id", "reader_chapter_index", "understanding_state"],
+        "properties": {
+          "checkpoint_id": { "type": "string" },
+          "reader_chapter_index": { "type": "integer", "minimum": 0 },
+          "understanding_state": {
+            "type": "object",
+            "required": ["known_facts", "suspected_motives", "foreshadowing_signals"],
+            "properties": {
+              "known_facts": { "type": "array", "items": { "type": "string" } },
+              "suspected_motives": { "type": "array", "items": { "type": "string" } },
+              "foreshadowing_signals": { "type": "array", "items": { "type": "string" } },
+              "causal_links": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

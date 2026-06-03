@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge Graph 3D - Mingle Reading</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+</script>
+<style>
+  :root {
+    --bg: #0f0f14;
+    --panel: #18181f;
+    --line: #2a2a35;
+    --text: #d4d4d8;
+    --muted: #8b8b96;
+    --accent: #5ec4c4;
+    --character: #3a7ca5;
+    --location: #5c8a4a;
+    --group: #c77d2a;
+    --artifact: #b0803c;
+    --concept: #9b5fc0;
+    --unknown: #666;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  header h1 { font-size: 1.1rem; font-weight: 700; white-space: nowrap; }
+  header select,
+  button,
+  input[type="range"] {
+    accent-color: var(--accent);
+  }
+  header select,
+  button {
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    font-size: 0.85rem;
+    background: var(--bg);
+    color: var(--text);
+  }
+  button { cursor: pointer; }
+  button:hover { background: var(--line); }
+  .toolbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .toolbar label { font-size: 0.8rem; color: var(--muted); }
+  .range-group { display: flex; align-items: center; gap: 6px; }
+  .range-group span { font-size: 0.78rem; min-width: 28px; }
+  .stats { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+  main { display: flex; flex: 1; overflow: hidden; position: relative; }
+  #three-container { flex: 1; position: relative; }
+  #three-container canvas { display: block; }
+  #sidebar {
+    width: 320px;
+    background: var(--panel);
+    border-left: 1px solid var(--line);
+    overflow-y: auto;
+    padding: 14px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  #sidebar h3 {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 4px;
+  }
+  .type-badge {
+    display: inline-block;
+    padding: 1px 7px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    color: #fff;
+    margin-left: 4px;
+  }
+  #detail-card .name { font-size: 1rem; font-weight: 700; }
+  #detail-card p { font-size: 0.8rem; margin-top: 3px; color: var(--muted); }
+  .community-list { display: flex; flex-wrap: wrap; gap: 4px; }
+  .com-tag {
+    padding: 2px 7px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    color: #fff;
+  }
+  .saga-item {
+    padding: 5px 7px;
+    border-radius: 5px;
+    background: var(--bg);
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+  }
+  .saga-item strong { display: block; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.75rem; }
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .tooltip-3d {
+    position: absolute;
+    padding: 6px 10px;
+    background: rgba(20, 20, 30, 0.94);
+    color: #eee;
+    border-radius: 5px;
+    font-size: 0.78rem;
+    pointer-events: none;
+    max-width: 280px;
+    z-index: 20;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+  }
+  .hint {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--muted);
+    pointer-events: none;
+    z-index: 5;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mingle Reading - 3D Knowledge Graph</h1>
+  <select id="book-select"><option value="">Loading...</option></select>
+</header>
+
+<div class="toolbar">
+  <div class="range-group">
+    <label for="from-chapter">From Ch</label>
+    <input type="range" id="from-chapter" min="1" max="23" value="1" step="1">
+    <span id="from-val">1</span>
+  </div>
+  <div class="range-group">
+    <label for="to-chapter">To Ch</label>
+    <input type="range" id="to-chapter" min="1" max="23" value="23" step="1">
+    <span id="to-val">23</span>
+  </div>
+	  <div class="range-group">
+	    <label for="min-weight">Min Wt</label>
+	    <input type="range" id="min-weight" min="0" max="50" value="0" step="1">
+	    <span id="weight-val">0</span>
+	  </div>
+	  <div class="range-group">
+	    <label for="max-edges">Max Edges</label>
+	    <input type="range" id="max-edges" min="10" max="600" value="300" step="10">
+	    <span id="edges-val">300</span>
+	  </div>
+  <button id="refresh-btn" type="button">Refresh</button>
+  <span class="stats" id="graph-stats"></span>
+</div>
+
+<main>
+  <div id="three-container">
+    <div id="tooltip-3d" class="tooltip-3d"></div>
+    <div class="hint">Drag to rotate · Scroll to zoom · Right-drag to pan · Click nodes or edges for details</div>
+  </div>
+
+  <div id="sidebar">
+    <div>
+      <h3>Legend</h3>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--character)"></span> Character</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--location)"></span> Location</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--group)"></span> Group</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--artifact)"></span> Artifact</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--concept)"></span> Concept</div>
+      </div>
+    </div>
+
+    <div id="detail-card">
+      <p class="muted">Click a node or edge to inspect details.</p>
+    </div>
+
+    <div>
+      <h3>Communities</h3>
+      <div id="community-list" class="community-list"></div>
+    </div>
+
+    <div>
+      <h3>Sagas</h3>
+      <div id="saga-list"></div>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { CSS2DRenderer, CSS2DObject } from "three/addons/renderers/CSS2DRenderer.js";
+
+const COLORS = {
+  character: 0x3a7ca5,
+  location: 0x5c8a4a,
+  group: 0xc77d2a,
+  artifact: 0xb0803c,
+  concept: 0x9b5fc0,
+  unknown: 0x666666,
+};
+const COMMUNITY_COLORS = ["#e67e22", "#2ecc71", "#9b59b6", "#f1c40f", "#e74c3c", "#1abc9c", "#f39c12", "#3498db"];
+const state = { bookId: "", data: null, chapterCount: 23 };
+
+let scene;
+let camera;
+let renderer;
+let labelRenderer;
+let controls;
+let nodeObjects = [];
+let labelObjects = [];
+let edgeObjects = [];
+let starField = null;
+
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error(detail || `Request failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+function pickDefaultBook(books) {
+  const params = new URLSearchParams(window.location.search);
+  const requestedBookId = params.get("book_id");
+  return (
+    books.find((book) => book.book_id === requestedBookId) ||
+    books.find((book) => book.book_id.includes("rebuild-20260520-005151")) ||
+    books.find((book) => book.book_id.includes("rebuild-")) ||
+    books[books.length - 1]
+  );
+}
+
+async function loadBooks() {
+  const books = await fetchJSON("/api/books");
+  const select = document.getElementById("book-select");
+  select.innerHTML = books.map((book) => `<option value="${book.book_id}">${book.title}</option>`).join("");
+  const target = pickDefaultBook(books);
+  if (target) {
+    state.bookId = target.book_id;
+    select.value = target.book_id;
+  }
+  await loadGraph();
+}
+
+function updateRangeLabels() {
+  document.getElementById("from-val").textContent = document.getElementById("from-chapter").value;
+  document.getElementById("to-val").textContent = document.getElementById("to-chapter").value;
+}
+
+async function loadGraph() {
+  if (!state.bookId) return;
+  const fromCh = Number(document.getElementById("from-chapter").value);
+  const toCh = Number(document.getElementById("to-chapter").value);
+  const minW = document.getElementById("min-weight").value;
+  const maxE = document.getElementById("max-edges").value;
+  const url = `/api/books/${encodeURIComponent(state.bookId)}/graph/view?scope=book&chapter=${toCh}&from_chapter=${fromCh}&limit=200&min_weight=${minW}&max_edges=${maxE}`;
+  state.data = await fetchJSON(url);
+  state.chapterCount = Math.max(state.data.chapter_index || 1, state.chapterCount);
+  document.getElementById("to-chapter").max = String(state.chapterCount);
+  document.getElementById("graph-stats").textContent =
+    `${state.data.title} · ${state.data.stats.node_count} nodes / ${state.data.stats.edge_count} edges / ${state.data.stats.saga_count || 0} sagas`;
+  render3D();
+  renderSidebar();
+}
+
+function initThree() {
+  const container = document.getElementById("three-container");
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0f0f14);
+
+  camera = new THREE.PerspectiveCamera(55, width / height, 1, 5000);
+  camera.position.set(0, 0, 400);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  labelRenderer = new CSS2DRenderer();
+  labelRenderer.setSize(width, height);
+  labelRenderer.domElement.style.position = "absolute";
+  labelRenderer.domElement.style.top = "0";
+  labelRenderer.domElement.style.pointerEvents = "none";
+  container.appendChild(labelRenderer.domElement);
+
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.minDistance = 50;
+  controls.maxDistance = 1500;
+
+  scene.add(new THREE.AmbientLight(0x404060, 1.5));
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(1, 1, 1);
+  scene.add(light);
+
+  window.addEventListener("resize", () => {
+    const nextWidth = container.clientWidth;
+    const nextHeight = container.clientHeight;
+    camera.aspect = nextWidth / nextHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(nextWidth, nextHeight);
+    labelRenderer.setSize(nextWidth, nextHeight);
+  });
+}
+
+function clearScene() {
+  nodeObjects.forEach((mesh) => scene.remove(mesh));
+  labelObjects.forEach((label) => scene.remove(label));
+  edgeObjects.forEach((mesh) => scene.remove(mesh));
+  nodeObjects = [];
+  labelObjects = [];
+  edgeObjects = [];
+  if (starField) {
+    scene.remove(starField);
+    starField = null;
+  }
+}
+
+function createStarField() {
+  const starGeometry = new THREE.BufferGeometry();
+  const vertices = [];
+  for (let index = 0; index < 600; index += 1) {
+    vertices.push((Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200, (Math.random() - 0.5) * 1200);
+  }
+  starGeometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+  starField = new THREE.Points(starGeometry, new THREE.PointsMaterial({ color: 0x555577, size: 1 }));
+  scene.add(starField);
+}
+
+function render3D() {
+  if (!scene) {
+    initThree();
+  } else {
+    clearScene();
+  }
+
+  const nodes = state.data?.nodes || [];
+  const edges = state.data?.edges || [];
+  if (!nodes.length) return;
+
+  const simNodes = nodes.map((node) => ({ ...node }));
+  const simEdges = edges.map((edge) => ({ source: edge.source, target: edge.target, status: edge.status }));
+  const simulation = d3.forceSimulation(simNodes)
+    .force("link", d3.forceLink(simEdges).id((d) => d.id).distance(80))
+    .force("charge", d3.forceManyBody().strength(-150))
+    .force("center", d3.forceCenter(0, 0))
+    .stop();
+  for (let index = 0; index < 200; index += 1) {
+    simulation.tick();
+  }
+
+  const meshMap = {};
+  simNodes.forEach((node) => {
+    const radius = Math.max(3, Math.min(12, 3 + (node.mention_count || 1) * 0.8));
+    const color = COLORS[node.type] || COLORS.unknown;
+    const geometry = new THREE.SphereGeometry(radius, 24, 16);
+    const material = new THREE.MeshStandardMaterial({ color, roughness: 0.4, metalness: 0.2 });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(node.x || 0, node.y || 0, node.z || 0);
+    mesh.userData = { node, isNode: true };
+    scene.add(mesh);
+    nodeObjects.push(mesh);
+    meshMap[node.id] = mesh;
+
+    const labelDiv = document.createElement("div");
+    labelDiv.textContent = node.label.length > 8 ? `${node.label.slice(0, 8)}...` : node.label;
+    labelDiv.style.cssText = "color:#ccc;font-size:9px;text-shadow:0 0 4px #000;pointer-events:none;";
+    const label = new CSS2DObject(labelDiv);
+    label.position.copy(mesh.position).add(new THREE.Vector3(0, radius + 6, 0));
+    scene.add(label);
+    labelObjects.push(label);
+  });
+
+  simEdges.forEach((edge) => {
+    const sourceMesh = meshMap[edge.source.id || edge.source];
+    const targetMesh = meshMap[edge.target.id || edge.target];
+    if (!sourceMesh || !targetMesh) return;
+    const midpoint = new THREE.Vector3().addVectors(sourceMesh.position, targetMesh.position).multiplyScalar(0.5);
+    const direction = new THREE.Vector3().subVectors(targetMesh.position, sourceMesh.position);
+    const length = direction.length();
+    const geometry = new THREE.CylinderGeometry(0.3, 0.3, length, 6);
+    const material = new THREE.MeshBasicMaterial({
+      color: edge.status === "active" ? 0x8899aa : 0x444455,
+      transparent: true,
+      opacity: edge.status === "active" ? 0.5 : 0.25,
+    });
+    const cylinder = new THREE.Mesh(geometry, material);
+    cylinder.position.copy(midpoint);
+    cylinder.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.normalize());
+    const matchingEdge = edges.find((item) => item.id === edge.id || (item.source === edge.source && item.target === edge.target));
+    cylinder.userData = { edge: matchingEdge || edge, isEdge: true };
+    scene.add(cylinder);
+    edgeObjects.push(cylinder);
+  });
+
+  createStarField();
+}
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const tooltip = document.getElementById("tooltip-3d");
+
+function buildNodeTooltip(node) {
+  return `<strong>${node.label}</strong> <span style="color:#999">${node.type}</span><br>Mentions: ${node.mention_count || 0} · First: ch${node.first_seen_chapter || "?"}<br>${node.summary || ""}`;
+}
+
+function buildEdgeTooltip(edge) {
+  return `<strong>${edge.label}</strong> <span style="color:#999">${edge.state_family || ""}</span><br>${edge.fact || ""}<br>Ch${edge.valid_at_chapter || "?"} · ${edge.status}`;
+}
+
+function locateHoveredObject(event) {
+  const rect = renderer.domElement.getBoundingClientRect();
+  mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouse, camera);
+  return raycaster.intersectObjects([...nodeObjects, ...edgeObjects]);
+}
+
+function onMouseMove(event) {
+  const hits = locateHoveredObject(event);
+  const hit = hits.find((item) => item.object.userData.isNode || item.object.userData.isEdge);
+  if (!hit) {
+    tooltip.style.display = "none";
+    return;
+  }
+
+  const object = hit.object;
+  tooltip.style.display = "block";
+  tooltip.innerHTML = object.userData.isNode
+    ? buildNodeTooltip(object.userData.node)
+    : buildEdgeTooltip(object.userData.edge);
+  tooltip.style.left = `${event.clientX + 14}px`;
+  tooltip.style.top = `${event.clientY + 14}px`;
+}
+
+function onClick(event) {
+  const hits = locateHoveredObject(event);
+  const hit = hits.find((item) => item.object.userData.isNode || item.object.userData.isEdge);
+  if (!hit) return;
+
+  const object = hit.object;
+  const detail = document.getElementById("detail-card");
+  if (object.userData.isNode) {
+    const node = object.userData.node;
+    detail.innerHTML = `<div class="name">${node.label}<span class="type-badge" style="background:#${(COLORS[node.type] || COLORS.unknown).toString(16).padStart(6, "0")}">${node.type}</span></div>
+      <p>Mentions: ${node.mention_count || 0} · First seen: ch${node.first_seen_chapter || "?"}</p>
+      <p>${node.summary || ""}</p>`;
+  } else {
+    const edge = object.userData.edge;
+    detail.innerHTML = `<div class="name">${edge.label}<span class="type-badge" style="background:#666">${edge.state_family || ""}</span></div>
+      <p>${edge.fact || ""}</p>
+      <p>Ch${edge.valid_at_chapter || "?"} · ${edge.status} · weight: ${edge.weight || 1}</p>`;
+  }
+}
+
+function renderSidebar() {
+  const communities = state.data?.communities || [];
+  document.getElementById("community-list").innerHTML = communities.length
+    ? communities.map((community, index) => `<span class="com-tag" style="background:${COMMUNITY_COLORS[index % COMMUNITY_COLORS.length]}">${community.label || `C${index + 1}`} (${community.entity_count})</span>`).join("")
+    : '<span style="color:var(--muted);font-size:0.78rem">None in range</span>';
+
+  const sagas = state.data?.sagas || [];
+  document.getElementById("saga-list").innerHTML = sagas.length
+    ? sagas.map((saga) => `<div class="saga-item"><strong>${saga.label}</strong>Ch${saga.chapter_start}-${saga.chapter_end}, ${saga.entity_count} entities<div style="font-size:0.72rem;color:var(--muted)">${saga.summary || ""}</div></div>`).join("")
+    : '<span style="color:var(--muted);font-size:0.78rem">None in range</span>';
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+  labelRenderer.render(scene, camera);
+}
+
+document.getElementById("refresh-btn").addEventListener("click", () => {
+  loadGraph();
+});
+document.getElementById("book-select").addEventListener("change", (event) => {
+  state.bookId = event.target.value;
+  loadGraph();
+});
+document.getElementById("from-chapter").addEventListener("input", updateRangeLabels);
+document.getElementById("to-chapter").addEventListener("input", updateRangeLabels);
+document.getElementById("three-container").addEventListener("mousemove", onMouseMove);
+document.getElementById("three-container").addEventListener("click", onClick);
+
+updateRangeLabels();
+initThree();
+animate();
+loadBooks();
+</script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>鲁迅 - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #C5DAF2;
+      --sidebar-start: #D5DCF6;
+      --sidebar-end: #D1E7EF;
+      --active-text: #253B74;
+      --active-border: #99A6BF;
+      --text-primary: #1E1B18;
+      --text-secondary: #706A63;
+      --text-light: #B7B0A7;
+      --page-bg: #F9F7F5;
+      --surface: #FFFFFF;
+      --hover: #A5B6CF;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: #F5F5F5;
+      color: var(--text-primary);
+      font-family: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+
+    .app {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background: var(--page-bg);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex: 0 0 260px;
+      flex-direction: column;
+      height: 100vh;
+      padding: 24px 18px 20px;
+      background: linear-gradient(180deg, var(--sidebar-start) 0%, var(--sidebar-end) 100%);
+      box-shadow: 12px 0 28px rgba(77, 88, 124, 0.18);
+    }
+
+    .logo {
+      margin: 0 0 34px;
+      padding-top: 24px;
+      color: #737373;
+      font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #FFFFFF;
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .user-card:hover {
+      box-shadow: 0 8px 20px rgba(77, 88, 124, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .avatar {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #FFFFFF;
+    }
+
+    .username {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .settings-icon {
+      margin-left: auto;
+      color: #99A6BF;
+      font-size: 15px;
+    }
+
+    .nav-block {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 42px;
+      padding: 0 13px;
+      border-left: 3px solid transparent;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.1));
+      color: var(--active-text);
+    }
+
+    .nav-item:hover {
+      transform: translateX(2px);
+    }
+
+    .nav-item.active {
+      border-left-color: var(--active-border);
+      font-weight: 600;
+    }
+
+    .nav-item i {
+      width: 18px;
+      text-align: center;
+      color: currentColor;
+      font-size: 15px;
+    }
+
+    .mascot {
+      display: grid;
+      width: 100%;
+      min-height: 33vh;
+      max-height: 33vh;
+      margin-top: auto;
+      place-items: center;
+      overflow: visible;
+    }
+
+    .mascot img {
+      width: min(245px, 110%);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .main {
+      position: relative;
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      height: 100vh;
+      min-width: 0;
+      overflow-y: auto;
+      padding: clamp(42px, 5vw, 72px);
+      background: #F5F5F5;
+    }
+
+    .main-back-arrow {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 auto;
+      place-items: center;
+      margin: -18px 0 20px;
+      border-radius: 8px;
+      color: var(--active-text);
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .main-back-arrow:hover {
+      background: rgba(255, 255, 255, 0.78);
+      transform: translateX(-2px);
+    }
+
+    .main-back-arrow i {
+      font-size: 28px;
+    }
+
+    .main-watermark {
+      position: fixed;
+      right: 40px;
+      bottom: 32px;
+      z-index: 0;
+      display: grid;
+      width: min(360px, 38vw);
+      aspect-ratio: 1 / 1.16;
+      place-items: center;
+      pointer-events: none;
+      opacity: 0.8;
+    }
+
+    .main-watermark img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .profile-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: min(100%, 1180px);
+      min-height: calc(100vh - 144px);
+      grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+      gap: clamp(36px, 5vw, 72px);
+      align-items: start;
+      margin: 0 auto;
+    }
+
+    .left-profile {
+      display: grid;
+      gap: 28px;
+      align-content: start;
+    }
+
+    .avatar-panel {
+      display: grid;
+      aspect-ratio: 1 / 1;
+      place-items: center;
+      border-radius: 8px;
+      background: #C5DAF2;
+      box-shadow: 0 16px 32px rgba(77, 88, 124, 0.12);
+    }
+
+    .avatar-panel img {
+      width: min(62%, 210px);
+      max-height: 78%;
+      object-fit: contain;
+    }
+
+    .preference {
+      position: relative;
+      padding-right: 48px;
+      color: #8A97AA;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.7;
+    }
+
+    .preference p {
+      margin: 0;
+    }
+
+    .preference strong {
+      color: #4D638D;
+      font-weight: 600;
+    }
+
+    .heart-button {
+      position: absolute;
+      top: 6px;
+      right: 0;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(37, 59, 116, 0.32);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.62);
+      color: var(--active-text);
+      cursor: pointer;
+    }
+
+    .right-profile {
+      display: grid;
+      gap: 28px;
+      padding-top: 12px;
+    }
+
+    .profile-heading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .profile-heading h1 {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .duration-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      border-radius: 999px;
+      padding: 7px 15px;
+      background: #D4E6F7;
+      color: var(--active-text);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .intro {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .style-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .style-tag {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 8px;
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--active-text);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .style-tag:nth-child(1) {
+      background: #D4E6F7;
+    }
+
+    .style-tag:nth-child(2) {
+      background: #E6EBFB;
+    }
+
+    .style-tag:nth-child(3) {
+      background: #D1E7EF;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+      color: var(--text-primary);
+      font-size: 21px;
+      font-weight: 700;
+    }
+
+    .deeds {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .deeds li {
+      position: relative;
+      margin-bottom: 9px;
+      padding-left: 18px;
+    }
+
+    .deeds li::before {
+      position: absolute;
+      top: 0.78em;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--active-border);
+      content: "";
+    }
+
+    .deeds strong {
+      color: #4D638D;
+      font-weight: 600;
+    }
+
+    .book-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 18px;
+      max-width: 720px;
+    }
+
+    .book-item {
+      display: grid;
+      gap: 9px;
+    }
+
+    .book-cover {
+      display: grid;
+      aspect-ratio: 3 / 4;
+      place-items: center;
+      border-radius: 8px;
+      background: #E9E5DF;
+      overflow: hidden;
+      box-shadow: 0 12px 24px rgba(77, 88, 124, 0.1);
+    }
+
+    .book-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .book-placeholder {
+      color: #AFA8A0;
+      font-size: 32px;
+    }
+
+    .book-name {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .bottom-tabs {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .app {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .sidebar {
+        flex-basis: 80px;
+        padding: 24px 12px 18px;
+      }
+
+      .logo {
+        text-align: center;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo-text,
+      .user-info,
+      .settings-icon,
+      .nav-label,
+      .section-title {
+        display: none;
+      }
+
+      .user-card,
+      .nav-item {
+        justify-content: center;
+        padding-right: 0;
+        padding-left: 0;
+      }
+
+      .user-card {
+        width: 54px;
+        height: 54px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .settings-icon {
+        display: none;
+      }
+
+      .nav-item i {
+        width: auto;
+      }
+
+      .mascot {
+        min-height: 28vh;
+      }
+
+      .profile-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        display: block;
+        padding-bottom: 72px;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        min-height: 100vh;
+        padding: 24px 18px 42px;
+      }
+
+      .main-watermark {
+        right: 18px;
+        bottom: 84px;
+        width: 74vw;
+      }
+
+      .book-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .bottom-tabs {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        min-height: 64px;
+        background: #FFFFFF;
+        box-shadow: 0 -8px 22px rgba(77, 88, 124, 0.12);
+      }
+
+      .tab-item {
+        display: grid;
+        place-items: center;
+        gap: 3px;
+        border: 0;
+        background: transparent;
+        color: var(--text-secondary);
+        font: inherit;
+        font-size: 11px;
+      }
+
+      .tab-item i {
+        font-size: 17px;
+      }
+
+      .tab-item.active {
+        color: var(--active-text);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="侧边栏导航">
+      <h1 class="logo"><span class="logo-text">Mingle Reading</span></h1>
+
+      <a class="user-card" href="user-settings.html" aria-label="进入用户设置页面">
+        <img class="avatar" src="logo1.png" alt="用户头像" />
+        <div class="user-info">
+          <p class="username">User_01</p>
+        </div>
+        <i class="settings-icon fa-solid fa-gear" aria-hidden="true"></i>
+      </a>
+
+      <nav class="nav-block" aria-label="主菜单">
+        <a class="nav-item" href="index.html"><i class="fa-solid fa-book-bookmark"></i><span class="nav-label">书籍 Books</span></a>
+        <a class="nav-item active" href="role.html?mode=profile"><i class="fa-solid fa-feather-pointed"></i><span class="nav-label">形象 Characters</span></a>
+        <a class="nav-item" href="#"><i class="fa-regular fa-pen-to-square"></i><span class="nav-label">笔记 Notes</span></a>
+      </nav>
+
+      <div class="mascot" aria-label="简笔画吉祥物占位图">
+        <img src="waitingMascot_Luxun.svg" alt="等待吉祥物" />
+      </div>
+    </aside>
+
+    <main class="main">
+      <a class="main-back-arrow" href="role.html?mode=profile" aria-label="返回形象选择页面">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      </a>
+
+      <div class="main-watermark" aria-hidden="true">
+        <img src="watermark.png" alt="" />
+      </div>
+
+      <section class="profile-layout" aria-label="鲁迅形象介绍">
+        <aside class="left-profile">
+          <div class="avatar-panel" aria-label="鲁迅形象">
+            <img src="celebrity_Luxun.png" alt="鲁迅形象" />
+          </div>
+
+          <div class="preference">
+            <p>喜欢读</p>
+            <p><strong>1950 - 2000年的</strong></p>
+            <p><strong>纪实文学</strong></p>
+            <button class="heart-button" type="button" aria-label="收藏鲁迅形象">
+              <i class="fa-regular fa-heart" aria-hidden="true"></i>
+            </button>
+          </div>
+        </aside>
+
+        <section class="right-profile">
+          <div>
+            <div class="profile-heading">
+              <h1>鲁迅</h1>
+              <span class="duration-tag">伴读时长 666h</span>
+            </div>
+            <p class="intro">清末到民国战乱年代，横跨晚清、民国。</p>
+          </div>
+
+          <div class="style-tags" aria-label="人物风格标签">
+            <span class="style-tag"><i class="fa-solid fa-star" aria-hidden="true"></i>犀利清醒</span>
+            <span class="style-tag"><i class="fa-solid fa-bolt" aria-hidden="true"></i>深刻批判</span>
+            <span class="style-tag"><i class="fa-solid fa-diamond" aria-hidden="true"></i>悲悯同情</span>
+          </div>
+
+          <section aria-label="重大事迹">
+            <h2 class="section-title"><i class="fa-solid fa-list-ul" aria-hidden="true"></i>重大事迹</h2>
+            <ul class="deeds">
+              <li><strong>弃医从文：</strong>日本求学见国人精神麻木，转而以文字唤醒时代。</li>
+              <li><strong>创作《狂人日记》：</strong>开创现代白话小说，以锋利寓言揭示礼教压迫。</li>
+              <li><strong>助力新文化运动：</strong>倡导白话文，推动思想启蒙与文学革新。</li>
+            </ul>
+          </section>
+
+          <section aria-label="阅读书目">
+            <h2 class="section-title"><i class="fa-solid fa-book-open" aria-hidden="true"></i>阅读书目：</h2>
+            <div class="book-row">
+              <article class="book-item">
+                <div class="book-cover">
+                  <img src="bookCover_aPig.png" alt="一只特立独行的猪" />
+                </div>
+                <p class="book-name">《一只特立独行的猪》</p>
+              </article>
+              <article class="book-item">
+                <div class="book-cover">
+                  <img src="bookCover_Guxiang.png" alt="故乡" />
+                </div>
+                <p class="book-name">《故乡》</p>
+              </article>
+              <article class="book-item">
+                <div class="book-cover book-placeholder">
+                  <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+                </div>
+                <p class="book-name">待解锁书目</p>
+              </article>
+              <article class="book-item">
+                <div class="book-cover book-placeholder">
+                  <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+                </div>
+                <p class="book-name">待解锁书目</p>
+              </article>
+            </div>
+          </section>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-tabs" aria-label="移动端底部导航">
+    <button class="tab-item" type="button" onclick="window.location.href='index.html'"><i class="fa-solid fa-book-bookmark"></i><span>书籍</span></button>
+    <button class="tab-item active" type="button" onclick="window.location.href='role.html?mode=profile'"><i class="fa-solid fa-feather-pointed"></i><span>形象</span></button>
+    <button class="tab-item" type="button"><i class="fa-regular fa-pen-to-square"></i><span>笔记</span></button>
+  </nav>
+</body>
+</html>

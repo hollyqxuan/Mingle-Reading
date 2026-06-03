@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mingle-reading.local/backend/assets/schemas/persona.schema.json",
+  "title": "Mingle Reading Persona Pack",
+  "type": "object",
+  "required": [
+    "persona_id",
+    "display_name",
+    "persona_type",
+    "fact_layer",
+    "style_layer",
+    "stance_layer",
+    "source_layer",
+    "constraints"
+  ],
+  "properties": {
+    "persona_id": { "type": "string" },
+    "display_name": { "type": "string" },
+    "persona_type": { "type": "string", "enum": ["author", "character", "critic", "narrator"] },
+    "target_book_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fact_layer": {
+      "type": "object",
+      "properties": {
+        "bio_summary": { "type": "string" },
+        "era_context": { "type": "string" },
+        "themes": { "type": "array", "items": { "type": "string" } },
+        "representative_views": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "style_layer": {
+      "type": "object",
+      "properties": {
+        "tone_keywords": { "type": "array", "items": { "type": "string" } },
+        "reasoning_steps": { "type": "array", "items": { "type": "string" } },
+        "forbidden_patterns": { "type": "array", "items": { "type": "string" } },
+        "preferred_rhetoric": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "stance_layer": {
+      "type": "object",
+      "properties": {
+        "core_positions": { "type": "array", "items": { "type": "string" } },
+        "contrast_notes": { "type": "array", "items": { "type": "string" } },
+        "quote_refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "source_layer": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "source_type", "citation"],
+        "properties": {
+          "source_id": { "type": "string" },
+          "source_type": { "type": "string" },
+          "citation": { "type": "string" },
+          "redistributable": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "required": ["anti_spoiler", "knowledge_boundary"],
+      "properties": {
+        "anti_spoiler": { "type": "boolean" },
+        "knowledge_boundary": { "type": "string" },
+        "max_response_length": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

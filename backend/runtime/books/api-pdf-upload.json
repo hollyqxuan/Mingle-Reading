@@ -1,0 +1,90 @@
+{
+  "book_id": "api-pdf-upload",
+  "title": "api_pdf_upload",
+  "source_path": "C:\\Users\\21358\\Desktop\\MuseReading\\backend\\runtime\\uploads\\api-pdf-upload.pdf",
+  "chapter_count": 2,
+  "chunks": [
+    {
+      "chunk_id": "api-pdf-upload-c001-p001",
+      "book_id": "api-pdf-upload",
+      "chapter_id": "chapter-001",
+      "section_id": "section-001",
+      "paragraph_start_id": "paragraph-001",
+      "paragraph_end_id": "paragraph-001",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 1,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "text": "Chapter 1\nLin enters the square.",
+      "token_offset": 0,
+      "spoiler_level": 0,
+      "position": {
+        "chapter_index": 1,
+        "section_index": 1,
+        "char_start": 0,
+        "char_end": 32
+      },
+      "spoiler_guard": {
+        "spoiler_level": "safe",
+        "max_visible_chapter_index": 1
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Lin"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 1",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 6
+      }
+    },
+    {
+      "chunk_id": "api-pdf-upload-c002-p001",
+      "book_id": "api-pdf-upload",
+      "chapter_id": "chapter-002",
+      "section_id": "section-002",
+      "paragraph_start_id": "paragraph-001",
+      "paragraph_end_id": "paragraph-001",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 2,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "text": "Chapter 2\nAya responds.",
+      "token_offset": 6,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 2,
+        "section_index": 2,
+        "char_start": 6,
+        "char_end": 29
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 2
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Aya"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 2",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 4
+      }
+    }
+  ]
+}

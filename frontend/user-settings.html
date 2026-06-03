@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>用户设置 - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --page-bg: #F5F5F5;
+      --sidebar-bg: #F5F5F5;
+      --card-bg: #D5DCF6;
+      --active-bg: #DDE7FF;
+      --text-primary: #202124;
+      --text-secondary: #666B76;
+      --text-muted: #9298A6;
+      --theme: #253B74;
+      --theme-soft: #AEBBED;
+      --line: rgba(37, 59, 116, 0.12);
+      --surface: rgba(255, 255, 255, 0.78);
+      --shadow: 0 18px 44px rgba(72, 82, 120, 0.1);
+      --serif-cn: "Songti SC", "STSong", "SimSun", "Noto Serif SC", serif;
+      --serif-title: "Cormorant Garamond", "Times New Roman", "Songti SC", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--text-primary);
+      font-family: var(--serif-cn);
+      font-weight: 400;
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    .container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      background: var(--page-bg);
+    }
+
+    .sidebar {
+      flex: 0 0 34%;
+      max-width: 440px;
+      min-width: 320px;
+      height: 100vh;
+      padding: 28px 26px 34px;
+      overflow-y: auto;
+      background: var(--sidebar-bg);
+      box-shadow: 10px 0 30px rgba(72, 82, 120, 0.08);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 24px;
+      border-radius: 12px;
+      color: var(--theme);
+      font-family: var(--serif-title);
+      font-size: 30px;
+      line-height: 1;
+      text-decoration: none;
+      transition: background 0.18s ease, transform 0.18s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.65);
+      transform: translateX(-2px);
+    }
+
+    .settings-nav {
+      display: grid;
+      gap: 22px;
+    }
+
+    .menu-group {
+      display: grid;
+      gap: 0;
+      padding: 8px;
+      border-radius: 22px;
+      background: var(--card-bg);
+      box-shadow: 0 10px 26px rgba(89, 108, 176, 0.08);
+      overflow: hidden;
+    }
+
+    .menu-item {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      align-items: center;
+      width: 100%;
+      min-height: 58px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 14px;
+      background: transparent;
+      color: var(--text-primary);
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .menu-item:hover {
+      background: rgba(255, 255, 255, 0.56);
+      transform: translateX(2px);
+    }
+
+    .menu-item.active {
+      background: var(--active-bg);
+      box-shadow: 0 8px 22px rgba(89, 108, 176, 0.13);
+    }
+
+    .menu-item + .menu-item {
+      border-top: 1px solid var(--line);
+    }
+
+    .menu-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      color: var(--theme);
+      font-family: var(--serif-title);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .menu-icon svg {
+      display: block;
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.55;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .menu-text {
+      min-width: 0;
+      color: var(--text-primary);
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .menu-arrow {
+      color: var(--text-muted);
+      font-family: var(--serif-title);
+      font-size: 24px;
+      font-weight: 300;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 29px;
+    }
+
+    .toggle input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .switch {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #D7DAE3;
+      cursor: pointer;
+      transition: background 0.18s ease;
+    }
+
+    .switch::after {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 3px 8px rgba(70, 76, 92, 0.22);
+      content: "";
+      transition: transform 0.18s ease;
+    }
+
+    .toggle input:checked + .switch {
+      background: var(--theme-soft);
+    }
+
+    .toggle input:checked + .switch::after {
+      transform: translateX(21px);
+    }
+
+    .content {
+      position: relative;
+      display: grid;
+      flex: 1;
+      min-width: 0;
+      height: 100vh;
+      align-content: center;
+      justify-content: center;
+      padding: 56px clamp(32px, 6vw, 88px);
+      overflow-y: auto;
+      background: var(--page-bg);
+    }
+
+    .brand-area {
+      display: grid;
+      place-items: center;
+      width: min(720px, 74vw);
+      min-height: 60vh;
+    }
+
+    .brand-area.hidden {
+      display: none;
+    }
+
+    .brand-logo {
+      display: block;
+      width: min(560px, 72%);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 28px rgba(72, 82, 120, 0.12));
+    }
+
+    .setting-panel {
+      display: none;
+      width: min(100%, 760px);
+      padding: 30px 32px;
+      border: 1px solid rgba(153, 166, 191, 0.18);
+      border-radius: 24px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .setting-panel.active {
+      display: block;
+    }
+
+    .setting-panel h1 {
+      margin: 0 0 22px;
+      color: var(--theme);
+      font-family: var(--serif-cn);
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .setting-row {
+      display: grid;
+      grid-template-columns: minmax(140px, 1fr) minmax(160px, 1.4fr) auto;
+      align-items: center;
+      gap: 18px;
+      min-height: 62px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(37, 59, 116, 0.1);
+    }
+
+    .setting-row:last-child {
+      border-bottom: 0;
+    }
+
+    .label {
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+
+    .value {
+      color: var(--text-secondary);
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+
+    .setting-panel button {
+      min-width: 68px;
+      height: 36px;
+      border: 1px solid rgba(37, 59, 116, 0.2);
+      border-radius: 10px;
+      background: #FFFFFF;
+      color: var(--theme);
+      cursor: pointer;
+    }
+
+    select {
+      width: min(100%, 230px);
+      height: 39px;
+      padding: 0 12px;
+      border: 1px solid rgba(37, 59, 116, 0.18);
+      border-radius: 10px;
+      background: #FFFFFF;
+      color: var(--text-primary);
+    }
+
+    input[type="range"] {
+      width: min(100%, 220px);
+      accent-color: var(--theme-soft);
+    }
+
+    .range-value,
+    .setting-panel a {
+      color: var(--theme);
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        overflow: auto;
+      }
+
+      .container {
+        display: block;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 100%;
+        max-width: none;
+        min-width: 0;
+        height: auto;
+      }
+
+      .content {
+        height: auto;
+        min-height: 58vh;
+        padding: 32px 20px;
+      }
+
+      .brand-area {
+        width: 100%;
+        min-height: 42vh;
+      }
+
+      .brand-logo {
+        width: min(420px, 84%);
+      }
+
+      .setting-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <a class="back-button" href="index.html" aria-label="返回首页">&lt;</a>
+
+      <nav class="settings-nav" aria-label="用户设置菜单">
+        <section class="menu-group" aria-label="账号相关">
+          <button class="menu-item" type="button" data-panel="panel-account">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8.5 11a4 4 0 1 1 7 0"/><path d="M4.5 20c.8-3.4 3.4-5.2 7.5-5.2 1.2 0 2.3.2 3.3.6"/><path d="M16 18.2h5"/><path d="M19.5 15.6 22 18.2l-2.5 2.6"/><path d="M15.5 18.2a1.8 1.8 0 1 1 0-.1"/></svg>
+            </span>
+            <span class="menu-text">账号与安全</span>
+            <span class="menu-arrow">›</span>
+          </button>
+          <button class="menu-item" type="button" data-panel="panel-privacy">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3.5 19 6v5.2c0 4.5-2.6 7.8-7 9.3-4.4-1.5-7-4.8-7-9.3V6l7-2.5Z"/><path d="m8.7 12.1 2.1 2.1 4.7-5"/></svg>
+            </span>
+            <span class="menu-text">隐私设置</span>
+            <span class="menu-arrow">›</span>
+          </button>
+        </section>
+
+        <section class="menu-group" aria-label="通用设置">
+          <button class="menu-item" type="button" data-panel="panel-general">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 3.5 19.4 8v8L12 20.5 4.6 16V8L12 3.5Z"/><path d="M12 8.5v7"/><path d="M8.8 10.4 12 8.5l3.2 1.9"/></svg>
+            </span>
+            <span class="menu-text">通用设置</span>
+            <span class="menu-arrow">›</span>
+          </button>
+          <button class="menu-item" type="button" data-panel="panel-font">
+            <span class="menu-icon" aria-hidden="true">Aa</span>
+            <span class="menu-text">字体设置</span>
+            <span class="menu-arrow">›</span>
+          </button>
+          <button class="menu-item" type="button" data-panel="panel-interface">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M4.5 5.5h15v10h-15z"/><path d="M9 19h6"/><path d="M12 15.5V19"/></svg>
+            </span>
+            <span class="menu-text">界面设置</span>
+            <span class="menu-arrow">›</span>
+          </button>
+        </section>
+
+        <section class="menu-group" aria-label="偏好设置">
+          <div class="menu-item" role="button" tabindex="0" data-panel="panel-darkmode">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M16.8 18.6A7.5 7.5 0 0 1 12.2 4a6.8 6.8 0 1 0 6.4 11.3 7.4 7.4 0 0 1-1.8 3.3Z"/></svg>
+            </span>
+            <span class="menu-text">深色模式</span>
+            <label class="toggle" aria-label="深色模式开关">
+              <input type="checkbox" checked />
+              <span class="switch"></span>
+            </label>
+          </div>
+          <button class="menu-item" type="button" data-panel="panel-reading">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.3-8.2-9.2C3.1 7.8 4.9 5.5 7.5 5.5c1.7 0 3.1 1 4.5 2.8 1.4-1.8 2.8-2.8 4.5-2.8 2.6 0 4.4 2.3 3.7 5.3C19 15.7 12 20 12 20Z"/></svg>
+            </span>
+            <span class="menu-text">阅读偏好</span>
+            <span class="menu-arrow">›</span>
+          </button>
+        </section>
+
+        <section class="menu-group" aria-label="关于与实验室">
+          <button class="menu-item" type="button" data-panel="panel-about">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 10.8v5.4"/><path d="M12 7.6h.01"/></svg>
+            </span>
+            <span class="menu-text">关于Mingle</span>
+            <span class="menu-arrow">›</span>
+          </button>
+          <button class="menu-item" type="button" data-panel="panel-labs">
+            <span class="menu-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 3.8h6"/><path d="M10.5 3.8v5.7l-4 7.2A2.4 2.4 0 0 0 8.6 20h6.8a2.4 2.4 0 0 0 2.1-3.3l-4-7.2V3.8"/><path d="M8.3 15.5h7.4"/></svg>
+            </span>
+            <span class="menu-text">实验室</span>
+            <span class="menu-arrow">›</span>
+          </button>
+        </section>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="brand-area" aria-label="品牌展示区">
+        <img class="brand-logo" src="logo.png" alt="Mingle Reading Logo" />
+      </section>
+
+      <div class="setting-panel" id="panel-account">
+        <h1>账号与安全</h1>
+        <div class="setting-row">
+          <div class="label">手机号</div>
+          <div class="value">+86 138 0000 1234</div>
+          <button type="button">修改</button>
+        </div>
+        <div class="setting-row">
+          <div class="label">邮箱</div>
+          <div class="value">user_01@mingle.com</div>
+          <button type="button">修改</button>
+        </div>
+        <div class="setting-row">
+          <div class="label">密码</div>
+          <div class="value">********</div>
+          <button type="button">修改</button>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-privacy">
+        <h1>隐私设置</h1>
+        <div class="setting-row">
+          <div class="label">允许通过手机号找到我</div>
+          <div class="value">开启后他人可通过手机号搜索账号</div>
+          <label class="toggle">
+            <input type="checkbox" checked />
+            <span class="switch"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div class="label">允许推荐通讯录好友</div>
+          <div class="value">用于优化好友推荐</div>
+          <label class="toggle">
+            <input type="checkbox" />
+            <span class="switch"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-general">
+        <h1>通用设置</h1>
+        <div class="setting-row">
+          <div class="label">语言</div>
+          <select>
+            <option>中文（简体）</option>
+            <option>English</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-font">
+        <h1>字体设置</h1>
+        <div class="setting-row">
+          <div class="label">正文字号</div>
+          <input id="font-size-range" type="range" min="14" max="20" step="1" value="16" />
+          <span class="range-value" id="font-size-value">16px</span>
+        </div>
+        <div class="setting-row">
+          <div class="label">字体</div>
+          <select>
+            <option>系统默认</option>
+            <option>宋体</option>
+            <option>黑体</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-interface">
+        <h1>界面设置</h1>
+        <div class="setting-row">
+          <div class="label">布局密度</div>
+          <select>
+            <option>紧凑</option>
+            <option selected>舒适</option>
+            <option>宽松</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-darkmode">
+        <h1>深色模式</h1>
+        <div class="setting-row">
+          <div class="label">外观</div>
+          <select>
+            <option>跟随系统</option>
+            <option>浅色模式</option>
+            <option>深色模式</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-reading">
+        <h1>阅读偏好</h1>
+        <div class="setting-row">
+          <div class="label">默认字体</div>
+          <select>
+            <option>系统默认</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div class="label">行高</div>
+          <input type="range" min="1.2" max="2.0" step="0.1" value="1.5" />
+          <span class="range-value">1.5</span>
+        </div>
+        <div class="setting-row">
+          <div class="label">翻页效果</div>
+          <select>
+            <option>滑动</option>
+            <option>仿真</option>
+            <option>无</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-about">
+        <h1>关于Mingle</h1>
+        <div class="setting-row">
+          <div class="label">版本</div>
+          <div class="value">v2.0.0 (build 42)</div>
+        </div>
+        <div class="setting-row">
+          <div class="label">隐私政策</div>
+          <a href="#">查看</a>
+        </div>
+        <div class="setting-row">
+          <div class="label">用户协议</div>
+          <a href="#">查看</a>
+        </div>
+      </div>
+
+      <div class="setting-panel" id="panel-labs">
+        <h1>实验室</h1>
+        <div class="setting-row">
+          <div class="label">AI摘要</div>
+          <div class="value">为长篇内容生成摘要</div>
+          <label class="toggle">
+            <input type="checkbox" />
+            <span class="switch"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div class="label">语音朗读</div>
+          <div class="value">实验性文本转语音功能</div>
+          <label class="toggle">
+            <input type="checkbox" checked />
+            <span class="switch"></span>
+          </label>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const menuItems = document.querySelectorAll(".settings-nav .menu-item");
+    const panels = document.querySelectorAll(".setting-panel");
+    const brandArea = document.querySelector(".brand-area");
+
+    function showPanel(panelId) {
+      brandArea.classList.add("hidden");
+
+      panels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === panelId);
+      });
+
+      menuItems.forEach((item) => {
+        item.classList.toggle("active", item.dataset.panel === panelId);
+      });
+    }
+
+    menuItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        showPanel(item.dataset.panel);
+      });
+
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          showPanel(item.dataset.panel);
+        }
+      });
+    });
+
+    document.querySelectorAll(".toggle").forEach((toggle) => {
+      toggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+    });
+
+    const fontSizeRange = document.querySelector("#font-size-range");
+    const fontSizeValue = document.querySelector("#font-size-value");
+
+    fontSizeRange.addEventListener("input", () => {
+      fontSizeValue.textContent = `${fontSizeRange.value}px`;
+    });
+  </script>
+</body>
+</html>

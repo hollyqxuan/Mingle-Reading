@@ -1,0 +1,53 @@
+{
+  "manifest_id": "persona_collection_requirements_summary_v001",
+  "generated_on": "2026-05-13",
+  "collection_requirements": {
+    "minimum_total_sources_per_persona": 20,
+    "minimum_works_per_persona": 10,
+    "minimum_voice_sources_per_persona": 10,
+    "voice_source_definition": "Interviews, quotes, letters, speeches, essays, prefaces, afterwords, autobiographical prose, or other source types that directly expose the author's voice and reading stance."
+  },
+  "personas": [
+    {
+      "persona_id": "persona_lu_xun",
+      "display_name": "Lu Xun",
+      "catalog_path": "backend/assets/data/raw/persona_sources/catalog_lu_xun__v001.json",
+      "counts": {
+        "total_sources": 28,
+        "works": 12,
+        "voice_sources": 12,
+        "biography_and_critical": 4
+      },
+      "status": "meets_requirements"
+    },
+    {
+      "persona_id": "persona_mark_twain",
+      "display_name": "Mark Twain",
+      "catalog_path": "backend/assets/data/raw/persona_sources/catalog_mark_twain__v001.json",
+      "counts": {
+        "total_sources": 30,
+        "works": 12,
+        "voice_sources": 15,
+        "biography_and_critical": 3
+      },
+      "status": "meets_requirements"
+    },
+    {
+      "persona_id": "persona_zhang_ailing",
+      "display_name": "Zhang Ailing",
+      "catalog_path": "backend/assets/data/raw/persona_sources/catalog_zhang_ailing__v001.json",
+      "counts": {
+        "total_sources": 30,
+        "works": 12,
+        "voice_sources": 13,
+        "biography_and_critical": 5
+      },
+      "status": "meets_requirements"
+    }
+  ],
+  "next_structuring_targets": [
+    "Split catalog entries into graph-ready evidence shards.",
+    "Define a formal schema for persona source catalogs and per-source records.",
+    "Add relation fields such as era, voice_traits, relation_to_work_ids, and candidate_edge_types."
+  ]
+}

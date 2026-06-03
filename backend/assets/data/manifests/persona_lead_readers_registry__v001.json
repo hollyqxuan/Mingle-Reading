@@ -1,0 +1,140 @@
+{
+  "registry_id": "persona_lead_readers_registry_v001",
+  "generated_on": "2026-05-13",
+  "purpose": "Lead-reader persona assets curated for temporal graph-backed Mingle Reading retrieval and commentary.",
+  "graph_mapping": {
+    "persona_node_type": "persona",
+    "source_node_type": "persona_source",
+    "evidence_edge_type": "grounded_in",
+    "time_field": "time_anchor",
+    "recommended_edge_payload": [
+      "source_id",
+      "source_type",
+      "time_anchor",
+      "copyright_status",
+      "redistributable"
+    ]
+  },
+  "personas": [
+    {
+      "persona_id": "persona_lu_xun",
+      "display_name": "Lu Xun",
+      "pack_path": "backend/assets/data/processed/personas/persona_lu_xun__v002.json",
+      "release_policy": "open_with_metadata_only_biography_reference",
+      "sources": [
+        {
+          "source_id": "src_lu_xun_nahan_preface",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_lu_xun_nahan_preface__author_work__v002.json",
+          "time_anchor": "1922-12-03",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_lu_xun_how_i_started_novels",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_lu_xun_how_i_started_novels__author_work__v002.json",
+          "time_anchor": "1933-03-05",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_lu_xun_wild_grass_preface",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_lu_xun_wild_grass_preface__author_work__v002.json",
+          "time_anchor": "1924-1926 compositions; preface signed 11-05",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_lu_xun_britannica_bio",
+          "source_type": "biography_reference",
+          "path": "backend/assets/data/raw/persona_sources/src_lu_xun_britannica_bio__biography_reference__v002.json",
+          "time_anchor": "1881-1936",
+          "copyright_status": "copyrighted_reference_metadata_only",
+          "redistributable": false
+        }
+      ]
+    },
+    {
+      "persona_id": "persona_mark_twain",
+      "display_name": "Mark Twain",
+      "pack_path": "backend/assets/data/processed/personas/persona_mark_twain__v001.json",
+      "release_policy": "open_public_domain",
+      "sources": [
+        {
+          "source_id": "src_mark_twain_001",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_mark_twain_001__author_work__what_is_man__v001.json",
+          "time_anchor": "1906",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_mark_twain_002",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_mark_twain_002__author_work__life_on_the_mississippi__v001.json",
+          "time_anchor": "1883",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_mark_twain_003",
+          "source_type": "author_work",
+          "path": "backend/assets/data/raw/persona_sources/src_mark_twain_003__author_work__following_the_equator__v001.json",
+          "time_anchor": "1897",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_mark_twain_004",
+          "source_type": "biography_reference",
+          "path": "backend/assets/data/raw/persona_sources/src_mark_twain_004__biography_reference__mark_twain_a_biography__v001.json",
+          "time_anchor": "1835-1910",
+          "copyright_status": "public_domain",
+          "redistributable": true
+        }
+      ]
+    },
+    {
+      "persona_id": "persona_zhang_ailing",
+      "display_name": "Zhang Ailing (Eileen Chang)",
+      "pack_path": "backend/assets/data/processed/personas/persona_zhang_ailing__v001.json",
+      "release_policy": "metadata_only_and_critical_reference_open",
+      "sources": [
+        {
+          "source_id": "src_zhang_ailing_britannica_001",
+          "source_type": "biography_reference",
+          "path": "backend/assets/data/raw/persona_sources/zhang_ailing__britannica_biography_reference__v001.json",
+          "time_anchor": "1920-1995; accessed 2026-05-13",
+          "copyright_status": "metadata_only_open",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_zhang_ailing_encyclopedia_001",
+          "source_type": "biography_reference",
+          "path": "backend/assets/data/raw/persona_sources/zhang_ailing__encyclopedia_biography_reference__v001.json",
+          "time_anchor": "1920-1995; accessed 2026-05-13",
+          "copyright_status": "metadata_only_open",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_zhang_ailing_usc_critical_001",
+          "source_type": "critical_reference",
+          "path": "backend/assets/data/raw/persona_sources/zhang_ailing__usc_critical_reference__v001.json",
+          "time_anchor": "2003 dissertation summary; accessed 2026-05-13",
+          "copyright_status": "metadata_only_open",
+          "redistributable": true
+        },
+        {
+          "source_id": "src_zhang_ailing_cityscape_001",
+          "source_type": "critical_reference",
+          "path": "backend/assets/data/raw/persona_sources/zhang_ailing__lv_cityscape_critical_reference__v001.json",
+          "time_anchor": "2021 article; accessed 2026-05-13",
+          "copyright_status": "metadata_only_open",
+          "redistributable": true
+        }
+      ]
+    }
+  ]
+}

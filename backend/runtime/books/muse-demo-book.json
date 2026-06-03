@@ -1,0 +1,371 @@
+{
+  "book_id": "muse-demo-book",
+  "title": "muse_demo_book",
+  "source_path": "C:\\Users\\21358\\Desktop\\MuseReading\\backend\\assets\\examples\\muse_demo_book.txt",
+  "chapter_count": 3,
+  "chunks": [
+    {
+      "chunk_id": "muse-demo-book-c001-p001",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-001",
+      "section_id": "section-001",
+      "paragraph_start_id": "paragraph-001",
+      "paragraph_end_id": "paragraph-001",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 1,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "text": "Lin opened the old notebook because he wanted a cleaner reason to stay in the library than simple loneliness.",
+      "token_offset": 0,
+      "spoiler_level": 0,
+      "position": {
+        "chapter_index": 1,
+        "section_index": 1,
+        "char_start": 0,
+        "char_end": 109
+      },
+      "spoiler_guard": {
+        "spoiler_level": "safe",
+        "max_visible_chapter_index": 1
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Lin"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 1",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 19
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c001-p002",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-001",
+      "section_id": "section-001",
+      "paragraph_start_id": "paragraph-002",
+      "paragraph_end_id": "paragraph-002",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 1,
+      "paragraph_id": "paragraph-002",
+      "paragraph_index": 2,
+      "text": "The room was quiet except for the scrape of chairs and the nervous rhythm of rain against the glass.",
+      "token_offset": 19,
+      "spoiler_level": 0,
+      "position": {
+        "chapter_index": 1,
+        "section_index": 1,
+        "char_start": 19,
+        "char_end": 119
+      },
+      "spoiler_guard": {
+        "spoiler_level": "safe",
+        "max_visible_chapter_index": 1
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [],
+      "metadata": {
+        "chapter_title": "Chapter 1",
+        "source_paragraph_indices": [
+          2
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 19
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c001-p003",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-001",
+      "section_id": "section-001",
+      "paragraph_start_id": "paragraph-003",
+      "paragraph_end_id": "paragraph-003",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 1,
+      "paragraph_id": "paragraph-003",
+      "paragraph_index": 3,
+      "text": "When Aya laughed at his careful notes, the sentence stung less than the ease with which she seemed to read through him.",
+      "token_offset": 38,
+      "spoiler_level": 0,
+      "position": {
+        "chapter_index": 1,
+        "section_index": 1,
+        "char_start": 38,
+        "char_end": 157
+      },
+      "spoiler_guard": {
+        "spoiler_level": "safe",
+        "max_visible_chapter_index": 1
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Aya"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 1",
+        "source_paragraph_indices": [
+          3
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 22
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c002-p001",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-002",
+      "section_id": "section-002",
+      "paragraph_start_id": "paragraph-001",
+      "paragraph_end_id": "paragraph-001",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 2,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "text": "Aya returned the next afternoon with a page of corrections and a question: was he reading for knowledge, or for permission to feel something larger?",
+      "token_offset": 60,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 2,
+        "section_index": 2,
+        "char_start": 60,
+        "char_end": 208
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 2
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Aya"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 2",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 25
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c002-p002",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-002",
+      "section_id": "section-002",
+      "paragraph_start_id": "paragraph-002",
+      "paragraph_end_id": "paragraph-002",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 2,
+      "paragraph_id": "paragraph-002",
+      "paragraph_index": 2,
+      "text": "Lin pretended to disagree, but he kept her margin notes folded in his coat pocket as if they were a private map.",
+      "token_offset": 85,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 2,
+        "section_index": 2,
+        "char_start": 85,
+        "char_end": 197
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 2
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Lin"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 2",
+        "source_paragraph_indices": [
+          2
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 22
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c002-p003",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-002",
+      "section_id": "section-002",
+      "paragraph_start_id": "paragraph-003",
+      "paragraph_end_id": "paragraph-003",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 2,
+      "paragraph_id": "paragraph-003",
+      "paragraph_index": 3,
+      "text": "At dusk they argued about whether memory protects a person or merely slows down the next mistake.",
+      "token_offset": 107,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 2,
+        "section_index": 2,
+        "char_start": 107,
+        "char_end": 204
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 2
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [],
+      "metadata": {
+        "chapter_title": "Chapter 2",
+        "source_paragraph_indices": [
+          3
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 17
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c003-p001",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-003",
+      "section_id": "section-003",
+      "paragraph_start_id": "paragraph-001",
+      "paragraph_end_id": "paragraph-001",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 3,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "text": "By the time the lights dimmed, the notebook had become less a record of facts than a ledger of unfinished courage.",
+      "token_offset": 124,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 3,
+        "section_index": 3,
+        "char_start": 124,
+        "char_end": 238
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 3
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [],
+      "metadata": {
+        "chapter_title": "Chapter 3",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 21
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c003-p002",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-003",
+      "section_id": "section-003",
+      "paragraph_start_id": "paragraph-002",
+      "paragraph_end_id": "paragraph-002",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 3,
+      "paragraph_id": "paragraph-002",
+      "paragraph_index": 2,
+      "text": "Lin finally understood that the passages he copied most carefully were the ones that allowed him to delay a decision.",
+      "token_offset": 145,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 3,
+        "section_index": 3,
+        "char_start": 145,
+        "char_end": 262
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 3
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Lin"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 3",
+        "source_paragraph_indices": [
+          2
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 20
+      }
+    },
+    {
+      "chunk_id": "muse-demo-book-c003-p003",
+      "book_id": "muse-demo-book",
+      "chapter_id": "chapter-003",
+      "section_id": "section-003",
+      "paragraph_start_id": "paragraph-003",
+      "paragraph_end_id": "paragraph-003",
+      "chunk_level": "l0_raw_paragraph",
+      "chapter_index": 3,
+      "paragraph_id": "paragraph-003",
+      "paragraph_index": 3,
+      "text": "Aya did not answer directly; she only said that every reader eventually meets the paragraph that refuses to remain a paragraph.",
+      "token_offset": 165,
+      "spoiler_level": 1,
+      "position": {
+        "chapter_index": 3,
+        "section_index": 3,
+        "char_start": 165,
+        "char_end": 292
+      },
+      "spoiler_guard": {
+        "spoiler_level": "mild",
+        "max_visible_chapter_index": 3
+      },
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "candidate_characters": [
+        "Aya"
+      ],
+      "metadata": {
+        "chapter_title": "Chapter 3",
+        "source_paragraph_indices": [
+          3
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 21
+      }
+    }
+  ]
+}

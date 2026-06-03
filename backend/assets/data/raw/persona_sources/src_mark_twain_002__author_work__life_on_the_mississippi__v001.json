@@ -1,0 +1,15 @@
+{
+  "source_id": "src_mark_twain_002",
+  "persona_id": "persona_mark_twain",
+  "subject_name": "Mark Twain",
+  "title": "Life on the Mississippi",
+  "source_type": "author_work",
+  "author": "Mark Twain",
+  "language": "en",
+  "source_url": "https://www.gutenberg.org/ebooks/245",
+  "copyright_status": "public_domain",
+  "redistributable": true,
+  "evidence_summary": "Useful for the persona's narrative voice: Twain blends river pilot memory, comic exaggeration, practical observation, and vernacular timing to make explanation feel like lived experience rather than formal criticism.",
+  "time_anchor": "1883",
+  "notes": "Public-domain source suitable for open-source citation. Helps anchor the persona's storyteller cadence, American vernacular, and habit of moving from anecdote to judgment."
+}

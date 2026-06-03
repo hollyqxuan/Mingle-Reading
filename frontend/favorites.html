@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>收藏的书籍 - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #C5DAF2;
+      --sidebar-start: #D5DCF6;
+      --sidebar-end: #D1E7EF;
+      --active-text: #253B74;
+      --active-border: #99A6BF;
+      --text-primary: #1E1B18;
+      --text-secondary: #706A63;
+      --text-light: #B7B0A7;
+      --page-bg: #F9F7F5;
+      --surface: #FFFFFF;
+      --hover: #A5B6CF;
+      --placeholder: #E9E5DF;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scrollbar-color: #99A6BF #ECE8E3;
+      scrollbar-width: thin;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: visible;
+      background: #F5F5F5;
+      color: var(--text-primary);
+      font-family: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+
+    body::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    body::-webkit-scrollbar-track {
+      background: #F5F5F5;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: #99A6BF;
+      border: 3px solid #ECE8E3;
+      border-radius: 999px;
+    }
+
+    .app {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      background: var(--page-bg);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      flex: 0 0 260px;
+      flex-direction: column;
+      height: 100vh;
+      padding: 24px 18px 20px;
+      background: linear-gradient(180deg, var(--sidebar-start) 0%, var(--sidebar-end) 100%);
+      box-shadow: 12px 0 28px rgba(77, 88, 124, 0.18);
+    }
+
+    .logo {
+      margin: 0 0 34px;
+      padding-top: 24px;
+      color: #737373;
+      font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+      padding: 12px;
+      border-radius: 16px;
+      background: #FFFFFF;
+      color: var(--text-primary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .user-card:hover {
+      box-shadow: 0 8px 20px rgba(77, 88, 124, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .avatar {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #FFFFFF;
+    }
+
+    .username {
+      margin: 0;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .settings-icon {
+      margin-left: auto;
+      color: #99A6BF;
+      font-size: 15px;
+    }
+
+    .nav-block {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 42px;
+      padding: 0 13px;
+      border-left: 3px solid transparent;
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.1));
+      color: var(--active-text);
+    }
+
+    .nav-item:hover {
+      transform: translateX(2px);
+    }
+
+    .nav-item.active {
+      border-left-color: var(--active-border);
+      font-weight: 600;
+    }
+
+    .nav-item i {
+      width: 18px;
+      text-align: center;
+      color: currentColor;
+      font-size: 15px;
+    }
+
+    .section-title {
+      margin: 0 0 12px 16px;
+      color: rgba(37, 59, 116, 0.68);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .mascot {
+      display: grid;
+      width: 100%;
+      min-height: 33vh;
+      max-height: 33vh;
+      margin-top: auto;
+      place-items: center;
+      overflow: visible;
+    }
+
+    .mascot img {
+      width: min(245px, 110%);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .main {
+      position: relative;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      height: 100vh;
+      min-width: 0;
+      padding: 32px;
+      overflow: hidden;
+      background: #F5F5F5;
+    }
+
+    .main-header {
+      position: relative;
+      z-index: 3;
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .page-title {
+      margin: 0;
+      color: #9F9F9F;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    .main-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-button,
+    .search-control {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: var(--active-text);
+      cursor: pointer;
+      transition: width 0.24s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .action-button::before,
+    .search-control::before {
+      position: absolute;
+      inset: 7px;
+      border: 1px solid var(--active-text);
+      border-radius: 6px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .action-button:hover,
+    .search-control:hover,
+    .search-control:focus-within {
+      box-shadow: 4px 6px 14px rgba(77, 88, 124, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .search-control {
+      overflow: hidden;
+    }
+
+    .search-control:hover,
+    .search-control:focus-within {
+      justify-content: flex-start;
+      width: 260px;
+      padding: 0 18px;
+    }
+
+    .search-control i,
+    .action-button i {
+      z-index: 1;
+      color: var(--active-text);
+      font-size: 15px;
+    }
+
+    .search-input {
+      z-index: 1;
+      width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text-primary);
+      font: inherit;
+      font-size: 15px;
+      opacity: 0;
+      cursor: text;
+      transition: width 0.2s ease, margin 0.2s ease, opacity 0.2s ease;
+    }
+
+    .search-control:hover .search-input,
+    .search-control:focus-within .search-input {
+      width: 180px;
+      margin-left: 10px;
+      opacity: 1;
+    }
+
+    .search-input::placeholder {
+      color: #B7B0A7;
+    }
+
+    .main-watermark {
+      position: absolute;
+      right: 40px;
+      bottom: 32px;
+      z-index: 0;
+      display: grid;
+      width: min(360px, 42vw);
+      aspect-ratio: 1 / 1.16;
+      place-items: center;
+      color: rgba(37, 59, 116, 0.12);
+      pointer-events: none;
+    }
+
+    .main-watermark img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .card-scroll {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding: 0 72px 48px 0;
+      scrollbar-color: #99A6BF rgba(255, 255, 255, 0.5);
+      scrollbar-width: thin;
+    }
+
+    .card-scroll::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .card-scroll::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 999px;
+    }
+
+    .card-scroll::-webkit-scrollbar-thumb {
+      background: #99A6BF;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      border-radius: 999px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 120px;
+      width: min(100%, 1300px);
+      margin: 0 auto;
+    }
+
+    .create-card {
+      display: grid;
+      place-items: center;
+      background: #FFFFFF;
+    }
+
+    .create-card::after {
+      display: none;
+    }
+
+    .create-plus {
+      color: var(--active-text);
+      font-size: 76px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .favorite-heading {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .back-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      color: var(--active-text);
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .back-arrow:hover {
+      background: rgba(255, 255, 255, 0.78);
+      transform: translateX(-2px);
+    }
+
+    .back-arrow i {
+      font-size: 22px;
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 60px;
+      width: min(100%, 1100px);
+      margin: 0 auto;
+      padding-top: 6px;
+    }
+
+    .book-card {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 4.2;
+      overflow: visible;
+      border: 0;
+      border-radius: 2px;
+      background: #D4E6F7;
+      box-shadow: 0 10px 22px rgba(77, 88, 124, 0.12);
+      padding: 0;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book-card:hover {
+      box-shadow: 0 14px 28px rgba(77, 88, 124, 0.16);
+      transform: translateY(-2px);
+    }
+
+    .book-cover {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .book-badge {
+      position: absolute;
+      right: -14%;
+      bottom: -6%;
+      z-index: 2;
+      display: grid;
+      width: 42%;
+      aspect-ratio: 117.54 / 100.5;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(231, 231, 231, 0.65);
+    }
+
+    .book-badge img {
+      width: 85%;
+      height: 85%;
+      object-fit: contain;
+    }
+
+    .book-badge .book-badge-notification {
+      position: absolute;
+      top: -8%;
+      right: -4%;
+      z-index: 3;
+      width: 42.5%;
+      height: auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .new-book-card {
+      display: grid;
+      place-items: center;
+      box-shadow: none;
+    }
+
+    .new-book-card::before,
+    .new-book-card::after {
+      grid-area: 1 / 1;
+      display: block;
+      border-radius: 999px;
+      background: #535353;
+      content: "";
+    }
+
+    .new-book-card::before {
+      width: 34%;
+      height: 4px;
+    }
+
+    .new-book-card::after {
+      width: 4px;
+      height: 24%;
+    }
+
+    .bottom-tabs {
+      display: none;
+    }
+
+    @media (max-width: 1023px) {
+      .app {
+        width: 100%;
+        aspect-ratio: auto;
+      }
+
+      .sidebar {
+        flex-basis: 80px;
+        padding: 24px 12px 18px;
+      }
+
+      .logo {
+        text-align: center;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .logo-text,
+      .user-info,
+      .nav-label,
+      .section-title {
+        display: none;
+      }
+
+      .user-card,
+      .nav-item {
+        justify-content: center;
+        padding-right: 0;
+        padding-left: 0;
+      }
+
+      .user-card {
+        width: 54px;
+        height: 54px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .settings-icon {
+        display: none;
+      }
+
+      .nav-item i {
+        width: auto;
+      }
+
+      .mascot {
+        min-height: 28vh;
+      }
+
+      .page-title {
+        font-size: 30px;
+      }
+
+      .book-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 34px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .app {
+        display: block;
+        padding-bottom: 76px;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 24px 18px;
+      }
+
+      .main-header {
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .main-actions {
+        gap: 8px;
+      }
+
+      .action-button,
+      .search-control {
+        width: 44px;
+        height: 44px;
+      }
+
+      .search-control:hover,
+      .search-control:focus-within {
+        width: min(220px, calc(100vw - 132px));
+      }
+
+      .search-control:hover .search-input,
+      .search-control:focus-within .search-input {
+        width: 145px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .book-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+        width: min(100%, 420px);
+      }
+
+      .favorite-heading {
+        gap: 10px;
+      }
+
+      .back-arrow {
+        width: 44px;
+        height: 44px;
+      }
+
+      .category-card {
+        aspect-ratio: 20 / 11;
+      }
+
+      .bottom-tabs {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: 9px 12px 11px;
+        border-top: 1px solid rgba(153, 166, 191, 0.35);
+        background: #FFFFFF;
+      }
+
+      .tab-item {
+        display: grid;
+        gap: 4px;
+        place-items: center;
+        border: 0;
+        background: transparent;
+        color: var(--text-secondary);
+        font: inherit;
+        font-size: 11px;
+        cursor: pointer;
+      }
+
+      .tab-item i {
+        font-size: 17px;
+      }
+
+      .tab-item.active {
+        color: var(--active-text);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="侧边栏导航">
+      <h1 class="logo"><span class="logo-text">Mingle Reading</span></h1>
+
+      <a class="user-card" href="user-settings.html" aria-label="进入用户设置页面">
+        <img class="avatar" src="logo1.png" alt="用户头像" />
+        <div class="user-info">
+          <p class="username">User_01</p>
+        </div>
+        <i class="settings-icon fa-solid fa-gear" aria-hidden="true"></i>
+      </a>
+
+      <nav class="nav-block" aria-label="主菜单">
+        <a class="nav-item active" href="#"><i class="fa-solid fa-book-bookmark"></i><span class="nav-label">书籍 Books</span></a>
+        <a class="nav-item" href="role.html?mode=profile"><i class="fa-solid fa-feather-pointed"></i><span class="nav-label">形象 Characters</span></a>
+        <a class="nav-item" href="#"><i class="fa-regular fa-pen-to-square"></i><span class="nav-label">笔记 Notes</span></a>
+      </nav>
+
+      <div class="mascot" aria-label="简笔画吉祥物占位图">
+        <img src="waitingMascot_Luxun.svg" alt="等待吉祥物" />
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="main-header" aria-label="收藏的书籍工具栏">
+        <div class="favorite-heading">
+          <a class="back-arrow" href="index.html" aria-label="返回首页">
+            <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+          </a>
+          <h1 class="page-title">收藏的书籍</h1>
+        </div>
+        <div class="main-actions">
+          <label class="search-control" aria-label="查找收藏的书籍">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input class="search-input" type="search" placeholder="查找收藏的书籍" />
+          </label>
+          <button class="action-button" type="button" aria-label="切换语言">
+            <i class="fa-solid fa-language" aria-hidden="true"></i>
+          </button>
+          <button class="action-button" type="button" aria-label="切换深夜或白昼模式">
+            <i class="fa-regular fa-moon" aria-hidden="true"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="main-watermark" aria-hidden="true">
+        <img src="watermark.png" alt="" />
+      </div>
+
+      <div class="card-scroll">
+        <section class="book-grid" aria-label="收藏的书籍">
+          <a class="book-card" href="aPig.html" aria-label="特立独行的猪">
+            <img class="book-cover" src="bookCover_aPig.png" alt="特立独行的猪书籍封面" />
+            <span class="book-badge" aria-hidden="true">
+              <img src="bookCornerBadge_Luxun.png" alt="" />
+              <img class="book-badge-notification" src="bookBadgeNotification.png" alt="" />
+            </span>
+          </a>
+          <a class="book-card" href="100yrs.html" aria-label="百年孤独">
+            <img class="book-cover" src="bookCover_100yrsofSolitude.png" alt="百年孤独书籍封面" />
+            <span class="book-badge" aria-hidden="true">
+              <img src="bookCornerBadge_Eileen.png" alt="" />
+            </span>
+          </a>
+          <article class="book-card" aria-label="故乡">
+            <img class="book-cover" src="bookCover_Guxiang.png" alt="故乡书籍封面" />
+          </article>
+          <article class="book-card" aria-label="马可瓦多">
+            <img class="book-cover" src="bookCover_MarcoValdo.png" alt="马可瓦多书籍封面" />
+          </article>
+          <button class="book-card new-book-card" type="button" aria-label="上传本地书籍" data-upload-book-trigger></button>
+          <input type="file" data-upload-book-input accept=".txt,.pdf,.epub" hidden />
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    async function fetchJSON(url, options = {}) {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Request failed: ${response.status}`);
+      }
+      return response.json();
+    }
+
+    function setUploadStatus(text) {
+      const button = document.querySelector("[data-upload-book-trigger]");
+      button.setAttribute("aria-label", text);
+      button.title = text;
+    }
+
+    async function pollUploadJob(jobId) {
+      let current = await fetchJSON(`/api/upload-jobs/${encodeURIComponent(jobId)}`);
+      while (current.status !== "completed" && current.status !== "failed") {
+        setUploadStatus(current.message || current.title || "正在处理上传文件...");
+        await new Promise((resolve) => window.setTimeout(resolve, 1200));
+        current = await fetchJSON(`/api/upload-jobs/${encodeURIComponent(jobId)}`);
+      }
+      if (current.status === "failed") {
+        throw new Error(current.error || current.message || "上传处理失败");
+      }
+      return current.result || current;
+    }
+
+    async function uploadSelectedBook(file) {
+      if (!file) return;
+      const button = document.querySelector("[data-upload-book-trigger]");
+      button.disabled = true;
+      setUploadStatus("正在上传本地书籍...");
+
+      try {
+        const body = new FormData();
+        body.append("file", file);
+        const job = await fetchJSON("/api/upload-jobs", {
+          method: "POST",
+          body,
+        });
+        const result = await pollUploadJob(job.job_id);
+        const bookId = result.book_id || result.result?.book_id || result.book?.book_id;
+        if (!bookId) {
+          throw new Error("上传完成，但没有返回 book_id");
+        }
+        window.localStorage.setItem("mingle:selectedBookId", bookId);
+        window.location.href = `role.html?mode=reader&return=favorites.html&book_id=${encodeURIComponent(bookId)}`;
+      } catch (error) {
+        console.error(error);
+        setUploadStatus(`上传失败：${error.message}`);
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    document.querySelector("[data-upload-book-trigger]").addEventListener("click", () => {
+      document.querySelector("[data-upload-book-input]").click();
+    });
+
+    document.querySelector("[data-upload-book-input]").addEventListener("change", (event) => {
+      uploadSelectedBook(event.target.files[0]).catch((error) => console.error(error));
+      event.target.value = "";
+    });
+  </script>
+
+  <nav class="bottom-tabs" aria-label="移动端底部导航">
+    <button class="tab-item active" type="button"><i class="fa-solid fa-book-bookmark"></i><span>书籍</span></button>
+    <button class="tab-item" type="button"><i class="fa-solid fa-feather-pointed"></i><span>形象</span></button>
+    <button class="tab-item" type="button"><i class="fa-regular fa-pen-to-square"></i><span>笔记</span></button>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personalization - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --page-bg: #F5F5F5;
+      --preview-bg: #C5DAF2;
+      --panel-bg: #DDE4F4;
+      --panel-soft: #EEF2FA;
+      --text-primary: #1E1B18;
+      --text-muted: #5E6D8A;
+      --accent: #253B74;
+      --accent-soft: #AFC4E8;
+      --surface: #FFFFFF;
+      --component-offset-x: -8px;
+      --preview-size: 420px;
+      --preview-left: clamp(48px, 6vw, 110px);
+      --editor-right: clamp(38px, 5vw, 76px);
+      --panel-gap: 36px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--text-primary);
+      font-family: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+    }
+
+    body.dark-mode {
+      --page-bg: #171B28;
+      --preview-bg: #50698E;
+      --panel-bg: #273248;
+      --panel-soft: #35415A;
+      --text-primary: #F4F7FB;
+      --text-muted: #BAC6DC;
+      --accent: #DCE8FF;
+      --accent-soft: #6E86B4;
+      --surface: #202737;
+    }
+
+    .back-arrow {
+      position: fixed;
+      top: 32px;
+      left: 34px;
+      z-index: 5;
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .back-arrow:hover {
+      background: rgba(255, 255, 255, 0.76);
+      transform: translateX(-2px);
+    }
+
+    .back-arrow i {
+      font-size: 30px;
+    }
+
+    .top-actions {
+      position: fixed;
+      top: 32px;
+      right: 34px;
+      z-index: 5;
+      display: flex;
+      gap: 12px;
+    }
+
+    .top-action {
+      position: relative;
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border: 0;
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--accent);
+      cursor: pointer;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .top-action::before {
+      position: absolute;
+      inset: 7px;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .top-action:hover {
+      box-shadow: 4px 6px 14px rgba(77, 88, 124, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .top-action i {
+      z-index: 1;
+      font-size: 16px;
+    }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    .preview-side {
+      position: absolute;
+      left: var(--preview-left);
+      top: 50%;
+      display: grid;
+      place-items: center;
+      transform: translateY(-50%);
+    }
+
+    .preview-card {
+      display: grid;
+      width: var(--preview-size);
+      aspect-ratio: 1 / 1;
+      place-items: center;
+      border-radius: 34px;
+      background: var(--preview-bg);
+      box-shadow: 0 24px 44px rgba(77, 88, 124, 0.12);
+    }
+
+    .avatar-canvas {
+      position: relative;
+      width: 240px;
+      height: 366px;
+    }
+
+    .avatar-layer {
+      position: absolute;
+      left: 0;
+      display: block;
+      width: 240px;
+      height: auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .avatar-layer:not(.layer-original) {
+      left: var(--component-offset-x);
+    }
+
+    .layer-original,
+    .layer-hair {
+      top: 0;
+    }
+
+    .layer-original {
+      z-index: 0;
+    }
+
+    .layer-hair {
+      z-index: 6;
+    }
+
+    .layer-brow {
+      top: 87px;
+      z-index: 7;
+    }
+
+    .layer-eye {
+      top: 98px;
+      z-index: 7;
+    }
+
+    .layer-blush {
+      top: 117px;
+      z-index: 7;
+    }
+
+    .layer-mouth {
+      top: 115px;
+      z-index: 7;
+    }
+
+    .layer-clothesTop {
+      top: 143px;
+      z-index: 3;
+    }
+
+    .layer-clothesBottom {
+      top: 143px;
+      z-index: 2;
+    }
+
+    .editor-wrap {
+      position: absolute;
+      top: 50%;
+      right: var(--editor-right);
+      display: flex;
+      width: min(1160px, calc(100vw - var(--preview-left) - var(--preview-size) - var(--panel-gap) - var(--editor-right)));
+      min-width: 520px;
+      flex-direction: column;
+      gap: 16px;
+      transform: translateY(-50%);
+    }
+
+    .editor-panel {
+      width: 100%;
+      height: 449px;
+      flex: 0 0 449px;
+      overflow-y: auto;
+      border-radius: 18px;
+      background: var(--panel-bg);
+      padding: 24px 26px;
+      scrollbar-color: var(--accent-soft) transparent;
+      scrollbar-width: thin;
+    }
+
+    .editor-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .editor-panel::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: var(--accent-soft);
+    }
+
+    .part-section + .part-section {
+      margin-top: 24px;
+    }
+
+    .part-title {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(86px, 1fr));
+      gap: 12px;
+    }
+
+    .option-button {
+      display: grid;
+      aspect-ratio: 1 / 0.76;
+      place-items: center;
+      border: 1px solid rgba(37, 59, 116, 0.1);
+      border-radius: 10px;
+      background: var(--panel-soft);
+      cursor: pointer;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .option-button:hover,
+    .option-button.is-active {
+      border-color: var(--accent);
+      box-shadow: 0 8px 16px rgba(37, 59, 116, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .option-button img {
+      width: 82%;
+      max-height: 62%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .prompt-bar {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 8px;
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 10px 12px 10px 18px;
+      box-shadow: 0 12px 24px rgba(77, 88, 124, 0.1);
+    }
+
+    .prompt-bar input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: var(--text-primary);
+      font: inherit;
+      outline: 0;
+    }
+
+    .prompt-bar input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .prompt-bar button {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    .finish-button {
+      align-self: flex-end;
+      min-width: 152px;
+      border: 0;
+      border-radius: 14px;
+      background: #253B74;
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 14px 24px;
+      font: inherit;
+      font-weight: 600;
+      box-shadow: 0 14px 26px rgba(37, 59, 116, 0.2);
+    }
+
+    @media (max-width: 1380px) {
+      :root {
+        --preview-size: 360px;
+        --panel-gap: 28px;
+      }
+
+      .avatar-canvas {
+        transform: scale(0.88);
+      }
+    }
+
+    @media (max-width: 1180px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .page {
+        display: grid;
+        gap: 28px;
+        padding: 104px 22px 42px;
+      }
+
+      .preview-side,
+      .editor-wrap {
+        position: static;
+        width: 100%;
+        min-width: 0;
+        transform: none;
+      }
+
+      .preview-card {
+        width: min(var(--preview-size), 100%);
+        justify-self: center;
+      }
+
+      .editor-wrap {
+        justify-self: center;
+      }
+
+      .editor-panel {
+        height: 449px;
+        flex-basis: 449px;
+      }
+
+      .option-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back-arrow" href="role.html?mode=profile" aria-label="返回角色选择">
+    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+  </a>
+
+  <div class="top-actions" aria-label="页面设置">
+    <button class="top-action" type="button" aria-label="语言切换">
+      <i class="fa-solid fa-language" aria-hidden="true"></i>
+    </button>
+    <button class="top-action" type="button" aria-label="主题切换" data-theme-toggle>
+      <i class="fa-regular fa-moon" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <main class="page">
+    <section class="preview-side" aria-label="形象预览">
+      <div class="preview-card">
+        <div class="avatar-canvas" data-avatar-canvas>
+          <img class="avatar-layer layer-original" src="original.svg" alt="" />
+        </div>
+      </div>
+    </section>
+
+    <section class="editor-wrap" aria-label="形象编辑">
+      <div class="editor-panel" data-editor-panel></div>
+      <div class="prompt-bar">
+        <input type="text" placeholder="输入想法，生成形象" aria-label="输入想法，生成形象" />
+        <button type="button" aria-label="语音输入"><i class="fa-solid fa-microphone"></i></button>
+        <button type="button" aria-label="发送"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+      <button class="finish-button" type="button" data-finish>完成形象</button>
+    </section>
+  </main>
+
+  <script>
+    const PARTS = [
+      { key: "brow", label: "眉毛", assetKey: "brow", start: 1, count: 3 },
+      { key: "eye", label: "眼睛", assetKey: "eye", start: 1, count: 4 },
+      { key: "mouth", label: "嘴巴", assetKey: "mouth", start: 1, count: 4 },
+      { key: "blush", label: "腮红", assetKey: "blush", start: 1, count: 3 },
+      { key: "hair", label: "头发", assetKey: "hair", start: 1, count: 3 },
+      { key: "clothesTop", label: "上装", assetKey: "clothes_top", start: 1, count: 4 },
+      { key: "clothesBottom", label: "下装", assetKey: "clothes_bottom", start: 5, count: 3 },
+    ];
+    const state = {};
+    const returnParams = new URLSearchParams(window.location.search);
+
+    function roleReturnUrl() {
+      const target = new URL("role.html", window.location.href);
+      const mode = returnParams.get("mode") || "profile";
+      target.searchParams.set("mode", mode);
+      if (returnParams.get("book_id")) {
+        target.searchParams.set("book_id", returnParams.get("book_id"));
+      }
+      if (returnParams.get("return")) {
+        target.searchParams.set("return", returnParams.get("return"));
+      }
+      return `${target.pathname}${target.search}`;
+    }
+
+    function assetName(assetKey, index) {
+      return `${assetKey}%20(${index}).svg`;
+    }
+
+    function renderEditor() {
+      const panel = document.querySelector("[data-editor-panel]");
+      panel.innerHTML = PARTS.map((part) => `
+        <section class="part-section">
+          <h2 class="part-title">${part.label}</h2>
+          <div class="option-grid">
+            ${Array.from({ length: part.count }, (_, idx) => {
+              const index = part.start + idx;
+              const src = assetName(part.assetKey, index);
+              return `
+                <button class="option-button" type="button" data-part="${part.key}" data-src="${src}" aria-label="${part.label}${idx + 1}">
+                  <img src="${src}" alt="" />
+                </button>
+              `;
+            }).join("")}
+          </div>
+        </section>
+      `).join("");
+    }
+
+    function updatePreview() {
+      const canvas = document.querySelector("[data-avatar-canvas]");
+      canvas.querySelectorAll("[data-preview-layer]").forEach((layer) => layer.remove());
+      Object.entries(state).forEach(([part, src]) => {
+        if (!src) return;
+        const img = document.createElement("img");
+        img.className = `avatar-layer layer-${part}`;
+        img.dataset.previewLayer = part;
+        img.src = src;
+        img.alt = "";
+        canvas.appendChild(img);
+      });
+
+      document.querySelectorAll(".option-button").forEach((button) => {
+        button.classList.toggle("is-active", state[button.dataset.part] === button.dataset.src);
+      });
+    }
+
+    function togglePart(part, src) {
+      state[part] = state[part] === src ? "" : src;
+      updatePreview();
+    }
+
+    function previewMarkup() {
+      const layers = [`<img class="custom-role-layer custom-role-original" src="original.svg" alt="" />`];
+      Object.entries(state).forEach(([part, src]) => {
+        if (!src) return;
+        layers.push(`<img class="custom-role-layer custom-role-${part}" src="${src}" alt="" />`);
+      });
+      return `<div class="custom-role-preview">${layers.join("")}</div>`;
+    }
+
+    function finishRole() {
+      const roles = JSON.parse(window.localStorage.getItem("mingle:customRoles") || "[]");
+      roles.push({
+        id: `custom-${Date.now()}`,
+        name: "自定义形象",
+        preview: previewMarkup(),
+        parts: { ...state },
+      });
+      window.localStorage.setItem("mingle:customRoles", JSON.stringify(roles));
+      window.location.href = roleReturnUrl();
+    }
+
+    document.querySelector(".back-arrow").href = roleReturnUrl();
+    renderEditor();
+    document.querySelector("[data-editor-panel]").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-part]");
+      if (!button) return;
+      togglePart(button.dataset.part, button.dataset.src);
+    });
+    document.querySelector("[data-finish]").addEventListener("click", finishRole);
+    document.querySelector("[data-theme-toggle]").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+  </script>
+</body>
+</html>

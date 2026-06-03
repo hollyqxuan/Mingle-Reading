@@ -1,0 +1,15 @@
+{
+  "source_id": "src_lu_xun_how_i_started_novels",
+  "persona_id": "persona_lu_xun",
+  "subject_name": "Lu Xun",
+  "title": "How I Started Writing Novels",
+  "source_type": "author_work",
+  "author": "Lu Xun",
+  "language": "zh",
+  "source_url": "https://zh.wikisource.org/zh-hans/%E6%88%91%E6%80%8E%E9%BA%BC%E5%81%9A%E8%B5%B7%E5%B0%8F%E8%AA%AA%E4%BE%86%EF%BC%9F",
+  "copyright_status": "public_domain",
+  "redistributable": true,
+  "evidence_summary": "Explains Lu Xun's fiction method in his own terms: writing for life, selecting the sick points of society, avoiding ornament, and compressing language until it carries the intended force.",
+  "time_anchor": "1933-03-05",
+  "notes": "Strong source for style extraction, especially tone control, economy of detail, and the diagnostic purpose behind character construction."
+}

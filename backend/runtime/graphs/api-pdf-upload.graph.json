@@ -1,0 +1,682 @@
+{
+  "graph_id": "graph::api-pdf-upload",
+  "book_id": "api-pdf-upload",
+  "title": "api_pdf_upload",
+  "graph_version": "0.5.0",
+  "chapters": {
+    "chapter_001": {
+      "node_kind": "chapter",
+      "chapter_node_id": "chapter_001",
+      "book_id": "api-pdf-upload",
+      "chapter_id": "chapter-001",
+      "chapter_index": 1,
+      "title": "Chapter 1",
+      "episode_ids": [
+        "episode_001_001"
+      ],
+      "entity_ids": [
+        "entity_lin"
+      ],
+      "relation_ids": [],
+      "active_relation_ids": [],
+      "invalidated_relation_ids": [],
+      "community_ids": [
+        "community_002"
+      ],
+      "saga_ids": [
+        "saga_001"
+      ],
+      "spoiler_level": 0,
+      "paragraph_count": 1,
+      "metadata": {
+        "section_ids": [
+          "section-001"
+        ],
+        "chunk_levels": [
+          "l0_raw_paragraph"
+        ],
+        "reference_time": "chapter://api-pdf-upload/001",
+        "timeline_summary": "Chapter 1 centers on Lin."
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c001-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-001",
+          "chapter_index": 1,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 1 Lin enters the square.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c001/p001",
+            "spoiler_guard": {
+              "spoiler_level": "safe",
+              "max_visible_chapter_index": 1
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-001"
+          }
+        }
+      ]
+    },
+    "chapter_002": {
+      "node_kind": "chapter",
+      "chapter_node_id": "chapter_002",
+      "book_id": "api-pdf-upload",
+      "chapter_id": "chapter-002",
+      "chapter_index": 2,
+      "title": "Chapter 2",
+      "episode_ids": [
+        "episode_002_001"
+      ],
+      "entity_ids": [
+        "entity_aya"
+      ],
+      "relation_ids": [],
+      "active_relation_ids": [],
+      "invalidated_relation_ids": [],
+      "community_ids": [
+        "community_001"
+      ],
+      "saga_ids": [
+        "saga_002"
+      ],
+      "spoiler_level": 1,
+      "paragraph_count": 1,
+      "metadata": {
+        "section_ids": [
+          "section-002"
+        ],
+        "chunk_levels": [
+          "l0_raw_paragraph"
+        ],
+        "reference_time": "chapter://api-pdf-upload/002",
+        "timeline_summary": "Chapter 2 centers on Aya."
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c002-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-002",
+          "chapter_index": 2,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 2 Aya responds.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c002/p001",
+            "spoiler_guard": {
+              "spoiler_level": "mild",
+              "max_visible_chapter_index": 2
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-002"
+          }
+        }
+      ]
+    }
+  },
+  "episodes": {
+    "episode_001_001": {
+      "node_kind": "episode",
+      "episode_id": "episode_001_001",
+      "episode_type": "paragraph",
+      "book_id": "api-pdf-upload",
+      "chunk_id": "api-pdf-upload-c001-p001",
+      "chapter_id": "chapter-001",
+      "chapter_index": 1,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "episode_index": 1,
+      "text": "Chapter 1\nLin enters the square.",
+      "spoiler_level": 0,
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "entity_ids": [
+        "entity_lin"
+      ],
+      "relation_ids": [],
+      "community_ids": [
+        "community_002"
+      ],
+      "saga_ids": [
+        "saga_001"
+      ],
+      "prev_episode_id": null,
+      "next_episode_id": "episode_002_001",
+      "reference_time": "narrative://api-pdf-upload/c001/p001",
+      "created_at": "2026-05-19T08:06:14.258218+00:00",
+      "metadata": {
+        "token_offset": 0,
+        "position": {
+          "chapter_index": 1,
+          "section_index": 1,
+          "char_start": 0,
+          "char_end": 32
+        },
+        "section_id": "section-001",
+        "paragraph_start_id": "paragraph-001",
+        "paragraph_end_id": "paragraph-001",
+        "extraction_mode": "heuristic",
+        "chapter_title": "Chapter 1",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 6
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c001-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-001",
+          "chapter_index": 1,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 1 Lin enters the square.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c001/p001",
+            "spoiler_guard": {
+              "spoiler_level": "safe",
+              "max_visible_chapter_index": 1
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-001"
+          }
+        }
+      ]
+    },
+    "episode_002_001": {
+      "node_kind": "episode",
+      "episode_id": "episode_002_001",
+      "episode_type": "paragraph",
+      "book_id": "api-pdf-upload",
+      "chunk_id": "api-pdf-upload-c002-p001",
+      "chapter_id": "chapter-002",
+      "chapter_index": 2,
+      "paragraph_id": "paragraph-001",
+      "paragraph_index": 1,
+      "episode_index": 2,
+      "text": "Chapter 2\nAya responds.",
+      "spoiler_level": 1,
+      "tags": [
+        "book_text",
+        "demo_chunk"
+      ],
+      "entity_ids": [
+        "entity_aya"
+      ],
+      "relation_ids": [],
+      "community_ids": [
+        "community_001"
+      ],
+      "saga_ids": [
+        "saga_002"
+      ],
+      "prev_episode_id": "episode_001_001",
+      "next_episode_id": null,
+      "reference_time": "narrative://api-pdf-upload/c002/p001",
+      "created_at": "2026-05-19T08:06:14.258218+00:00",
+      "metadata": {
+        "token_offset": 6,
+        "position": {
+          "chapter_index": 2,
+          "section_index": 2,
+          "char_start": 6,
+          "char_end": 29
+        },
+        "section_id": "section-002",
+        "paragraph_start_id": "paragraph-001",
+        "paragraph_end_id": "paragraph-001",
+        "extraction_mode": "heuristic",
+        "chapter_title": "Chapter 2",
+        "source_paragraph_indices": [
+          1
+        ],
+        "source_paragraph_count": 1,
+        "is_merged_packet": false,
+        "packet_token_count": 4
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c002-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-002",
+          "chapter_index": 2,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 2 Aya responds.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c002/p001",
+            "spoiler_guard": {
+              "spoiler_level": "mild",
+              "max_visible_chapter_index": 2
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-002"
+          }
+        }
+      ]
+    }
+  },
+  "entities": {
+    "entity_lin": {
+      "node_kind": "entity",
+      "entity_id": "entity_lin",
+      "canonical_name": "Lin",
+      "aliases": [
+        "Lin"
+      ],
+      "entity_type": "character",
+      "mention_count": 1,
+      "first_seen_chapter": 1,
+      "first_seen_paragraph": 1,
+      "last_seen_chapter": 1,
+      "last_seen_paragraph": 1,
+      "summary": "Lin is tracked as a character from chapter 1 to chapter 1 across 1 mentions.",
+      "episode_ids": [
+        "episode_001_001"
+      ],
+      "metadata": {
+        "resolution_strategy": "heuristic-alias",
+        "resolution_hint": "",
+        "last_evidence": "",
+        "last_confidence": 0.0,
+        "chapter_span": [
+          1
+        ],
+        "episode_count": 1,
+        "alias_count": 1
+      }
+    },
+    "entity_aya": {
+      "node_kind": "entity",
+      "entity_id": "entity_aya",
+      "canonical_name": "Aya",
+      "aliases": [
+        "Aya"
+      ],
+      "entity_type": "character",
+      "mention_count": 1,
+      "first_seen_chapter": 2,
+      "first_seen_paragraph": 1,
+      "last_seen_chapter": 2,
+      "last_seen_paragraph": 1,
+      "summary": "Aya is tracked as a character from chapter 2 to chapter 2 across 1 mentions.",
+      "episode_ids": [
+        "episode_002_001"
+      ],
+      "metadata": {
+        "resolution_strategy": "heuristic-alias",
+        "resolution_hint": "",
+        "last_evidence": "",
+        "last_confidence": 0.0,
+        "chapter_span": [
+          2
+        ],
+        "episode_count": 1,
+        "alias_count": 1
+      }
+    }
+  },
+  "relations": {},
+  "communities": {
+    "community_001": {
+      "node_kind": "community",
+      "community_id": "community_001",
+      "label": "Aya",
+      "summary": "Community 1 links Aya through 0 temporal facts.",
+      "entity_ids": [
+        "entity_aya"
+      ],
+      "episode_ids": [
+        "episode_002_001"
+      ],
+      "relation_ids": [],
+      "chapter_start": 2,
+      "chapter_end": 2,
+      "metadata": {
+        "entity_count": 1,
+        "dominant_entities": [
+          "Aya"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c002-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-002",
+          "chapter_index": 2,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 2 Aya responds.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c002/p001",
+            "spoiler_guard": {
+              "spoiler_level": "mild",
+              "max_visible_chapter_index": 2
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-002"
+          }
+        }
+      ]
+    },
+    "community_002": {
+      "node_kind": "community",
+      "community_id": "community_002",
+      "label": "Lin",
+      "summary": "Community 2 links Lin through 0 temporal facts.",
+      "entity_ids": [
+        "entity_lin"
+      ],
+      "episode_ids": [
+        "episode_001_001"
+      ],
+      "relation_ids": [],
+      "chapter_start": 1,
+      "chapter_end": 1,
+      "metadata": {
+        "entity_count": 1,
+        "dominant_entities": [
+          "Lin"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c001-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-001",
+          "chapter_index": 1,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 1 Lin enters the square.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c001/p001",
+            "spoiler_guard": {
+              "spoiler_level": "safe",
+              "max_visible_chapter_index": 1
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-001"
+          }
+        }
+      ]
+    }
+  },
+  "sagas": {
+    "saga_001": {
+      "node_kind": "saga",
+      "saga_id": "saga_001",
+      "label": "Lin",
+      "episode_ids": [
+        "episode_001_001"
+      ],
+      "entity_ids": [
+        "entity_lin"
+      ],
+      "relation_ids": [],
+      "chapter_start": 1,
+      "chapter_end": 1,
+      "summary": "Chapters 1-1 track Lin through 1 episodes and 0 facts.",
+      "metadata": {
+        "chapter_count": 1,
+        "dominant_entities": [
+          "entity_lin"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c001-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-001",
+          "chapter_index": 1,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 1 Lin enters the square.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c001/p001",
+            "spoiler_guard": {
+              "spoiler_level": "safe",
+              "max_visible_chapter_index": 1
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-001"
+          }
+        }
+      ]
+    },
+    "saga_002": {
+      "node_kind": "saga",
+      "saga_id": "saga_002",
+      "label": "Aya",
+      "episode_ids": [
+        "episode_002_001"
+      ],
+      "entity_ids": [
+        "entity_aya"
+      ],
+      "relation_ids": [],
+      "chapter_start": 2,
+      "chapter_end": 2,
+      "summary": "Chapters 2-2 track Aya through 1 episodes and 0 facts.",
+      "metadata": {
+        "chapter_count": 1,
+        "dominant_entities": [
+          "entity_aya"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c002-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-002",
+          "chapter_index": 2,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 2 Aya responds.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c002/p001",
+            "spoiler_guard": {
+              "spoiler_level": "mild",
+              "max_visible_chapter_index": 2
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-002"
+          }
+        }
+      ]
+    }
+  },
+  "chapter_timeline": [
+    {
+      "chapter_id": "chapter-001",
+      "chapter_index": 1,
+      "title": "Chapter 1",
+      "episode_ids": [
+        "episode_001_001"
+      ],
+      "entity_ids": [
+        "entity_lin"
+      ],
+      "relation_ids": [],
+      "active_relation_ids": [],
+      "invalidated_relation_ids": [],
+      "community_ids": [
+        "community_002"
+      ],
+      "saga_ids": [
+        "saga_001"
+      ],
+      "spoiler_level": 0,
+      "paragraph_count": 1,
+      "summary": "Chapter 1 centers on Lin.",
+      "metadata": {
+        "dominant_entities": [
+          "Lin"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c001-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-001",
+          "chapter_index": 1,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 1 Lin enters the square.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c001/p001",
+            "spoiler_guard": {
+              "spoiler_level": "safe",
+              "max_visible_chapter_index": 1
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-001"
+          }
+        }
+      ]
+    },
+    {
+      "chapter_id": "chapter-002",
+      "chapter_index": 2,
+      "title": "Chapter 2",
+      "episode_ids": [
+        "episode_002_001"
+      ],
+      "entity_ids": [
+        "entity_aya"
+      ],
+      "relation_ids": [],
+      "active_relation_ids": [],
+      "invalidated_relation_ids": [],
+      "community_ids": [
+        "community_001"
+      ],
+      "saga_ids": [
+        "saga_002"
+      ],
+      "spoiler_level": 1,
+      "paragraph_count": 1,
+      "summary": "Chapter 2 centers on Aya.",
+      "metadata": {
+        "dominant_entities": [
+          "Aya"
+        ]
+      },
+      "provenance": [
+        {
+          "chunk_id": "api-pdf-upload-c002-p001",
+          "book_id": "api-pdf-upload",
+          "chapter_id": "chapter-002",
+          "chapter_index": 2,
+          "paragraph_id": "paragraph-001",
+          "paragraph_index": 1,
+          "text_excerpt": "Chapter 2 Aya responds.",
+          "source": "episode",
+          "metadata": {
+            "reference_time": "narrative://api-pdf-upload/c002/p001",
+            "spoiler_guard": {
+              "spoiler_level": "mild",
+              "max_visible_chapter_index": 2
+            },
+            "chunk_level": "l0_raw_paragraph",
+            "section_id": "section-002"
+          }
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "source_path": "C:\\Users\\21358\\Desktop\\MuseReading\\backend\\runtime\\uploads\\api-pdf-upload.pdf",
+    "chapter_count": 2,
+    "chunk_count": 2,
+    "builder": "TemporalGraphBuilder",
+    "graph_style": "graphiti-inspired",
+    "entity_extraction": "heuristic-resolution",
+    "fact_extraction": "heuristic-resolution",
+    "created_at": "2026-05-19T08:06:14.258218+00:00",
+    "llm_calls": 0,
+    "llm_skipped": 0,
+    "chapter_consolidations": [
+      {
+        "chapter_index": 1,
+        "merged_entities": 0,
+        "deduplicated_relations": 0
+      },
+      {
+        "chapter_index": 2,
+        "merged_entities": 0,
+        "deduplicated_relations": 0
+      }
+    ],
+    "graph_stats": {
+      "chapter_count": 2,
+      "episode_count": 2,
+      "entity_count": 2,
+      "relation_count": 0,
+      "active_relation_count": 0,
+      "invalidated_relation_count": 0,
+      "community_count": 2,
+      "saga_count": 2,
+      "max_chapter_index": 2,
+      "max_episode_index": 2,
+      "top_entities": [
+        {
+          "entity_id": "entity_lin",
+          "canonical_name": "Lin",
+          "mention_count": 1,
+          "entity_type": "character"
+        },
+        {
+          "entity_id": "entity_aya",
+          "canonical_name": "Aya",
+          "mention_count": 1,
+          "entity_type": "character"
+        }
+      ],
+      "top_relation_types": [],
+      "entity_type_breakdown": {
+        "character": 2
+      },
+      "relation_family_breakdown": {},
+      "chapter_density": [
+        {
+          "chapter_index": 1,
+          "episode_count": 1,
+          "entity_count": 1,
+          "relation_count": 0,
+          "active_relation_count": 0,
+          "invalidated_relation_count": 0
+        },
+        {
+          "chapter_index": 2,
+          "episode_count": 1,
+          "entity_count": 1,
+          "relation_count": 0,
+          "active_relation_count": 0,
+          "invalidated_relation_count": 0
+        }
+      ]
+    },
+    "chapter_timeline_count": 2,
+    "active_relation_count": 0,
+    "invalidated_relation_count": 0,
+    "storage": {
+      "storage_version": "graph-store.v1",
+      "saved_at": "2026-05-19T08:06:14.260955+00:00",
+      "graph_path": "C:\\Users\\21358\\Desktop\\MuseReading\\backend\\runtime\\graphs\\api-pdf-upload.graph.json"
+    }
+  }
+}

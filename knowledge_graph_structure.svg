@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1320" width="1200" height="1320">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+    </marker>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2c3e50"/><stop offset="100%" stop-color="#34495e"/>
+    </linearGradient>
+    <linearGradient id="gradE" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3498db"/><stop offset="100%" stop-color="#2980b9"/>
+    </linearGradient>
+    <linearGradient id="gradR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e74c3c"/><stop offset="100%" stop-color="#c0392b"/>
+    </linearGradient>
+    <linearGradient id="gradEp" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#27ae60"/><stop offset="100%" stop-color="#1e8449"/>
+    </linearGradient>
+    <linearGradient id="gradCh" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8e44ad"/><stop offset="100%" stop-color="#7d3c98"/>
+    </linearGradient>
+    <filter id="sh" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="70" fill="url(#hdr)"/>
+  <text x="600" y="30" text-anchor="middle" fill="#ecf0f1" font-size="20" font-weight="bold" font-family="sans-serif">MingleReading 知识图谱 — 四层精简架构</text>
+  <text x="600" y="55" text-anchor="middle" fill="#bdc3c7" font-size="13" font-family="sans-serif">354 实体 · 780 关系 · 2555 叙事依赖边 · 314 次 LLM 调用</text>
+
+  <!-- Layer 1 -->
+  <rect x="50" y="85" width="1100" height="125" rx="8" fill="#f5eef8" stroke="#8e44ad" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="50" y="85" width="1100" height="32" rx="8" fill="url(#gradCh)"/>
+  <rect x="50" y="105" width="1100" height="12" fill="url(#gradCh)"/>
+  <text x="80" y="107" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">第一层 — 章节 (Chapter)  ×23</text>
+  <text x="80" y="137" fill="#333" font-size="12" font-family="sans-serif">每个章节作为一个叙事容器，汇总本章出现的所有实体和关系。携带剧透等级标记，</text>
+  <text x="80" y="157" fill="#333" font-size="12" font-family="sans-serif">支持按阅读进度的可见性过滤——未读章节的信息被严格隔离。</text>
+  <text x="80" y="185" fill="#7d3c98" font-size="11" font-family="sans-serif">章节标题 · 剧透等级 · 段落数 · 子节点索引（实体ID列表、关系ID列表、剧集ID列表）</text>
+
+  <line x1="600" y1="212" x2="600" y2="243" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="615" y="230" fill="#8e44ad" font-size="11" font-family="sans-serif">一对多</text>
+
+  <!-- Layer 2 -->
+  <rect x="50" y="243" width="1100" height="135" rx="8" fill="#eafaf1" stroke="#27ae60" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="50" y="243" width="1100" height="32" rx="8" fill="url(#gradEp)"/>
+  <rect x="50" y="263" width="1100" height="12" fill="url(#gradEp)"/>
+  <text x="80" y="265" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">第二层 — 叙事节拍 (Episode)  ×838</text>
+  <text x="80" y="295" fill="#333" font-size="12" font-family="sans-serif">每个滑动窗口经过 LLM 提取后的结果容器。存储原始文本、提取到的实体与关系。</text>
+  <text x="80" y="318" fill="#c0392b" font-size="12" font-family="sans-serif" font-weight="bold">✦ 叙事依赖边 — 节拍之间的因果链条：如「被嘲笑」依赖「去图书馆查资料」</text>
+  <text x="80" y="340" fill="#666" font-size="12" font-family="sans-serif">线性前后指针记录章节内的顺序关系。</text>
+  <text x="80" y="365" fill="#1e8449" font-size="11" font-family="sans-serif">原文文本 · 本章序号 · 段落序号 · 实体ID列表 · 关系ID列表 · 前驱节拍 · 后继节拍</text>
+
+  <line x1="350" y1="380" x2="250" y2="435" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="850" y1="380" x2="950" y2="435" stroke="#27ae60" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Layer 3: Entity -->
+  <rect x="50" y="435" width="530" height="340" rx="8" fill="#ebf5fb" stroke="#3498db" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="50" y="435" width="530" height="32" rx="8" fill="url(#gradE)"/>
+  <rect x="50" y="455" width="530" height="12" fill="url(#gradE)"/>
+  <text x="80" y="457" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">第三层 — 实体 (Entity)  ×388</text>
+
+  <text x="80" y="490" fill="#333" font-size="12" font-family="sans-serif">图中的"节点"——人、地点、物品、团体、概念。</text>
+  <text x="80" y="515" fill="#333" font-size="12" font-family="sans-serif">每个实体携带：规范名、别名列表、自然语言简述、</text>
+  <text x="80" y="535" fill="#333" font-size="12" font-family="sans-serif">首次/末次出现章节、提及次数、所属节拍列表。</text>
+
+  <text x="80" y="568" fill="#2980b9" font-size="13" font-weight="bold" font-family="sans-serif">类型分布</text>
+  <rect x="80" y="578" width="480" height="22" rx="4" fill="#e8f4fd"/>
+  <rect x="80" y="578" width="280" height="22" rx="4" fill="#3498db"/>
+  <text x="90" y="593" fill="white" font-size="11" font-family="sans-serif">人物 228 (58%)</text>
+  <rect x="80" y="603" width="480" height="22" rx="4" fill="#e8f4fd"/>
+  <rect x="80" y="603" width="98" height="22" rx="4" fill="#5dade2"/>
+  <text x="90" y="618" fill="white" font-size="11" font-family="sans-serif">地点 80</text>
+  <rect x="80" y="628" width="480" height="22" rx="4" fill="#e8f4fd"/>
+  <rect x="80" y="628" width="80" height="22" rx="4" fill="#85c1e9"/>
+  <text x="90" y="643" fill="white" font-size="11" font-family="sans-serif">团体 65</text>
+  <rect x="80" y="653" width="480" height="22" rx="4" fill="#e8f4fd"/>
+  <rect x="80" y="653" width="37" height="22" rx="4" fill="#aed6f1"/>
+  <text x="90" y="668" fill="white" font-size="11" font-family="sans-serif">物品30</text>
+  <rect x="80" y="678" width="480" height="22" rx="4" fill="#e8f4fd"/>
+  <rect x="80" y="678" width="9" height="22" rx="4" fill="#d6eaf8"/>
+  <text x="90" y="693" fill="#333" font-size="11" font-family="sans-serif">概念 7</text>
+
+  <text x="80" y="727" fill="#2980b9" font-size="13" font-weight="bold" font-family="sans-serif">消歧机制</text>
+  <text x="80" y="750" fill="#555" font-size="11" font-family="sans-serif">别名匹配 + 尊称前缀剥离（堂/唐）+ 父子关系保护（不同代同名不合并）</text>
+
+  <!-- Layer 4: Relation -->
+  <rect x="620" y="435" width="530" height="340" rx="8" fill="#fdedec" stroke="#e74c3c" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="620" y="435" width="530" height="32" rx="8" fill="url(#gradR)"/>
+  <rect x="620" y="455" width="530" height="12" fill="url(#gradR)"/>
+  <text x="650" y="457" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">第四层 — 关系 (Relation)  ×969</text>
+
+  <text x="650" y="490" fill="#333" font-size="12" font-family="sans-serif">图中的"边"——连接两个实体，携带事件描述。</text>
+  <text x="650" y="515" fill="#333" font-size="12" font-family="sans-serif">源实体 → 目标实体，附带关系类型、自然语言事实、</text>
+  <text x="650" y="535" fill="#333" font-size="12" font-family="sans-serif">建立/失效章节、权重、所属节拍列表。</text>
+
+  <text x="650" y="568" fill="#c0392b" font-size="13" font-weight="bold" font-family="sans-serif">关系类型分布</text>
+  <text x="650" y="593" fill="#333" font-size="11" font-family="sans-serif">FAMILY_OF (180)　　血缘 / 婚姻　　"奥雷里亚诺是何塞的儿子"</text>
+  <text x="650" y="613" fill="#333" font-size="11" font-family="sans-serif">SPOKE_WITH (204)　　对话 / 交流　　"乌尔苏拉对丈夫说..."</text>
+  <text x="650" y="633" fill="#333" font-size="11" font-family="sans-serif">LOCATED_IN (172)　　位置 / 居住　　"梅尔基亚德斯来到马孔多"</text>
+  <text x="650" y="653" fill="#333" font-size="11" font-family="sans-serif">CARES_ABOUT (151)　 情感 / 牵挂　　"乌尔苏拉对丈夫感到怜悯"</text>
+  <text x="650" y="673" fill="#333" font-size="11" font-family="sans-serif">CONFLICTS_WITH (107) 冲突 / 对抗　　"何塞用长矛杀死了普鲁邓希奥"</text>
+  <text x="650" y="693" fill="#333" font-size="11" font-family="sans-serif">ACCOMPANIES (73)　　 同行 / 陪伴　　"何塞跟吉卜赛人跑了"</text>
+  <text x="650" y="713" fill="#333" font-size="11" font-family="sans-serif">MEMBER_OF (48)　　　 成员 / 归属　　"梅尔基亚德斯是吉卜赛部落成员"</text>
+  <text x="650" y="733" fill="#333" font-size="11" font-family="sans-serif">OWNS (41)　　　　　　拥有 / 使用　　"吉卜赛人展示冰块并收费"</text>
+
+  <!-- Cross-ref -->
+  <line x1="580" y1="600" x2="620" y2="600" stroke="#3498db" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="590" y="592" fill="#3498db" font-size="10" font-family="sans-serif" text-anchor="middle">源</text>
+  <line x1="580" y1="660" x2="620" y2="660" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow)"/>
+  <text x="590" y="652" fill="#e74c3c" font-size="10" font-family="sans-serif" text-anchor="middle">目标</text>
+
+  <!-- Flow summary -->
+  <rect x="50" y="790" width="1100" height="95" rx="8" fill="#f8f8f8" stroke="#ccc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="80" y="815" fill="#2c3e50" font-size="14" font-weight="bold" font-family="sans-serif">构建流程与层间关联</text>
+  <line x1="50" y1="825" x2="1150" y2="825" stroke="#ddd"/>
+  <text x="80" y="846" fill="#333" font-size="11" font-family="sans-serif">1. 原始文本 → 滑动窗口分块 (800 token/window) → LLM 从每个窗口抽取实体和关系</text>
+  <text x="80" y="865" fill="#333" font-size="11" font-family="sans-serif">2. 实体消歧：每个窗口的抽取结果与已累积的实体索引对比 → 同名合并 or 新建</text>
+  <text x="80" y="884" fill="#333" font-size="11" font-family="sans-serif">3. 依赖边构建：相邻节拍自动关联 + 同章实体重叠检测 → 形成叙事因果链条</text>
+
+  <!-- Deleted -->
+  <rect x="50" y="900" width="1100" height="55" rx="8" fill="#fdf2f2" stroke="#e74c3c" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="80" y="925" fill="#c0392b" font-size="13" font-weight="bold" font-family="sans-serif">已删除的层</text>
+  <text x="250" y="925" fill="#888" font-size="11" font-family="sans-serif">Community (BFS连通分量，95%为单实体碎片) · Saga (实体重叠，无叙事区分度) · Timeline (纯统计，摘要全空)</text>
+  <text x="80" y="945" fill="#888" font-size="11" font-family="sans-serif">删除理由：BFS 在人物密集的小说上产生大量碎片，章节实体重叠导致全书合并为1个Saga。替换为实体级的叙事依赖边。</text>
+
+  <!-- Data flow -->
+  <rect x="50" y="970" width="1100" height="95" rx="8" fill="#eaf2f8" stroke="#3498db" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="80" y="995" fill="#2980b9" font-size="14" font-weight="bold" font-family="sans-serif">查询时如何使用这个图谱</text>
+  <line x1="50" y1="1005" x2="1150" y2="1005" stroke="#ddd"/>
+  <text x="80" y="1026" fill="#333" font-size="11" font-family="sans-serif">路径一 (QA)：用户问题 → 全局关键词匹配 + 图谱多路并行检索 → 评分排序 → top-k 截断 → LLM 回复</text>
+  <text x="80" y="1046" fill="#333" font-size="11" font-family="sans-serif">路径二 (角色)：角色名 → 实体定位 → 拉取该实体所有关系和邻居 → 按类型分组 → LLM 角色扮演回复</text>
+  <text x="80" y="1066" fill="#333" font-size="11" font-family="sans-serif">可见性控制：查询时按用户已读章节过滤实体和关系 → 未出现的角色和尚未发生的事件不可见</text>
+
+  <text x="600" y="1100" text-anchor="middle" fill="#999" font-size="10" font-family="sans-serif">MingleReading Knowledge Graph Structure · 2026-05-23</text>
+</svg>

@@ -1,0 +1,18 @@
+{
+  "record_id": "raw_book_the_pig_like_maverick_v001",
+  "book_id": "book_the_pig_like_maverick",
+  "title": "The Pig Like Maverick",
+  "author": "Wang Xiaobo",
+  "language": "zh",
+  "source_type": "project_demo_book",
+  "source_format": "txt",
+  "copyright_status": "internal_demo_only",
+  "source_uri": "internal://demo/the_pig_like_maverick.txt",
+  "license_note": "Synthetic demo excerpt only. Do not redistribute full source text.",
+  "ingest_date": "2026-05-13",
+  "chapter_titles": [
+    "chapter 1"
+  ],
+  "content": "People build rules and call them order. The pig only runs where it wants, and that freedom exposes how artificial the human arrangement can be.",
+  "notes": "Short synthetic English paraphrase used only for repository demo wiring."
+}

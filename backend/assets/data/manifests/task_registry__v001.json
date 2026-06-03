@@ -1,0 +1,67 @@
+{
+  "registry_id": "task_registry_v001",
+  "generated_on": "2026-05-13",
+  "tasks": [
+    {
+      "task_id": "annotation_highlight_qa_demo_v001",
+      "task_group": "annotation",
+      "task_type": "highlight_qa",
+      "book_ids": [
+        "book_the_pig_like_maverick"
+      ],
+      "input_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001",
+        "persona_lu_xun__v001"
+      ],
+      "artifact_path": "backend/assets/data/annotations/highlight_qa/highlight_qa__book_the_pig_like_maverick__split_demo__v001.jsonl",
+      "schema_path": "backend/assets/schemas/highlight_qa.schema.json",
+      "example_path": "backend/assets/examples/backend/assets/data/highlight_qa/sample_highlight_qa.jsonl",
+      "split": "demo",
+      "owner_role": "human_annotation_and_qa_review",
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "notes": "Use as the smallest end-to-end sample for highlight-triggered QA."
+    },
+    {
+      "task_id": "annotation_chapter_evolution_demo_v001",
+      "task_group": "annotation",
+      "task_type": "chapter_evolution",
+      "book_ids": [
+        "book_the_pig_like_maverick"
+      ],
+      "input_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001"
+      ],
+      "artifact_path": "backend/assets/data/annotations/chapter_evolution/chapter_evolution__book_the_pig_like_maverick__split_demo__v001.json",
+      "schema_path": "backend/assets/schemas/chapter_evolution.schema.json",
+      "example_path": "backend/assets/examples/backend/assets/data/chapter_evolution/sample_chapter_evolution.json",
+      "split": "demo",
+      "owner_role": "human_annotation_and_qa_review",
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "notes": "Captures safe chapter summary plus progress checkpoints."
+    },
+    {
+      "task_id": "eval_anti_spoiler_demo_v001",
+      "task_group": "evaluation",
+      "task_type": "anti_spoiler_eval",
+      "book_ids": [
+        "book_the_pig_like_maverick"
+      ],
+      "input_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001"
+      ],
+      "artifact_path": "backend/assets/data/eval/anti_spoiler/anti_spoiler_eval__book_the_pig_like_maverick__split_demo__v001.jsonl",
+      "schema_path": "backend/assets/schemas/anti_spoiler_eval.schema.json",
+      "example_path": "backend/assets/examples/backend/assets/data/anti_spoiler_eval/sample_anti_spoiler_eval.jsonl",
+      "split": "demo",
+      "owner_role": "benchmark_design_and_eval_ops",
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "notes": "Records one progress-aware anti-spoiler evaluation sample."
+    }
+  ]
+}

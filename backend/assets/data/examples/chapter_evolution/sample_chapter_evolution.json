@@ -1,0 +1,38 @@
+{
+  "record_id": "chapter_evolution_pig_ch_001_v001",
+  "book_id": "book_the_pig_like_maverick",
+  "chapter_id": "ch_001",
+  "chapter_summary": {
+    "summary_safe": "The chapter uses the image of the pig to expose how social discipline can appear natural while constraining vitality.",
+    "key_events": [
+      "The narrator contrasts human settings with animal freedom.",
+      "The pig becomes a mirror for absurd discipline."
+    ],
+    "open_questions": [
+      "Is discipline presented as protection, violence, or both?",
+      "Why does the pig feel more alive than the human order around it?"
+    ]
+  },
+  "progress_checkpoints": [
+    {
+      "checkpoint_id": "cp_001",
+      "reader_chapter_index": 1,
+      "understanding_state": {
+        "known_facts": ["The text contrasts regulation with freedom."],
+        "suspected_motives": ["The narrator may be criticizing habitual obedience."],
+        "foreshadowing_signals": ["The pig may function as a stable symbol rather than a simple animal image."],
+        "causal_links": ["Human setting-making leads to the loss of spontaneity."]
+      }
+    },
+    {
+      "checkpoint_id": "cp_002",
+      "reader_chapter_index": 1,
+      "understanding_state": {
+        "known_facts": ["The pig is used as a counterexample to human self-discipline."],
+        "suspected_motives": ["The chapter wants the reader to feel the absurdity before stating it directly."],
+        "foreshadowing_signals": ["Later arguments may widen from individual habit to collective culture."],
+        "causal_links": ["The symbolic pig sharpens the critique of social norms."]
+      }
+    }
+  ]
+}

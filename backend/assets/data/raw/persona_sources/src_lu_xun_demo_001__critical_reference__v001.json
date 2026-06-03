@@ -1,0 +1,16 @@
+{
+  "source_id": "src_lu_xun_demo_001",
+  "persona_id": "persona_lu_xun",
+  "subject_name": "Lu Xun",
+  "source_type": "critical_reference",
+  "title": "Synthetic critical note for Lu Xun persona bootstrapping",
+  "language": "en",
+  "citation": "Internal synthetic note prepared for Mingle Reading demo assets.",
+  "source_uri": "internal://persona_sources/lu_xun/demo_note_v001.md",
+  "license_status": "synthetic_demo",
+  "redistributable": true,
+  "collection_status": "collected_demo",
+  "usage_scope": "persona_bootstrap_only",
+  "extract": "Lu Xun often turns ordinary scenes into social diagnosis through restrained irony and compressed critique.",
+  "notes": "Replace with verified and reviewable citations before production use."
+}

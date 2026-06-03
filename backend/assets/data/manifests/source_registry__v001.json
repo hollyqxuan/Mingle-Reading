@@ -1,0 +1,117 @@
+{
+  "registry_id": "source_registry_v001",
+  "generated_on": "2026-05-13",
+  "field_legend": {
+    "redistributable": "Whether the artifact itself can ship in an open repository release.",
+    "license_status": "Current legal or packaging status for the artifact.",
+    "collection_status": "Operational status in the ingestion or authoring pipeline."
+  },
+  "status_definitions": {
+    "license_status": [
+      "internal_demo_only",
+      "synthetic_demo",
+      "metadata_only_open"
+    ],
+    "collection_status": [
+      "collected_demo",
+      "normalized_demo",
+      "drafted_demo",
+      "registered"
+    ]
+  },
+  "assets": [
+    {
+      "asset_id": "raw_book_the_pig_like_maverick_v001",
+      "asset_class": "book_text_source",
+      "book_id": "book_the_pig_like_maverick",
+      "title": "The Pig Like Maverick",
+      "source_type": "project_demo_book",
+      "artifact_path": "backend/assets/data/raw/books/book_the_pig_like_maverick__source_project_demo_book__v001.json",
+      "schema_path": "backend/assets/schemas/raw_text.schema.json",
+      "redistributable": false,
+      "license_status": "internal_demo_only",
+      "collection_status": "normalized_demo",
+      "release_channel": "private_demo",
+      "notes": "Carries only a short synthetic excerpt, but the source book should still be treated as demo-only."
+    },
+    {
+      "asset_id": "src_lu_xun_demo_001",
+      "asset_class": "persona_source",
+      "persona_id": "persona_lu_xun",
+      "title": "Synthetic critical note for Lu Xun persona bootstrapping",
+      "source_type": "critical_reference",
+      "artifact_path": "backend/assets/data/raw/persona_sources/src_lu_xun_demo_001__critical_reference__v001.json",
+      "schema_path": null,
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "collected_demo",
+      "release_channel": "open_demo",
+      "notes": "Synthetic placeholder source for persona prototyping."
+    },
+    {
+      "asset_id": "persona_lu_xun__v001",
+      "asset_class": "persona_pack",
+      "persona_id": "persona_lu_xun",
+      "title": "Lu Xun demo persona pack",
+      "artifact_path": "backend/assets/data/processed/personas/persona_lu_xun__v001.json",
+      "schema_path": "backend/assets/schemas/persona.schema.json",
+      "upstream_asset_ids": [
+        "src_lu_xun_demo_001"
+      ],
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "normalized_demo",
+      "release_channel": "open_demo",
+      "notes": "Minimal persona pack wired to one synthetic source."
+    },
+    {
+      "asset_id": "highlight_qa_demo_pig_v001",
+      "asset_class": "annotation_data",
+      "book_id": "book_the_pig_like_maverick",
+      "task_type": "highlight_qa",
+      "artifact_path": "backend/assets/data/annotations/highlight_qa/highlight_qa__book_the_pig_like_maverick__split_demo__v001.jsonl",
+      "schema_path": "backend/assets/schemas/highlight_qa.schema.json",
+      "upstream_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001",
+        "persona_lu_xun__v001"
+      ],
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "release_channel": "open_demo",
+      "notes": "Annotation demo intentionally uses paraphrased content only."
+    },
+    {
+      "asset_id": "chapter_evolution_demo_pig_v001",
+      "asset_class": "annotation_data",
+      "book_id": "book_the_pig_like_maverick",
+      "task_type": "chapter_evolution",
+      "artifact_path": "backend/assets/data/annotations/chapter_evolution/chapter_evolution__book_the_pig_like_maverick__split_demo__v001.json",
+      "schema_path": "backend/assets/schemas/chapter_evolution.schema.json",
+      "upstream_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001"
+      ],
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "release_channel": "open_demo",
+      "notes": "Progress-aware summary demo for CME-style workflows."
+    },
+    {
+      "asset_id": "anti_spoiler_eval_demo_pig_v001",
+      "asset_class": "evaluation_data",
+      "book_id": "book_the_pig_like_maverick",
+      "task_type": "anti_spoiler_eval",
+      "artifact_path": "backend/assets/data/eval/anti_spoiler/anti_spoiler_eval__book_the_pig_like_maverick__split_demo__v001.jsonl",
+      "schema_path": "backend/assets/schemas/anti_spoiler_eval.schema.json",
+      "upstream_asset_ids": [
+        "raw_book_the_pig_like_maverick_v001"
+      ],
+      "redistributable": true,
+      "license_status": "synthetic_demo",
+      "collection_status": "drafted_demo",
+      "release_channel": "open_demo",
+      "notes": "Eval demo records boundary behavior without revealing future plot."
+    }
+  ]
+}

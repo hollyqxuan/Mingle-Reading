@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reading - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --topbar: #D4E6F7;
+      --page-bg: #FCFBF8;
+      --role-bg: #E6EBFB;
+      --ink: #1E1B18;
+      --muted: #716B63;
+      --line: rgba(37, 59, 116, 0.18);
+      --blue: #253B74;
+      --panel: #FFFFFF;
+    }
+
+    body.dark-mode {
+      --topbar: #253B74;
+      --page-bg: #17191D;
+      --role-bg: #2F3D62;
+      --ink: #F6F1EA;
+      --muted: #C9C1B7;
+      --line: rgba(212, 230, 247, 0.22);
+      --blue: #D4E6F7;
+      --panel: #20242C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+    }
+
+    .reader-shell {
+      position: relative;
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      background: var(--page-bg);
+    }
+
+    .reader-topbar {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      width: 100%;
+      height: 73px;
+      flex: 0 0 73px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 28px 9px 34px;
+      background: var(--topbar);
+      overflow: hidden;
+      transition: height 0.24s ease, flex-basis 0.24s ease, padding 0.24s ease;
+    }
+
+    .reader-shell.topbar-collapsed .reader-topbar {
+      height: 0;
+      flex-basis: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .book-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.18;
+    }
+
+    .book-author {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.1;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .icon-button,
+    .close-topbar,
+    .chat-collapse,
+    .topbar-hook,
+    .chat-hook {
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .icon-button {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 16px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .icon-button:hover {
+      box-shadow: 3px 5px 12px rgba(77, 88, 124, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .chapter-select {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.72);
+      color: transparent;
+      cursor: pointer;
+      font-size: 0;
+      appearance: none;
+    }
+
+    .chapter-select option {
+      color: var(--blue);
+      font-size: 16px;
+    }
+
+    .chapter-control {
+      position: relative;
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+    }
+
+    .chapter-control i {
+      position: absolute;
+      color: var(--blue);
+      pointer-events: none;
+    }
+
+    .close-topbar {
+      width: 36px;
+      height: 36px;
+      border: 2px solid var(--blue);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.42);
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .topbar-hook {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      z-index: 6;
+      width: 74px;
+      height: 20px;
+      border-radius: 0 0 20px 20px;
+      background: var(--topbar);
+      box-shadow: 0 6px 14px rgba(77, 88, 124, 0.12);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .reader-shell.topbar-collapsed .topbar-hook {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .reading-main {
+      display: flex;
+      min-height: 0;
+      flex: 1;
+      background: var(--page-bg);
+    }
+
+    .reading-area {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow-y: auto;
+      padding: clamp(34px, 5vw, 72px) clamp(36px, 7vw, 118px);
+      scroll-behavior: smooth;
+      scrollbar-color: #99A6BF rgba(255, 255, 255, 0.45);
+      scrollbar-width: thin;
+    }
+
+    .reading-area::-webkit-scrollbar,
+    .chat-history::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .reading-area::-webkit-scrollbar-track,
+    .chat-history::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .reading-area::-webkit-scrollbar-thumb,
+    .chat-history::-webkit-scrollbar-thumb {
+      background: #99A6BF;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+    }
+
+    .chapter-heading {
+      margin: 0 0 28px;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .passage {
+      max-width: 860px;
+      margin: 0 auto 22px;
+      font-size: clamp(18px, 1.35vw, 22px);
+      line-height: 2.05;
+      letter-spacing: 0;
+      text-align: justify;
+    }
+
+    .quote-selection-button {
+      position: fixed;
+      z-index: 120;
+      display: inline-flex;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 8px;
+      padding: 0 14px;
+      background: var(--blue);
+      color: #FFFFFF;
+      box-shadow: 0 8px 18px rgba(37, 59, 116, 0.22);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      white-space: nowrap;
+      transform: translate(-50%, -100%);
+    }
+
+    .quote-selection-button[hidden] {
+      display: none;
+    }
+
+    .chapter-navigation {
+      display: flex;
+      max-width: 860px;
+      margin: 48px auto 0;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(153, 166, 191, 0.28);
+    }
+
+    .chapter-nav-button {
+      display: inline-flex;
+      min-width: 118px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+      font-size: 15px;
+      transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .chapter-nav-button:hover:not(:disabled) {
+      box-shadow: 3px 5px 12px rgba(77, 88, 124, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .chapter-nav-button:disabled {
+      cursor: default;
+      opacity: 0.42;
+    }
+
+    .chapter-nav-current {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .inline-bubble-highlight {
+      border-radius: 4px;
+      background: rgba(212, 230, 247, 0.55);
+      box-shadow: inset 0 -0.5em 0 rgba(153, 166, 191, 0.22);
+      cursor: help;
+      transition: background 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .inline-bubble-highlight:hover,
+    .inline-bubble-highlight:focus,
+    .inline-bubble-highlight.is-active {
+      background: rgba(212, 230, 247, 0.86);
+      box-shadow: inset 0 -0.58em 0 rgba(37, 59, 116, 0.2);
+      outline: 0;
+    }
+
+    .inline-bubble-theme {
+      background: rgba(197, 218, 242, 0.64);
+      box-shadow: inset 0 -0.5em 0 rgba(37, 59, 116, 0.14);
+    }
+
+    .inline-bubble-emotion,
+    .inline-bubble-character_inner_voice {
+      background: rgba(230, 235, 251, 0.78);
+      box-shadow: inset 0 -0.5em 0 rgba(37, 59, 116, 0.12);
+    }
+
+    .inline-bubble-relation {
+      background: rgba(209, 231, 239, 0.72);
+      box-shadow: inset 0 -0.5em 0 rgba(77, 88, 124, 0.14);
+    }
+
+    .inline-bubble-question {
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: inset 0 -0.5em 0 rgba(153, 166, 191, 0.24);
+    }
+
+    .bubble-hover-card {
+      position: fixed;
+      z-index: 90;
+      display: none;
+      width: min(320px, calc(100vw - 32px));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: var(--panel);
+      box-shadow: 0 18px 38px rgba(77, 88, 124, 0.22);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .bubble-hover-card.is-open {
+      display: block;
+    }
+
+    .bubble-hover-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue);
+      font-size: 14px;
+    }
+
+    .bubble-hover-card span {
+      color: var(--muted);
+    }
+
+    .reader-sidebar {
+      position: relative;
+      display: flex;
+      width: min(558px, 36vw);
+      min-width: 390px;
+      flex: 0 0 min(558px, 36vw);
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 30px 24px;
+      border-left: 1px solid var(--line);
+      background: var(--panel);
+      transition: flex-basis 0.24s ease, min-width 0.24s ease, width 0.24s ease, padding 0.24s ease, transform 0.24s ease;
+    }
+
+    .reader-shell.chat-collapsed .reader-sidebar {
+      width: 0;
+      min-width: 0;
+      flex-basis: 0;
+      padding-right: 0;
+      padding-left: 0;
+      overflow: hidden;
+      transform: translateX(100%);
+    }
+
+    .role-name {
+      position: absolute;
+      top: 28px;
+      left: 30px;
+      margin: 0;
+      color: var(--blue);
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .role-avatar,
+    .floating-role-avatar {
+      position: relative;
+      display: grid;
+      width: 226px;
+      height: 226px;
+      flex: 0 0 226px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--role-bg);
+    }
+
+    .role-avatar .avatar-state,
+    .floating-role-avatar .avatar-state {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: opacity 120ms ease;
+    }
+
+    .role-avatar .avatar-state.is-active,
+    .floating-role-avatar .avatar-state.is-active {
+      opacity: 1;
+    }
+
+    .role-avatar .avatar-state.luxun-idle-avatar,
+    .floating-role-avatar .avatar-state.luxun-idle-avatar {
+      width: 46%;
+      height: 70%;
+    }
+
+    .role-avatar.has-custom-role .avatar-state,
+    .floating-role-avatar.has-custom-role .avatar-state {
+      display: none;
+    }
+
+    .custom-reader-avatar {
+      position: relative;
+      display: none;
+      width: 58%;
+      aspect-ratio: 240 / 366;
+    }
+
+    .custom-reader-avatar .custom-role-preview {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 240 / 366;
+    }
+
+    .role-avatar.has-custom-role .custom-reader-avatar,
+    .floating-role-avatar.has-custom-role .custom-reader-avatar {
+      display: block;
+    }
+
+    .custom-reader-avatar img.custom-role-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      transform: none;
+    }
+
+    .custom-reader-avatar img.custom-role-layer:not(.custom-role-original) {
+      left: -3.333%;
+    }
+
+    .custom-reader-avatar img.custom-role-original {
+      z-index: 0;
+    }
+
+    .custom-reader-avatar img.custom-role-hair {
+      top: 0;
+      z-index: 6;
+    }
+
+    .custom-reader-avatar img.custom-role-brow {
+      top: 23.8%;
+      z-index: 7;
+    }
+
+    .custom-reader-avatar img.custom-role-eye {
+      top: 26.78%;
+      z-index: 7;
+    }
+
+    .custom-reader-avatar img.custom-role-blush {
+      top: 31.97%;
+      z-index: 7;
+    }
+
+    .custom-reader-avatar img.custom-role-mouth {
+      top: 31.42%;
+      z-index: 7;
+    }
+
+    .custom-reader-avatar img.custom-role-clothesTop {
+      top: 39.07%;
+      z-index: 3;
+    }
+
+    .custom-reader-avatar img.custom-role-clothesBottom {
+      top: 39.07%;
+      z-index: 2;
+    }
+
+    .floating-role-avatar {
+      position: fixed;
+      right: clamp(38px, 5vw, 84px);
+      bottom: clamp(34px, 6vh, 74px);
+      z-index: 4;
+      width: 226px;
+      height: 226px;
+      border-radius: 0;
+      background: transparent;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(18px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .reader-shell.chat-collapsed .floating-role-avatar {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .chat-collapse {
+      position: absolute;
+      top: 28px;
+      right: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      font-size: 24px;
+      letter-spacing: -4px;
+    }
+
+    .chat-form {
+      display: grid;
+      width: 100%;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .quote-preview {
+      display: none;
+      gap: 8px;
+      border: 1px solid rgba(153, 166, 191, 0.28);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .quote-preview.is-active {
+      display: grid;
+    }
+
+    .quote-preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .quote-preview-text {
+      max-height: 76px;
+      overflow: auto;
+    }
+
+    .quote-clear {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .chat-input {
+      width: 100%;
+      min-height: 92px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #FCFBF8;
+      color: var(--ink);
+      font: inherit;
+      font-size: 15px;
+      line-height: 1.6;
+      outline: 0;
+    }
+
+    .chat-input:focus {
+      border-color: rgba(37, 59, 116, 0.45);
+      box-shadow: 0 0 0 3px rgba(37, 59, 116, 0.08);
+    }
+
+    .send-button {
+      justify-self: end;
+      min-width: 96px;
+      height: 38px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--blue);
+      color: #FFFFFF;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .send-button:disabled {
+      cursor: wait;
+      opacity: 0.62;
+    }
+
+    body.dark-mode .send-button {
+      background: #D4E6F7;
+      color: #253B74;
+    }
+
+    .chat-history {
+      width: 100%;
+      min-height: 0;
+      flex: 1;
+      margin-top: 18px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .chat-message {
+      margin: 0 0 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .chat-message.user {
+      margin-left: 42px;
+      background: #D4E6F7;
+    }
+
+    .chat-message.assistant {
+      margin-right: 42px;
+      background: #E6EBFB;
+    }
+
+    .chat-hook {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      z-index: 6;
+      width: 22px;
+      height: 76px;
+      border-radius: 18px 0 0 18px;
+      background: var(--role-bg);
+      box-shadow: -6px 0 14px rgba(77, 88, 124, 0.12);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-50%) translateX(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .reader-shell.chat-collapsed .chat-hook {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      background: rgba(30, 27, 24, 0.18);
+    }
+
+    .drawer-backdrop.is-open {
+      display: block;
+    }
+
+    .insight-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      width: min(560px, 94vw);
+      height: 100vh;
+      flex-direction: column;
+      gap: 16px;
+      padding: 22px;
+      background: var(--panel);
+      border-left: 1px solid var(--line);
+      box-shadow: -16px 0 38px rgba(77, 88, 124, 0.18);
+      overflow-y: auto;
+      transform: translateX(104%);
+      transition: transform 0.24s ease, width 0.24s ease;
+    }
+
+    .insight-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    .insight-drawer.is-map-mode {
+      width: min(720px, 96vw);
+    }
+
+    .insight-drawer.is-graph-fullscreen {
+      inset: 0;
+      z-index: 40;
+      width: 100vw;
+      height: 100vh;
+      padding: 22px 28px;
+    }
+
+    .insight-header,
+    .insight-row,
+    .insight-tabs,
+    .graph-toolbar,
+    .pill-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .insight-header {
+      justify-content: space-between;
+    }
+
+    .insight-title {
+      margin: 0;
+      color: var(--blue);
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .insight-tabs,
+    .graph-toolbar,
+    .insight-row {
+      flex-wrap: wrap;
+    }
+
+    .insight-tab,
+    .graph-button,
+    .soft-button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #FFFFFF;
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .insight-tab.is-active,
+    .graph-button.is-active,
+    .character-subtab.is-active {
+      border-color: rgba(37, 59, 116, 0.35);
+      background: #D4E6F7;
+    }
+
+    .character-subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .character-subtab {
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 7px 12px;
+      background: #FFFFFF;
+      color: var(--blue);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .character-subpane {
+      display: none;
+      min-height: 0;
+    }
+
+    .character-subpane.is-active {
+      display: grid;
+      gap: 12px;
+    }
+
+    .character-chat-history {
+      max-height: 230px;
+      min-height: 120px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .character-chat-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .character-chat-form .chat-input {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    .insight-pane {
+      display: none;
+      min-height: 0;
+    }
+
+    .insight-pane.is-active {
+      display: grid;
+      gap: 14px;
+    }
+
+    .insight-field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .insight-field label,
+    .insight-label {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0;
+    }
+
+    .insight-field select,
+    .insight-field input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #FCFBF8;
+      color: var(--ink);
+      font: inherit;
+      outline: 0;
+    }
+
+    .insight-card,
+    .graph-detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      background: #FCFBF8;
+      color: var(--ink);
+      line-height: 1.65;
+    }
+
+    .insight-card p,
+    .graph-detail p {
+      margin: 0 0 10px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #E6EBFB;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .memory-status {
+      display: grid;
+      gap: 6px;
+    }
+
+    .memory-badge {
+      width: fit-content;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #E6EBFB;
+      color: var(--blue);
+      font-size: 12px;
+    }
+
+    .graph-panel.is-hidden {
+      display: none;
+    }
+
+    .graph-panel.is-expanded {
+      display: grid;
+      min-height: 0;
+      flex: 1;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .graph-canvas {
+      position: relative;
+      min-height: 380px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #FCFBF8;
+      overflow: hidden;
+    }
+
+    .insight-drawer.is-graph-fullscreen .graph-canvas {
+      min-height: 0;
+      height: 100%;
+    }
+
+    .graph-svg {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+    }
+
+    .graph-empty-state {
+      display: grid;
+      min-height: 260px;
+      place-items: center;
+      padding: 24px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .graph-node {
+      cursor: pointer;
+    }
+
+    .graph-node-circle {
+      stroke: #FFFFFF;
+      stroke-width: 2;
+    }
+
+    .graph-node-label {
+      fill: var(--ink);
+      font-size: 12px;
+      text-anchor: middle;
+    }
+
+    .graph-edge {
+      stroke: rgba(37, 59, 116, 0.25);
+      stroke-width: 1.5;
+    }
+
+    .graph-edge.is-invalidated {
+      stroke-dasharray: 5 5;
+      stroke: rgba(150, 75, 42, 0.62);
+    }
+
+    .status {
+      max-width: 860px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1040px) {
+      .reader-sidebar {
+        width: 360px;
+        min-width: 360px;
+        flex-basis: 360px;
+      }
+
+      .role-avatar {
+        width: 184px;
+        height: 184px;
+        flex-basis: 184px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .reader-topbar {
+        padding: 8px 14px;
+      }
+
+      .book-title {
+        font-size: 18px;
+      }
+
+      .reading-main {
+        display: block;
+        overflow: hidden;
+      }
+
+      .reading-area {
+        height: calc(100vh - 73px);
+        padding: 30px 22px;
+      }
+
+      .reader-shell.topbar-collapsed .reading-area {
+        height: 100vh;
+      }
+
+      .floating-role-avatar {
+        right: 28px;
+        bottom: 38px;
+        width: 158px;
+        height: 158px;
+      }
+
+      .chapter-navigation {
+        gap: 10px;
+      }
+
+      .chapter-nav-button {
+        min-width: 92px;
+        height: 38px;
+        font-size: 14px;
+      }
+
+      .chapter-nav-current {
+        font-size: 13px;
+      }
+
+      .reader-sidebar {
+        position: fixed;
+        top: 73px;
+        right: 0;
+        bottom: 0;
+        z-index: 5;
+        width: min(100vw, 390px);
+        min-width: 0;
+        flex-basis: auto;
+      }
+
+      .reader-shell.chat-collapsed .reader-sidebar {
+        transform: translateX(100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="reader-shell" data-reader-shell>
+    <header class="reader-topbar" aria-label="Reading toolbar">
+      <div>
+        <h1 class="book-title" data-book-title>Loading</h1>
+        <p class="book-author" data-book-author>Wang Xiaobo</p>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" aria-label="Switch dark mode" data-dark-toggle>
+          <i class="fa-regular fa-moon" aria-hidden="true"></i>
+        </button>
+        <button class="icon-button" type="button" aria-label="打开洞察" data-insight-open>
+          <i class="fa-solid fa-circle-nodes" aria-hidden="true"></i>
+        </button>
+        <label class="chapter-control" aria-label="Choose chapter">
+          <select class="chapter-select" data-chapter-select></select>
+          <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+        </label>
+        <button class="close-topbar" type="button" aria-label="Collapse toolbar" data-collapse-topbar>&times;</button>
+      </div>
+    </header>
+
+    <button class="topbar-hook" type="button" aria-label="Expand toolbar" data-expand-topbar>
+      <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+    </button>
+
+    <main class="reading-main">
+      <section class="reading-area" aria-label="Reading text" data-reading-area>
+        <p class="status">Loading reading text...</p>
+      </section>
+
+      <aside class="reader-sidebar" aria-label="Role companion chatbox">
+        <h2 class="role-name" data-role-name>鲁迅</h2>
+        <button class="chat-collapse" type="button" aria-label="Collapse role chatbox" data-collapse-chat>
+          <span aria-hidden="true">→|</span>
+        </button>
+        <div class="role-avatar" data-role-avatar aria-hidden="true">
+          <img class="avatar-state" data-default-role-image src="celebrity_Luxun.png" alt="" />
+          <img class="avatar-state luxun-idle-avatar is-active" data-avatar-src="celebrity_Luxun.png" src="celebrity_Luxun.png" alt="" />
+          <img class="avatar-state" data-avatar-src="celebrity_Luxun_think.svg" src="celebrity_Luxun_think.svg" alt="" />
+          <img class="avatar-state" data-avatar-src="celebrity_Luxun_read.svg" src="celebrity_Luxun_read.svg" alt="" />
+          <img class="avatar-state" data-avatar-src="celebrity_Luxun_happy.svg" src="celebrity_Luxun_happy.svg" alt="" />
+          <img class="avatar-state" data-avatar-src="celebrity_Luxun_mad.svg" src="celebrity_Luxun_mad.svg" alt="" />
+          <img class="avatar-state" data-avatar-src="celebrity_Luxun_sigh.svg" src="celebrity_Luxun_sigh.svg" alt="" />
+        </div>
+
+        <form class="chat-form" data-chat-form>
+          <div class="quote-preview" data-quote-preview>
+            <div class="quote-preview-header">
+              <span>引用文本</span>
+              <button class="quote-clear" type="button" aria-label="取消引用" data-clear-quote>&times;</button>
+            </div>
+            <div class="quote-preview-text" data-quote-preview-text></div>
+          </div>
+          <textarea class="chat-input" data-chat-input placeholder="有没有想讨论的内容？"></textarea>
+          <button class="send-button" type="submit" data-send-button>Send</button>
+        </form>
+
+        <div class="chat-history" data-chat-history aria-live="polite"></div>
+      </aside>
+    </main>
+
+    <button class="chat-hook" type="button" aria-label="Expand role chatbox" data-expand-chat>
+      <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+    </button>
+
+    <div class="floating-role-avatar" data-floating-role-avatar aria-hidden="true">
+      <img class="avatar-state" data-default-role-image src="celebrity_Luxun.png" alt="" />
+      <img class="avatar-state luxun-idle-avatar is-active" data-avatar-src="celebrity_Luxun.png" src="celebrity_Luxun.png" alt="" />
+      <img class="avatar-state" data-avatar-src="celebrity_Luxun_think.svg" src="celebrity_Luxun_think.svg" alt="" />
+      <img class="avatar-state" data-avatar-src="celebrity_Luxun_read.svg" src="celebrity_Luxun_read.svg" alt="" />
+      <img class="avatar-state" data-avatar-src="celebrity_Luxun_happy.svg" src="celebrity_Luxun_happy.svg" alt="" />
+      <img class="avatar-state" data-avatar-src="celebrity_Luxun_mad.svg" src="celebrity_Luxun_mad.svg" alt="" />
+      <img class="avatar-state" data-avatar-src="celebrity_Luxun_sigh.svg" src="celebrity_Luxun_sigh.svg" alt="" />
+    </div>
+  </div>
+  <button class="quote-selection-button" type="button" data-quote-selection hidden>引用文本</button>
+
+  <div class="drawer-backdrop" data-drawer-backdrop></div>
+
+  <aside class="insight-drawer" data-insight-drawer aria-label="洞察面板">
+    <header class="insight-header">
+      <h2 class="insight-title">洞察</h2>
+      <button class="icon-button" type="button" aria-label="关闭洞察" data-insight-close>
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <div class="insight-tabs" role="tablist" aria-label="洞察视图">
+      <button class="insight-tab is-active" type="button" data-insight-tab="character">人物</button>
+      <button class="insight-tab" type="button" data-insight-tab="map">记忆地图</button>
+    </div>
+
+    <section class="insight-pane is-active" data-insight-pane="character" aria-label="人物洞察">
+      <div class="character-subtabs" role="tablist" aria-label="人物功能">
+        <button class="character-subtab is-active" type="button" data-character-subtab="chat">对话书中人物</button>
+        <button class="character-subtab" type="button" data-character-subtab="profile">查看书中人物画像</button>
+      </div>
+      <div class="insight-field">
+        <label for="insight-character-select">书中人物</label>
+        <select id="insight-character-select" size="6" data-character-select></select>
+      </div>
+      <div class="insight-field">
+        <label for="insight-character-input">手动输入人物名</label>
+        <input id="insight-character-input" data-character-input type="text" placeholder="输入人物名" />
+      </div>
+      <div class="insight-row">
+        <button class="soft-button" type="button" data-character-refresh>刷新候选人物</button>
+      </div>
+      <section class="character-subpane is-active" data-character-subpane="chat" aria-label="对话书中人物">
+        <article class="insight-card">
+          <p class="muted" data-character-chat-status>选择或输入书中人物后，可以向该人物提问。</p>
+          <div class="character-chat-history" data-character-chat-history aria-live="polite"></div>
+          <form class="character-chat-form" data-character-chat-form>
+            <textarea class="chat-input" data-character-chat-input placeholder="想问这个人物什么？"></textarea>
+            <button class="send-button" type="submit" data-character-chat-send>发送</button>
+          </form>
+        </article>
+      </section>
+      <section class="character-subpane" data-character-subpane="profile" aria-label="查看书中人物画像">
+        <div class="insight-row">
+          <button class="soft-button" type="button" data-character-generate>生成画像</button>
+        </div>
+        <article class="insight-card" data-character-profile>
+          <p class="muted">选择候选人物，或手动输入人物名后生成角色画像。</p>
+        </article>
+      </section>
+    </section>
+
+    <section class="insight-pane" data-insight-pane="map" aria-label="记忆地图">
+      <article class="insight-card memory-status">
+        <span class="memory-badge" data-memory-status-badge>unknown</span>
+        <p class="muted" data-memory-status-text>打开书籍后查看记忆状态。</p>
+        <button class="soft-button" type="button" data-memory-rebuild>重建记忆</button>
+      </article>
+
+      <div class="graph-toolbar" aria-label="记忆地图控制">
+        <button class="graph-button" type="button" data-graph-toggle>加载地图</button>
+        <button class="graph-button" type="button" data-graph-refresh>刷新</button>
+        <button class="graph-button is-active" type="button" data-graph-scope="passage">当前段落</button>
+        <button class="graph-button" type="button" data-graph-scope="chapter">当前章节</button>
+        <button class="graph-button is-active" type="button" data-graph-mode="people">人物关系</button>
+        <button class="graph-button" type="button" data-graph-mode="all">全部实体</button>
+        <button class="graph-button" type="button" data-graph-zoom="-1">-</button>
+        <button class="graph-button" type="button" data-graph-zoom="1">+</button>
+        <button class="graph-button" type="button" data-graph-reset>重置</button>
+        <button class="graph-button" type="button" data-graph-expand>全屏</button>
+      </div>
+
+      <section class="graph-panel is-hidden" data-graph-panel>
+        <p class="muted" data-graph-caption>加载当前阅读范围的记忆地图。</p>
+        <div class="graph-canvas" data-graph-canvas>
+          <div class="graph-empty-state">记忆地图尚未加载。</div>
+        </div>
+        <div class="graph-detail" data-graph-detail>点击节点或关系查看详情。</div>
+      </section>
+    </section>
+  </aside>
+
+  <script>
+    const BOOK_ID_FALLBACK = decodeURIComponent("%E4%B8%80%E5%8F%AA%E7%89%B9%E7%AB%8B%E7%8B%AC%E8%A1%8C%E7%9A%84%E7%8C%AA-%E7%8E%8B%E5%B0%8F%E6%B3%A2");
+    const ROLE_META = {
+      persona_lu_xun: { name: "\u9c81\u8fc5", image: "celebrity_Luxun.png" },
+      persona_zhang_ailing: { name: "\u5f20\u7231\u73b2", image: "celebrity_EileenChang.png" },
+      persona_mark_twain: { name: "\u9a6c\u514b\u00b7\u5410\u6e29", image: "celebrity_MarkTwain.png" },
+      neutral: { name: "\u4f34\u8bfb", image: "character_user.png" },
+    };
+    const LUXUN_IDLE_IMAGE = "celebrity_Luxun.png";
+    const LUXUN_IDLE_ANIMATIONS = ["celebrity_Luxun_think.svg", "celebrity_Luxun_read.svg"];
+    const LUXUN_RESPONSE_ANIMATIONS = [
+      "celebrity_Luxun_think.svg",
+      "celebrity_Luxun_read.svg",
+      "celebrity_Luxun_happy.svg",
+      "celebrity_Luxun_mad.svg",
+      "celebrity_Luxun_sigh.svg",
+    ];
+
+    const state = {
+      bookId: "",
+      book: null,
+      chapter: 1,
+      activeParagraphIndex: 1,
+      personaId: "persona_lu_xun",
+      customRoleId: "",
+      customRole: null,
+      conversation: [],
+      pendingQuoteText: "",
+      quotedText: "",
+      inlineBubblesByChunk: {},
+      bubbleTimer: null,
+      characterCandidates: [],
+      activeCharacterName: "",
+      activeCharacterProfile: null,
+      characterConversation: [],
+      characterSubtab: "chat",
+      memoryStatus: null,
+      graphViewVisible: false,
+      graphViewData: null,
+      graphViewLoading: false,
+      graphViewError: "",
+      graphViewScope: "passage",
+      graphRelationMode: "people",
+      graphZoom: 1,
+      graphExpanded: false,
+      avatarTimer: null,
+      avatarMode: "idle",
+      luxunAnimationIndex: 0,
+    };
+
+    function params() {
+      return new URLSearchParams(window.location.search);
+    }
+
+    function escapeHtml(text = "") {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    async function fetchJSON(url, options = {}) {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Request failed: ${response.status}`);
+      }
+      return response.json();
+    }
+
+    function compactInlineText(text = "") {
+      return String(text).replace(/\s+/g, " ").trim();
+    }
+
+    function hideQuoteSelectionButton() {
+      const button = document.querySelector("[data-quote-selection]");
+      if (!button) return;
+      button.hidden = true;
+    }
+
+    function selectionIntersectsReadingArea(selection, area) {
+      if (!selection || selection.isCollapsed || !area) return false;
+      const anchorNode = selection.anchorNode;
+      const focusNode = selection.focusNode;
+      return Boolean((anchorNode && area.contains(anchorNode)) || (focusNode && area.contains(focusNode)));
+    }
+
+    function updateQuotePreview() {
+      const preview = document.querySelector("[data-quote-preview]");
+      const previewText = document.querySelector("[data-quote-preview-text]");
+      if (!preview || !previewText) return;
+      const quotedText = compactInlineText(state.quotedText);
+      preview.classList.toggle("is-active", Boolean(quotedText));
+      previewText.textContent = quotedText;
+    }
+
+    function showQuoteSelectionButton() {
+      const area = document.querySelector("[data-reading-area]");
+      const selection = window.getSelection();
+      if (!selectionIntersectsReadingArea(selection, area)) {
+        hideQuoteSelectionButton();
+        state.pendingQuoteText = "";
+        return;
+      }
+
+      const selectedText = compactInlineText(selection.toString());
+      if (!selectedText) {
+        hideQuoteSelectionButton();
+        state.pendingQuoteText = "";
+        return;
+      }
+
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      const fallbackRect = range.getClientRects()[0];
+      const targetRect = rect.width || rect.height ? rect : fallbackRect;
+      if (!targetRect) {
+        hideQuoteSelectionButton();
+        return;
+      }
+
+      state.pendingQuoteText = selectedText.slice(0, 1600);
+      const button = document.querySelector("[data-quote-selection]");
+      button.style.left = `${targetRect.left + targetRect.width / 2}px`;
+      button.style.top = `${Math.max(48, targetRect.top - 10)}px`;
+      button.hidden = false;
+    }
+
+    function quoteSelectedText() {
+      const selectedText = compactInlineText(state.pendingQuoteText || window.getSelection()?.toString() || "");
+      if (!selectedText) return;
+      state.quotedText = selectedText.slice(0, 1600);
+      updateQuotePreview();
+      hideQuoteSelectionButton();
+      window.getSelection()?.removeAllRanges();
+      document.querySelector("[data-reader-shell]").classList.remove("chat-collapsed");
+      document.querySelector("[data-chat-input]")?.focus();
+    }
+
+    function clearQuotedText() {
+      state.quotedText = "";
+      updateQuotePreview();
+    }
+
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function preloadAvatarImages() {
+      const sources = new Set([
+        ...Object.values(ROLE_META).map((role) => role.image),
+        LUXUN_IDLE_IMAGE,
+        ...LUXUN_IDLE_ANIMATIONS,
+        ...LUXUN_RESPONSE_ANIMATIONS,
+      ]);
+      sources.forEach((src) => {
+        const image = new Image();
+        image.src = src;
+        image.decode?.().catch(() => {});
+      });
+    }
+
+    function nextLuxunAnimation() {
+      const animation = LUXUN_RESPONSE_ANIMATIONS[state.luxunAnimationIndex % LUXUN_RESPONSE_ANIMATIONS.length];
+      state.luxunAnimationIndex += 1;
+      return animation;
+    }
+
+    function setRoleImage(src) {
+      const customRole = getActiveCustomRole();
+      document.querySelectorAll(".role-avatar, .floating-role-avatar").forEach((avatar) => {
+        if (customRole) {
+          applyCustomRoleAvatar(avatar, customRole);
+          return;
+        }
+        avatar.classList.remove("has-custom-role");
+        avatar.querySelector("[data-custom-reader-avatar]")?.remove();
+        const states = Array.from(avatar.querySelectorAll(".avatar-state"));
+        const defaultImage = avatar.querySelector("[data-default-role-image]");
+        let activeImage = null;
+
+        if (isLuxunRole()) {
+          activeImage = states.find((image) => image.dataset.avatarSrc === src) || null;
+        }
+
+        if (!activeImage && defaultImage) {
+          defaultImage.src = src;
+          activeImage = defaultImage;
+        }
+
+        states.forEach((image) => {
+          image.classList.toggle("is-active", image === activeImage);
+        });
+      });
+    }
+
+    function getActiveCustomRole() {
+      if (state.personaId !== "neutral" || !state.customRoleId) return null;
+      if (state.customRole?.id === state.customRoleId) return state.customRole;
+      try {
+        const roles = JSON.parse(window.localStorage.getItem("mingle:customRoles") || "[]");
+        state.customRole = roles.find((role) => role.id === state.customRoleId) || null;
+      } catch (_error) {
+        state.customRole = null;
+      }
+      return state.customRole;
+    }
+
+    function applyCustomRoleAvatar(avatar, role) {
+      avatar.classList.add("has-custom-role");
+      let customAvatar = avatar.querySelector("[data-custom-reader-avatar]");
+      if (!customAvatar) {
+        customAvatar = document.createElement("div");
+        customAvatar.className = "custom-reader-avatar";
+        customAvatar.dataset.customReaderAvatar = "true";
+        avatar.appendChild(customAvatar);
+      }
+      customAvatar.innerHTML = role.preview || `<img class="custom-role-layer custom-role-original" src="original.svg" alt="" />`;
+    }
+
+    function clearAvatarTimer() {
+      if (state.avatarTimer) {
+        window.clearTimeout(state.avatarTimer);
+        state.avatarTimer = null;
+      }
+    }
+
+    function isLuxunRole() {
+      return state.personaId === "persona_lu_xun";
+    }
+
+    function scheduleLuxunIdleAnimation() {
+      clearAvatarTimer();
+      if (!isLuxunRole() || state.avatarMode !== "idle") return;
+
+      state.avatarTimer = window.setTimeout(() => {
+        if (!isLuxunRole() || state.avatarMode !== "idle") return;
+        setRoleImage(nextLuxunAnimation());
+        state.avatarTimer = window.setTimeout(() => {
+          if (!isLuxunRole() || state.avatarMode !== "idle") return;
+          setRoleImage(LUXUN_IDLE_IMAGE);
+          scheduleLuxunIdleAnimation();
+        }, 7800);
+      }, 6000);
+    }
+
+    function startAvatarIdle() {
+      state.avatarMode = "idle";
+      clearAvatarTimer();
+      const role = ROLE_META[state.personaId] || ROLE_META.persona_lu_xun;
+      setRoleImage(role.image);
+      if (isLuxunRole()) {
+        scheduleLuxunIdleAnimation();
+      }
+    }
+
+    function startAvatarResponding() {
+      clearAvatarTimer();
+      if (!isLuxunRole()) return;
+      state.avatarMode = "responding";
+      setRoleImage(nextLuxunAnimation());
+    }
+
+    function setRole() {
+      const role = ROLE_META[state.personaId] || ROLE_META.persona_lu_xun;
+      document.querySelector("[data-role-name]").textContent = role.name;
+      startAvatarIdle();
+    }
+
+    function inferBookAuthor(book) {
+      const title = String(book?.title || state.bookId || "");
+      if (title.includes("百年孤独") || title.toLowerCase().includes("solitude")) {
+        return "加西亚·马尔克斯";
+      }
+      if (title.includes("特立独行的猪") || title.includes("王小波")) {
+        return "王小波";
+      }
+      return book?.author || "";
+    }
+
+    function setBookHeader() {
+      document.querySelector("[data-book-title]").textContent = state.book?.title || "\u4e00\u53ea\u7279\u7acb\u72ec\u884c\u7684\u732a";
+      document.querySelector("[data-book-author]").textContent = inferBookAuthor(state.book);
+    }
+
+    function chapterTitle(index) {
+      const explicit = state.book?.chapter_titles?.[index] || state.book?.chapter_titles?.[String(index)];
+      return explicit || `Chapter ${index}`;
+    }
+
+    function chapterNumbers() {
+      return Object.keys(state.book?.chapters || {}).map(Number).filter(Number.isFinite).sort((a, b) => a - b);
+    }
+
+    function renderChapterSelect() {
+      const select = document.querySelector("[data-chapter-select]");
+      const chapters = chapterNumbers();
+      select.innerHTML = chapters.map((chapter) => (
+        `<option value="${chapter}">${chapter}</option>`
+      )).join("");
+      select.value = String(state.chapter);
+    }
+
+    function chapterNavigationMarkup() {
+      const chapters = chapterNumbers();
+      const currentIndex = chapters.indexOf(Number(state.chapter));
+      const previousChapter = currentIndex > 0 ? chapters[currentIndex - 1] : null;
+      const nextChapter = currentIndex >= 0 && currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
+      return `
+        <nav class="chapter-navigation" aria-label="章节导航">
+          <button class="chapter-nav-button" type="button" data-chapter-nav="${previousChapter ?? ""}" ${previousChapter === null ? "disabled" : ""}>上一章</button>
+          <span class="chapter-nav-current">第 ${escapeHtml(state.chapter)} 章</span>
+          <button class="chapter-nav-button" type="button" data-chapter-nav="${nextChapter ?? ""}" ${nextChapter === null ? "disabled" : ""}>下一章</button>
+        </nav>
+      `;
+    }
+
+    function bubblesForChunk(chunkId) {
+      return (state.inlineBubblesByChunk[chunkId] || []).slice(0, 2);
+    }
+
+    function bubbleClassToken(value) {
+      const token = String(value || "detail").toLowerCase();
+      return /^[a-z0-9_-]+$/.test(token) ? token : "detail";
+    }
+
+    function createInlineBubbleMarkup(text, chunkId) {
+      const source = String(text || "");
+      const bubbles = bubblesForChunk(chunkId);
+      if (!bubbles.length) {
+        return escapeHtml(source);
+      }
+
+      const ranges = [];
+      bubbles.forEach((bubble, index) => {
+        const anchor = String(bubble.anchor_text || "").trim();
+        if (!anchor) return;
+        const start = source.indexOf(anchor);
+        if (start < 0) return;
+        const end = start + anchor.length;
+        const overlaps = ranges.some((range) => start < range.end && end > range.start);
+        if (!overlaps) {
+          ranges.push({ start, end, bubble, index });
+        }
+      });
+
+      if (!ranges.length) {
+        return escapeHtml(source);
+      }
+
+      ranges.sort((a, b) => a.start - b.start);
+      let html = "";
+      let cursor = 0;
+      ranges.forEach(({ start, end, bubble, index }) => {
+        const bubbleType = bubbleClassToken(bubble.bubble_type || bubble.emphasis || "detail");
+        html += escapeHtml(source.slice(cursor, start));
+        html += `<span class="inline-bubble-highlight inline-bubble-${bubbleType}" tabindex="0" data-bubble-id="${escapeHtml(
+          bubble.bubble_id || `${chunkId}-${index}`
+        )}" data-bubble-label="${escapeHtml(bubble.label || "旁注")}" data-bubble-comment="${escapeHtml(
+          bubble.comment || ""
+        )}" data-bubble-type="${escapeHtml(bubbleType)}">${escapeHtml(source.slice(start, end))}</span>`;
+        cursor = end;
+      });
+      html += escapeHtml(source.slice(cursor));
+      return html;
+    }
+
+    function ensureBubbleHoverCard() {
+      let card = document.getElementById("bubble-hover-card");
+      if (!card) {
+        card = document.createElement("div");
+        card.id = "bubble-hover-card";
+        card.className = "bubble-hover-card";
+        document.body.appendChild(card);
+      }
+      return card;
+    }
+
+    function showBubbleHoverCard(anchor) {
+      if (!anchor) return;
+      const card = ensureBubbleHoverCard();
+      card.dataset.bubbleId = anchor.dataset.bubbleId || "";
+      card.innerHTML = `
+        <strong>${escapeHtml(anchor.dataset.bubbleLabel || "旁注")}</strong>
+        <span>${escapeHtml(anchor.dataset.bubbleComment || "")}</span>
+      `;
+      document.querySelectorAll(".inline-bubble-highlight.is-active").forEach((item) => item.classList.remove("is-active"));
+      anchor.classList.add("is-active");
+      card.classList.add("is-open");
+
+      const rect = anchor.getBoundingClientRect();
+      const cardWidth = Math.min(320, window.innerWidth - 32);
+      const left = Math.min(Math.max(16, rect.left + rect.width / 2 - cardWidth / 2), window.innerWidth - cardWidth - 16);
+      const top = rect.bottom + 10 < window.innerHeight - 120 ? rect.bottom + 10 : Math.max(16, rect.top - 132);
+      card.style.left = `${left}px`;
+      card.style.top = `${top}px`;
+    }
+
+    function closeInlineBubbleNotes() {
+      const card = document.getElementById("bubble-hover-card");
+      if (card) {
+        card.classList.remove("is-open");
+        card.removeAttribute("data-bubble-id");
+      }
+      document.querySelectorAll(".inline-bubble-highlight.is-active").forEach((highlight) => {
+        highlight.classList.remove("is-active");
+      });
+    }
+
+    function wireInlineBubbleToggles() {
+      document.querySelectorAll(".inline-bubble-highlight").forEach((highlight) => {
+        highlight.addEventListener("mouseenter", (event) => showBubbleHoverCard(event.currentTarget));
+        highlight.addEventListener("focus", (event) => showBubbleHoverCard(event.currentTarget));
+        highlight.addEventListener("click", (event) => {
+          const target = event.currentTarget;
+          const card = document.getElementById("bubble-hover-card");
+          const isSameOpen = card?.classList.contains("is-open") && card.dataset.bubbleId === target.dataset.bubbleId;
+          if (isSameOpen) {
+            closeInlineBubbleNotes();
+          } else {
+            showBubbleHoverCard(target);
+          }
+          event.stopPropagation();
+        });
+      });
+    }
+
+    function renderReading(options = {}) {
+      const area = document.querySelector("[data-reading-area]");
+      const previousScrollTop = area.scrollTop;
+      const chunks = state.book?.chapters?.[state.chapter] || state.book?.chapters?.[String(state.chapter)] || [];
+      if (!chunks.length) {
+        area.innerHTML = `<p class="status">No text is available for this chapter.</p>${chapterNavigationMarkup()}`;
+        return;
+      }
+
+      area.innerHTML = `
+        <h2 class="chapter-heading">${escapeHtml(chapterTitle(state.chapter))}</h2>
+        ${chunks.map((chunk, index) => {
+          const paragraphIndex = chunk.paragraph_index || index + 1;
+          return `<p class="passage" data-chunk-id="${escapeHtml(chunk.chunk_id)}" data-paragraph-index="${paragraphIndex}">${createInlineBubbleMarkup(
+            chunk.text,
+            chunk.chunk_id
+          )}</p>`;
+        }).join("")}
+        ${chapterNavigationMarkup()}
+      `;
+      const first = chunks[0];
+      state.activeParagraphIndex = first ? first.paragraph_index || 1 : 1;
+      area.querySelectorAll("[data-paragraph-index]").forEach((node) => {
+        node.addEventListener("click", () => {
+          state.activeParagraphIndex = Number(node.dataset.paragraphIndex || 1);
+          fetchInlineBubbles({ selectedOnly: true }).catch((error) => console.error(error));
+          if (state.graphViewVisible && state.graphViewScope === "passage") {
+            refreshKnowledgeGraph().catch((error) => console.error(error));
+          }
+        });
+      });
+      wireInlineBubbleToggles();
+      area.scrollTop = options.preserveScroll ? previousScrollTop : 0;
+    }
+
+    function appendMessage(role, text) {
+      state.conversation.push({ role, content: text });
+      const history = document.querySelector("[data-chat-history]");
+      history.insertAdjacentHTML("beforeend", `<p class="chat-message ${role}">${escapeHtml(text)}</p>`);
+      history.scrollTop = history.scrollHeight;
+    }
+
+    function currentChapterChunks() {
+      return state.book?.chapters?.[state.chapter] || state.book?.chapters?.[String(state.chapter)] || [];
+    }
+
+    function scheduleDwellBubbles() {
+      if (state.bubbleTimer) {
+        window.clearTimeout(state.bubbleTimer);
+        state.bubbleTimer = null;
+      }
+      if (!state.bookId || !currentChapterChunks().length) {
+        return;
+      }
+      state.bubbleTimer = window.setTimeout(() => {
+        fetchInlineBubbles().catch((error) => console.error(error));
+      }, 4200);
+    }
+
+    async function fetchInlineBubbles(options = {}) {
+      if (!state.bookId) return;
+      const selectedOnly = options.selectedOnly === true;
+      const chunks = currentChapterChunks();
+      const targetChunks = selectedOnly
+        ? chunks.filter((chunk, index) => String(chunk.paragraph_index || index + 1) === String(state.activeParagraphIndex))
+        : chunks;
+      if (!targetChunks.length) return;
+
+      try {
+        const bubbles = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/bubbles/candidates`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            book_id: state.bookId,
+            current_chapter: state.chapter,
+            visible_chunk_ids: targetChunks.map((chunk) => chunk.chunk_id),
+            persona_id: state.personaId,
+            assistant_mode: "persona",
+            character_name: state.activeCharacterName,
+            max_bubbles: selectedOnly ? 2 : 1,
+          }),
+        });
+
+        const nextMap = selectedOnly ? { ...state.inlineBubblesByChunk } : {};
+        bubbles.forEach((bubble) => {
+          if (!nextMap[bubble.chunk_id]) {
+            nextMap[bubble.chunk_id] = [];
+          }
+          nextMap[bubble.chunk_id].push(bubble);
+        });
+        state.inlineBubblesByChunk = nextMap;
+        renderReading({ preserveScroll: true });
+      } catch (error) {
+        console.error("Inline bubble generation failed", error);
+      }
+    }
+
+    function setButtonLoading(selector, loading, label) {
+      const button = document.querySelector(selector);
+      if (!button) return;
+      if (!button.dataset.defaultText) {
+        button.dataset.defaultText = button.textContent;
+      }
+      button.disabled = loading;
+      button.textContent = loading ? label || "Loading..." : button.dataset.defaultText;
+    }
+
+    function setInsightOpen(open) {
+      document.querySelector("[data-insight-drawer]").classList.toggle("is-open", open);
+      document.querySelector("[data-drawer-backdrop]").classList.toggle("is-open", open);
+      if (open) {
+        loadCharacterCandidates().catch((error) => console.error(error));
+        loadMemoryStatus().catch((error) => console.error(error));
+      } else {
+        exitGraphFullscreen();
+      }
+    }
+
+    function setInsightTab(tab) {
+      document.querySelectorAll("[data-insight-tab]").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.insightTab === tab);
+      });
+      document.querySelectorAll("[data-insight-pane]").forEach((pane) => {
+        pane.classList.toggle("is-active", pane.dataset.insightPane === tab);
+      });
+      document.querySelector("[data-insight-drawer]").classList.toggle("is-map-mode", tab === "map");
+      if (tab === "map") {
+        loadMemoryStatus().catch((error) => console.error(error));
+        if (state.graphViewVisible) {
+          refreshKnowledgeGraph().catch((error) => console.error(error));
+        }
+      }
+    }
+
+    function renderCharacterCandidates() {
+      const select = document.querySelector("[data-character-select]");
+      if (!select) return;
+      select.innerHTML = "";
+      const empty = document.createElement("option");
+      empty.value = "";
+      empty.textContent = state.characterCandidates.length ? "选择当前书中的人物" : "当前章节暂无人物候选";
+      select.appendChild(empty);
+
+      state.characterCandidates.forEach((candidate) => {
+        const option = document.createElement("option");
+        option.value = candidate.character_name;
+        option.textContent = `${candidate.character_name} · ${candidate.mention_count || 0} 次`;
+        option.title = candidate.preview || "";
+        select.appendChild(option);
+      });
+
+      if (state.activeCharacterName) {
+        const hasActive = Array.from(select.options).some((option) => option.value === state.activeCharacterName);
+        if (!hasActive) {
+          const custom = document.createElement("option");
+          custom.value = state.activeCharacterName;
+          custom.textContent = `${state.activeCharacterName} · 手动`;
+          select.appendChild(custom);
+        }
+        select.value = state.activeCharacterName;
+      }
+    }
+
+    function setSelectedCharacter(name) {
+      const characterName = String(name || "").trim();
+      const changed = characterName !== state.activeCharacterName;
+      state.activeCharacterName = characterName;
+      if (changed) {
+        state.characterConversation = [];
+      }
+      document.querySelector("[data-character-input]").value = characterName;
+      renderCharacterCandidates();
+      renderCharacterChat();
+    }
+
+    function setCharacterSubtab(tab) {
+      state.characterSubtab = tab === "profile" ? "profile" : "chat";
+      document.querySelectorAll("[data-character-subtab]").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.characterSubtab === state.characterSubtab);
+      });
+      document.querySelectorAll("[data-character-subpane]").forEach((pane) => {
+        pane.classList.toggle("is-active", pane.dataset.characterSubpane === state.characterSubtab);
+      });
+    }
+
+    function renderCharacterChat() {
+      const status = document.querySelector("[data-character-chat-status]");
+      const history = document.querySelector("[data-character-chat-history]");
+      if (!status || !history) return;
+      status.textContent = state.activeCharacterName
+        ? `正在对话：${state.activeCharacterName}`
+        : "选择或输入书中人物后，可以向该人物提问。";
+      history.innerHTML = state.characterConversation.map((turn) => (
+        `<p class="chat-message ${escapeHtml(turn.role)}">${escapeHtml(turn.content || "")}</p>`
+      )).join("");
+      history.scrollTop = history.scrollHeight;
+    }
+
+    function appendCharacterMessage(role, content) {
+      state.characterConversation.push({ role, content });
+      renderCharacterChat();
+    }
+
+    async function askBookCharacter(question) {
+      const characterName = (document.querySelector("[data-character-input]").value || state.activeCharacterName || "").trim();
+      if (!characterName) {
+        document.querySelector("[data-character-chat-status]").textContent = "请先选择或输入书中人物。";
+        return;
+      }
+      setSelectedCharacter(characterName);
+      const button = document.querySelector("[data-character-chat-send]");
+      button.disabled = true;
+      button.textContent = "发送中";
+      appendCharacterMessage("user", question);
+
+      try {
+        const response = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/characters/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            book_id: state.bookId,
+            character_name: characterName,
+            question,
+            current_chapter: state.chapter,
+            conversation_history: state.characterConversation.slice(-8),
+          }),
+        });
+        state.activeCharacterProfile = response.profile || state.activeCharacterProfile;
+        appendCharacterMessage("assistant", response.answer || "");
+        renderCharacterProfile();
+      } catch (error) {
+        appendCharacterMessage("assistant", `人物对话失败：${error.message}`);
+      } finally {
+        button.disabled = false;
+        button.textContent = "发送";
+      }
+    }
+
+    function renderCharacterProfile() {
+      const container = document.querySelector("[data-character-profile]");
+      if (!container) return;
+      const profile = state.activeCharacterProfile;
+      if (!profile) {
+        container.innerHTML = `<p class="muted">选择候选人物，或手动输入人物名后生成角色画像。</p>`;
+        return;
+      }
+
+      const traits = (profile.core_traits || [])
+        .map((trait) => `<span class="pill">${escapeHtml(trait)}</span>`)
+        .join("");
+      const relationships = (profile.relationships || [])
+        .map((item) => `<p><strong>${escapeHtml(item.target || "")}</strong>：${escapeHtml(item.description || "")}</p>`)
+        .join("");
+
+      container.innerHTML = `
+        <h3 class="insight-title">${escapeHtml(profile.character_name || state.activeCharacterName)}</h3>
+        <p class="muted">${escapeHtml(profile.summary || "")}</p>
+        ${profile.arc_summary ? `<p class="insight-label">记忆弧线</p><p class="muted">${escapeHtml(profile.arc_summary)}</p>` : ""}
+        ${traits ? `<div class="pill-row">${traits}</div>` : ""}
+        ${relationships ? `<p class="insight-label">人物关系</p>${relationships}` : ""}
+      `;
+    }
+
+    async function loadCharacterCandidates() {
+      if (!state.bookId) return;
+      const select = document.querySelector("[data-character-select]");
+      if (select) {
+        select.innerHTML = `<option>Loading...</option>`;
+      }
+      try {
+        state.characterCandidates = await fetchJSON(
+          `/api/books/${encodeURIComponent(state.bookId)}/characters?current_chapter=${state.chapter}&limit=200`
+        );
+      } catch (error) {
+        state.characterCandidates = [];
+        document.querySelector("[data-character-profile]").innerHTML = `<p class="muted">人物候选加载失败：${escapeHtml(error.message)}</p>`;
+      }
+      renderCharacterCandidates();
+    }
+
+    async function generateCharacterProfile() {
+      const inputValue = document.querySelector("[data-character-input]").value;
+      const characterName = (inputValue || state.activeCharacterName || "").trim();
+      if (!characterName) {
+        document.querySelector("[data-character-profile]").innerHTML = `<p class="muted">请先选择或输入人物名。</p>`;
+        return;
+      }
+
+      setSelectedCharacter(characterName);
+      setButtonLoading("[data-character-generate]", true, "生成中...");
+      let profileError = "";
+      try {
+        state.activeCharacterProfile = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/characters/profile`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            book_id: state.bookId,
+            character_name: characterName,
+            current_chapter: state.chapter,
+          }),
+        });
+      } catch (error) {
+        state.activeCharacterProfile = null;
+        profileError = error.message;
+      } finally {
+        if (profileError) {
+          document.querySelector("[data-character-profile]").innerHTML = `<p class="muted">角色画像生成失败：${escapeHtml(profileError)}</p>`;
+        } else {
+          renderCharacterProfile();
+        }
+        setButtonLoading("[data-character-generate]", false);
+      }
+    }
+
+    function renderMemoryStatus() {
+      const badge = document.querySelector("[data-memory-status-badge]");
+      const text = document.querySelector("[data-memory-status-text]");
+      if (!badge || !text) return;
+      if (!state.bookId) {
+        badge.textContent = "unknown";
+        text.textContent = "打开书籍后查看记忆状态。";
+        return;
+      }
+      if (!state.memoryStatus) {
+        badge.textContent = "loading";
+        text.textContent = "正在检查记忆状态...";
+        return;
+      }
+
+      const reasons = state.memoryStatus.degraded_reasons || [];
+      const entityCount = state.memoryStatus.entity_count || 0;
+      const memoryCount = state.memoryStatus.memory_count || 0;
+      badge.textContent = state.memoryStatus.status || "unknown";
+      text.textContent = reasons.length
+        ? `${entityCount} entities · ${reasons.join(" / ")}`
+        : `${entityCount} entities · ${memoryCount} memories ready.`;
+    }
+
+    async function loadMemoryStatus() {
+      if (!state.bookId) return;
+      state.memoryStatus = null;
+      renderMemoryStatus();
+      try {
+        state.memoryStatus = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/memory/status`);
+      } catch (error) {
+        state.memoryStatus = { status: "failed", degraded_reasons: [error.message] };
+      }
+      renderMemoryStatus();
+    }
+
+    async function rebuildMemory() {
+      if (!state.bookId) return;
+      setButtonLoading("[data-memory-rebuild]", true, "Rebuilding...");
+      try {
+        const job = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/memory/rebuild-jobs`, { method: "POST" });
+        let current = job;
+        while (current.status !== "completed" && current.status !== "failed") {
+          document.querySelector("[data-memory-status-badge]").textContent = current.status || "running";
+          document.querySelector("[data-memory-status-text]").textContent = current.message || current.title || "记忆正在重建。";
+          await new Promise((resolve) => window.setTimeout(resolve, 1200));
+          current = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/memory/rebuild-jobs/${current.job_id}`);
+        }
+        if (current.status === "failed") {
+          throw new Error(current.error || current.message || "记忆重建失败。");
+        }
+        await loadMemoryStatus();
+        state.graphViewData = null;
+        if (state.graphViewVisible) {
+          await refreshKnowledgeGraph();
+        }
+      } catch (error) {
+        state.memoryStatus = { status: "failed", degraded_reasons: [error.message] };
+        renderMemoryStatus();
+      } finally {
+        setButtonLoading("[data-memory-rebuild]", false);
+      }
+    }
+
+    function isCharacterNode(node) {
+      const type = String(node?.type || "").toLowerCase();
+      return ["character", "person", "persona", "人物", "角色"].includes(type);
+    }
+
+    function graphNodeColor(type = "") {
+      const normalized = String(type || "").toLowerCase();
+      if (["character", "person", "persona", "人物", "角色"].includes(normalized)) return "#253B74";
+      if (normalized === "location") return "#5f7a48";
+      if (normalized === "theme" || normalized === "concept") return "#a57b2d";
+      if (normalized === "artifact" || normalized === "object") return "#8f5a3c";
+      return "#706A63";
+    }
+
+    function graphNodeById(data) {
+      return Object.fromEntries((data?.nodes || []).map((node) => [node.id, node]));
+    }
+
+    function getRenderableGraphData(data) {
+      const nodeById = graphNodeById(data);
+      const rawEdges = data?.edges || data?.relations || [];
+      let edges = rawEdges.filter((edge) => nodeById[edge.source] && nodeById[edge.target]);
+
+      if (state.graphRelationMode === "people") {
+        edges = edges.filter((edge) => isCharacterNode(nodeById[edge.source]) && isCharacterNode(nodeById[edge.target]));
+      }
+
+      const visibleIds = new Set();
+      edges.forEach((edge) => {
+        visibleIds.add(edge.source);
+        visibleIds.add(edge.target);
+      });
+
+      let nodes = (data?.nodes || []).filter((node) => visibleIds.has(node.id));
+      if (!nodes.length && state.graphRelationMode === "people") {
+        nodes = (data?.nodes || []).filter(isCharacterNode);
+      }
+      if (state.graphRelationMode === "all" && !nodes.length) {
+        nodes = data?.nodes || [];
+      }
+
+      return { nodes, edges };
+    }
+
+    function graphLayout(nodes, width, height) {
+      const centerX = width / 2;
+      const centerY = height / 2;
+      const radius = Math.min(width, height) * 0.34 * state.graphZoom;
+      const total = Math.max(nodes.length, 1);
+      return Object.fromEntries(
+        nodes.map((node, index) => {
+          const angle = (Math.PI * 2 * index) / total - Math.PI / 2;
+          const characterPull = isCharacterNode(node) ? 0.86 : 1.08;
+          return [
+            node.id,
+            {
+              x: centerX + Math.cos(angle) * radius * characterPull,
+              y: centerY + Math.sin(angle) * radius * characterPull,
+            },
+          ];
+        })
+      );
+    }
+
+    function graphCaptionText(renderable) {
+      const scope = state.graphViewScope === "chapter" ? "当前章节" : "当前段落";
+      const mode = state.graphRelationMode === "people" ? "人物关系" : "全部实体";
+      return `${scope} · ${mode} · ${renderable.nodes.length} nodes · ${renderable.edges.length} edges`;
+    }
+
+    function showGraphNodeDetail(node) {
+      const detail = document.querySelector("[data-graph-detail]");
+      if (!detail || !node) return;
+      detail.innerHTML = `
+        <strong>${escapeHtml(node.label || node.name || node.id)}</strong><br />
+        类型：${escapeHtml(node.type || "-")}<br />
+        提及：${escapeHtml(node.mention_count ?? "-")}<br />
+        首次出现：第 ${escapeHtml(node.first_seen_chapter || node.first_seen?.chapter || "-")} 章<br />
+        <span class="muted">${escapeHtml(node.summary || "")}</span>
+      `;
+    }
+
+    function showGraphEdgeDetail(edge, nodeById) {
+      const detail = document.querySelector("[data-graph-detail]");
+      if (!detail || !edge) return;
+      const source = nodeById[edge.source]?.label || edge.source;
+      const target = nodeById[edge.target]?.label || edge.target;
+      detail.innerHTML = `
+        <strong>${escapeHtml(source)} -> ${escapeHtml(target)}</strong><br />
+        关系：${escapeHtml(edge.label || edge.relation || "-")}<br />
+        权重：${escapeHtml(edge.weight ?? "-")}<br />
+        位置：第 ${escapeHtml(edge.valid_at_chapter || "-")} 章，第 ${escapeHtml(edge.valid_at_paragraph || "-")} 段<br />
+        <span class="muted">${escapeHtml(edge.fact || edge.summary || "")}</span>
+      `;
+    }
+
+    function renderGraphPanel() {
+      const panel = document.querySelector("[data-graph-panel]");
+      const canvas = document.querySelector("[data-graph-canvas]");
+      const caption = document.querySelector("[data-graph-caption]");
+      const toggleButton = document.querySelector("[data-graph-toggle]");
+      const expandButton = document.querySelector("[data-graph-expand]");
+      const drawer = document.querySelector("[data-insight-drawer]");
+      if (!panel || !canvas) return;
+
+      document.querySelectorAll("[data-graph-scope]").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.graphScope === state.graphViewScope);
+      });
+      document.querySelectorAll("[data-graph-mode]").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.graphMode === state.graphRelationMode);
+      });
+
+      panel.classList.toggle("is-hidden", !state.graphViewVisible);
+      panel.classList.toggle("is-expanded", state.graphExpanded && state.graphViewVisible);
+      drawer.classList.toggle("is-graph-fullscreen", state.graphExpanded && state.graphViewVisible);
+      if (toggleButton) toggleButton.textContent = state.graphViewVisible ? "隐藏地图" : "加载地图";
+      if (expandButton) expandButton.textContent = state.graphExpanded ? "退出全屏" : "全屏";
+
+      if (!state.graphViewVisible) return;
+      if (state.graphViewLoading) {
+        canvas.innerHTML = `<div class="graph-empty-state">正在加载关系图...</div>`;
+        return;
+      }
+      if (state.graphViewError) {
+        canvas.innerHTML = `<div class="graph-empty-state">${escapeHtml(state.graphViewError)}</div>`;
+        document.querySelector("[data-graph-detail]").textContent = "图谱请求失败，请确认当前书籍已经完成记忆重建。";
+        return;
+      }
+      if (!state.graphViewData) {
+        canvas.innerHTML = `<div class="graph-empty-state">记忆地图尚未加载。</div>`;
+        return;
+      }
+
+      const renderable = getRenderableGraphData(state.graphViewData);
+      if (caption) caption.textContent = graphCaptionText(renderable);
+      if (!renderable.nodes.length) {
+        canvas.innerHTML = `<div class="graph-empty-state">当前范围还没有可展示的关系节点。</div>`;
+        return;
+      }
+
+      const width = 680;
+      const height = 430;
+      const positions = graphLayout(renderable.nodes, width, height);
+      const nodeById = graphNodeById(state.graphViewData);
+      const edges = renderable.edges.map((edge, index) => {
+        const source = positions[edge.source];
+        const target = positions[edge.target];
+        if (!source || !target) return "";
+        const invalidated = edge.status === "invalidated" ? " is-invalidated" : "";
+        return `<line class="graph-edge${invalidated}" data-edge-index="${index}" x1="${source.x}" y1="${source.y}" x2="${target.x}" y2="${target.y}"></line>`;
+      }).join("");
+      const nodes = renderable.nodes.map((node) => {
+        const position = positions[node.id];
+        const size = isCharacterNode(node) ? 20 : 15;
+        return `
+          <g class="graph-node" data-node-id="${escapeHtml(node.id)}">
+            <circle class="graph-node-circle" cx="${position.x}" cy="${position.y}" r="${size}" fill="${graphNodeColor(node.type)}"></circle>
+            <text class="graph-node-label" x="${position.x}" y="${position.y + size + 15}">${escapeHtml(node.label || node.name || node.id)}</text>
+          </g>
+        `;
+      }).join("");
+
+      canvas.innerHTML = `<svg class="graph-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="记忆关系地图">${edges}${nodes}</svg>`;
+      canvas.querySelectorAll("[data-node-id]").forEach((node) => {
+        node.addEventListener("click", () => showGraphNodeDetail(nodeById[node.dataset.nodeId]));
+      });
+      canvas.querySelectorAll("[data-edge-index]").forEach((node) => {
+        node.addEventListener("click", () => showGraphEdgeDetail(renderable.edges[Number(node.dataset.edgeIndex)], nodeById));
+      });
+    }
+
+    async function refreshKnowledgeGraph() {
+      if (!state.bookId || !state.graphViewVisible) return;
+      state.graphViewLoading = true;
+      state.graphViewError = "";
+      renderGraphPanel();
+      try {
+        const query = new URLSearchParams({
+          chapter: String(state.chapter),
+          paragraph: String(state.activeParagraphIndex || 0),
+          limit: state.graphRelationMode === "people" ? "48" : "36",
+          scope: state.graphViewScope,
+        });
+        state.graphViewData = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}/memory/map?${query.toString()}`);
+      } catch (error) {
+        state.graphViewError = error.message;
+      } finally {
+        state.graphViewLoading = false;
+        renderGraphPanel();
+      }
+    }
+
+    async function toggleKnowledgeGraph() {
+      state.graphViewVisible = !state.graphViewVisible;
+      if (!state.graphViewVisible) {
+        state.graphExpanded = false;
+        renderGraphPanel();
+        return;
+      }
+      renderGraphPanel();
+      await refreshKnowledgeGraph();
+    }
+
+    async function setKnowledgeGraphScope(scope) {
+      state.graphViewScope = scope;
+      renderGraphPanel();
+      if (state.graphViewVisible) await refreshKnowledgeGraph();
+    }
+
+    async function setGraphRelationMode(mode) {
+      state.graphRelationMode = mode;
+      renderGraphPanel();
+      if (state.graphViewVisible) await refreshKnowledgeGraph();
+    }
+
+    function zoomGraph(direction) {
+      state.graphZoom = Math.max(0.55, Math.min(1.8, state.graphZoom + direction * 0.12));
+      renderGraphPanel();
+    }
+
+    function resetGraphView() {
+      state.graphZoom = 1;
+      renderGraphPanel();
+    }
+
+    function exitGraphFullscreen() {
+      state.graphExpanded = false;
+      document.querySelector("[data-insight-drawer]")?.classList.remove("is-graph-fullscreen");
+      renderGraphPanel();
+    }
+
+    function toggleGraphExpanded() {
+      if (!state.graphViewVisible) return;
+      state.graphExpanded = !state.graphExpanded;
+      renderGraphPanel();
+    }
+
+    async function resolveBookId(initialBookId) {
+      if (initialBookId) return initialBookId;
+      try {
+        const books = await fetchJSON("/api/books");
+        const target = books.find((book) => String(book.title || "").includes("\u7279\u7acb\u72ec\u884c\u7684\u732a")) || books[0];
+        return target?.book_id || BOOK_ID_FALLBACK;
+      } catch (_error) {
+        return BOOK_ID_FALLBACK;
+      }
+    }
+
+    async function loadBook() {
+      const query = params();
+      state.personaId = query.get("persona_id") || window.localStorage.getItem("mingle:selectedPersonaId") || "persona_lu_xun";
+      state.customRoleId = query.get("custom_role_id") || (state.personaId === "neutral" ? window.localStorage.getItem("mingle:selectedCustomRoleId") || "" : "");
+      if (state.personaId !== "neutral") {
+        state.customRoleId = "";
+        state.customRole = null;
+      }
+      state.bookId = await resolveBookId(query.get("book_id") || BOOK_ID_FALLBACK);
+      setRole();
+
+      try {
+        state.book = await fetchJSON(`/api/books/${encodeURIComponent(state.bookId)}`);
+      } catch (error) {
+        document.querySelector("[data-reading-area]").innerHTML = `<p class="status">Reading API unavailable: ${escapeHtml(error.message)}</p>`;
+        setBookHeader();
+        return;
+      }
+
+      const chapters = chapterNumbers();
+      state.chapter = chapters[0] || 1;
+      setBookHeader();
+      renderChapterSelect();
+      renderReading();
+      renderCharacterProfile();
+      renderCharacterChat();
+      setCharacterSubtab(state.characterSubtab);
+      renderGraphPanel();
+      await loadCharacterCandidates();
+      await loadMemoryStatus();
+      scheduleDwellBubbles();
+    }
+
+    async function switchChapter(chapter) {
+      const targetChapter = Number(chapter);
+      if (!Number.isFinite(targetChapter) || targetChapter === state.chapter) return;
+      const chapters = chapterNumbers();
+      if (!chapters.includes(targetChapter)) return;
+
+      state.chapter = targetChapter;
+      state.activeCharacterProfile = null;
+      state.characterConversation = [];
+      state.inlineBubblesByChunk = {};
+      renderChapterSelect();
+      renderReading();
+      renderCharacterProfile();
+      renderCharacterChat();
+      await loadCharacterCandidates();
+      scheduleDwellBubbles();
+      if (state.graphViewVisible) {
+        await refreshKnowledgeGraph();
+      }
+    }
+
+    async function askRole(question, highlightText = "") {
+      const button = document.querySelector("[data-send-button]");
+      button.disabled = true;
+      button.textContent = "Sending";
+      startAvatarResponding();
+
+      try {
+        const response = await fetchJSON("/api/qa", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            book_id: state.bookId,
+            question,
+            highlight_text: highlightText,
+            current_chapter: state.chapter,
+            persona_id: state.personaId,
+            conversation_history: state.conversation.slice(-8),
+          }),
+        });
+        appendMessage("assistant", response.answer || "");
+        fetchInlineBubbles({ selectedOnly: true }).catch((error) => console.error(error));
+      } catch (error) {
+        appendMessage("assistant", `API unavailable: ${error.message}`);
+      } finally {
+        button.disabled = false;
+        button.textContent = "Send";
+        startAvatarIdle();
+      }
+    }
+
+    document.querySelector("[data-collapse-topbar]").addEventListener("click", () => {
+      document.querySelector("[data-reader-shell]").classList.add("topbar-collapsed");
+    });
+
+    document.querySelector("[data-expand-topbar]").addEventListener("click", () => {
+      document.querySelector("[data-reader-shell]").classList.remove("topbar-collapsed");
+    });
+
+    document.querySelector("[data-collapse-chat]").addEventListener("click", () => {
+      document.querySelector("[data-reader-shell]").classList.add("chat-collapsed");
+    });
+
+    document.querySelector("[data-expand-chat]").addEventListener("click", () => {
+      document.querySelector("[data-reader-shell]").classList.remove("chat-collapsed");
+    });
+
+    document.querySelector("[data-dark-toggle]").addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    document.querySelector("[data-insight-open]").addEventListener("click", () => setInsightOpen(true));
+    document.querySelector("[data-insight-close]").addEventListener("click", () => setInsightOpen(false));
+    document.querySelector("[data-drawer-backdrop]").addEventListener("click", () => setInsightOpen(false));
+    document.querySelectorAll("[data-insight-tab]").forEach((button) => {
+      button.addEventListener("click", () => setInsightTab(button.dataset.insightTab));
+    });
+
+    document.querySelector("[data-character-select]").addEventListener("change", (event) => {
+      setSelectedCharacter(event.target.value);
+    });
+    document.querySelector("[data-character-input]").addEventListener("input", (event) => {
+      const nextName = event.target.value.trim();
+      if (nextName !== state.activeCharacterName) {
+        state.characterConversation = [];
+      }
+      state.activeCharacterName = nextName;
+      renderCharacterChat();
+    });
+    document.querySelectorAll("[data-character-subtab]").forEach((button) => {
+      button.addEventListener("click", () => setCharacterSubtab(button.dataset.characterSubtab));
+    });
+    document.querySelector("[data-character-generate]").addEventListener("click", () => {
+      generateCharacterProfile().catch((error) => console.error(error));
+    });
+    document.querySelector("[data-character-refresh]").addEventListener("click", () => {
+      loadCharacterCandidates().catch((error) => console.error(error));
+    });
+    document.querySelector("[data-character-chat-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = document.querySelector("[data-character-chat-input]");
+      const question = input.value.trim();
+      if (!question) return;
+      input.value = "";
+      askBookCharacter(question).catch((error) => console.error(error));
+    });
+
+    document.querySelector("[data-memory-rebuild]").addEventListener("click", () => {
+      rebuildMemory().catch((error) => console.error(error));
+    });
+    document.querySelector("[data-graph-toggle]").addEventListener("click", () => {
+      toggleKnowledgeGraph().catch((error) => console.error(error));
+    });
+    document.querySelector("[data-graph-refresh]").addEventListener("click", () => {
+      refreshKnowledgeGraph().catch((error) => console.error(error));
+    });
+    document.querySelectorAll("[data-graph-scope]").forEach((button) => {
+      button.addEventListener("click", () => {
+        setKnowledgeGraphScope(button.dataset.graphScope).catch((error) => console.error(error));
+      });
+    });
+    document.querySelectorAll("[data-graph-mode]").forEach((button) => {
+      button.addEventListener("click", () => {
+        setGraphRelationMode(button.dataset.graphMode).catch((error) => console.error(error));
+      });
+    });
+    document.querySelectorAll("[data-graph-zoom]").forEach((button) => {
+      button.addEventListener("click", () => zoomGraph(Number(button.dataset.graphZoom)));
+    });
+    document.querySelector("[data-graph-reset]").addEventListener("click", resetGraphView);
+    document.querySelector("[data-graph-expand]").addEventListener("click", toggleGraphExpanded);
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".inline-bubble-highlight") && !event.target.closest(".bubble-hover-card")) {
+        closeInlineBubbleNotes();
+      }
+    });
+    document.querySelector("[data-reading-area]").addEventListener("scroll", closeInlineBubbleNotes);
+    document.querySelector("[data-reading-area]").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-chapter-nav]");
+      if (!button || button.disabled) return;
+      switchChapter(button.dataset.chapterNav).catch((error) => console.error(error));
+    });
+    document.querySelector("[data-reading-area]").addEventListener("mouseup", () => {
+      window.setTimeout(showQuoteSelectionButton, 0);
+    });
+    document.querySelector("[data-reading-area]").addEventListener("touchend", () => {
+      window.setTimeout(showQuoteSelectionButton, 0);
+    });
+    document.querySelector("[data-quote-selection]").addEventListener("mousedown", (event) => {
+      event.preventDefault();
+    });
+    document.querySelector("[data-quote-selection]").addEventListener("click", quoteSelectedText);
+    document.querySelector("[data-clear-quote]").addEventListener("click", clearQuotedText);
+    document.addEventListener("selectionchange", () => {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed) {
+        hideQuoteSelectionButton();
+      }
+    });
+
+    document.querySelector("[data-chapter-select]").addEventListener("change", (event) => {
+      switchChapter(event.target.value).catch((error) => console.error(error));
+    });
+
+    document.querySelector("[data-chat-form]").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = document.querySelector("[data-chat-input]");
+      const question = input.value.trim();
+      if (!question) return;
+      const highlightText = compactInlineText(state.quotedText);
+      const userMessage = highlightText ? `引用：“${highlightText}”\n\n${question}` : question;
+      appendMessage("user", userMessage);
+      input.value = "";
+      clearQuotedText();
+      askRole(question, highlightText);
+    });
+
+    preloadAvatarImages();
+
+    loadBook().catch((error) => {
+      document.querySelector("[data-reading-area]").innerHTML = `<p class="status">${escapeHtml(error.message)}</p>`;
+    });
+  </script>
+</body>
+</html>

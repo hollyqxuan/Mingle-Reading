@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choose Role - Mingle Reading</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --active-text: #253B74;
+      --page-bg: #F5F5F5;
+      --role-card: #C5DAF2;
+      --role-card-hover: #E6EBFB;
+      --text-primary: #1E1B18;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--page-bg);
+      color: var(--text-primary);
+      font-family: "Noto Serif SC", "Cormorant Garamond", Georgia, serif;
+      font-weight: 400;
+    }
+
+    .role-page {
+      position: relative;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 120px 56px 72px;
+      background: var(--page-bg);
+    }
+
+    .back-arrow {
+      position: absolute;
+      top: 34px;
+      left: 34px;
+      z-index: 4;
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--active-text);
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .back-arrow:hover {
+      background: rgba(255, 255, 255, 0.78);
+      transform: translateX(-2px);
+    }
+
+    .back-arrow i {
+      font-size: 30px;
+    }
+
+    .main-actions {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-button {
+      position: relative;
+      display: flex;
+      width: 48px;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: var(--active-text);
+      cursor: pointer;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .action-button::before {
+      position: absolute;
+      inset: 7px;
+      border: 1px solid var(--active-text);
+      border-radius: 6px;
+      content: "";
+      pointer-events: none;
+    }
+
+    .action-button:hover {
+      box-shadow: 4px 6px 14px rgba(77, 88, 124, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .action-button i {
+      z-index: 1;
+      color: var(--active-text);
+      font-size: 15px;
+    }
+
+    .main-watermark {
+      position: absolute;
+      right: 40px;
+      bottom: 32px;
+      z-index: 0;
+      display: grid;
+      width: min(360px, 42vw);
+      aspect-ratio: 1 / 1.16;
+      place-items: center;
+      pointer-events: none;
+    }
+
+    .main-watermark img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .role-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      width: min(100%, 1100px);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(22px, 3vw, 40px);
+    }
+
+    .role-card {
+      position: relative;
+      display: grid;
+      aspect-ratio: 306 / 388;
+      place-items: center;
+      border: 0;
+      border-radius: 200px;
+      background: var(--role-card);
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .role-card:hover,
+    .role-card:focus-visible {
+      background: var(--role-card-hover);
+      box-shadow: 0 18px 36px rgba(77, 88, 124, 0.16);
+      transform: translateY(-3px);
+      outline: 0;
+    }
+
+    .role-card img {
+      display: block;
+      width: min(68%, 190px);
+      max-height: 72%;
+      object-fit: contain;
+    }
+
+    .role-card .custom-role-preview {
+      position: relative;
+      width: min(68%, 190px);
+      aspect-ratio: 240 / 366;
+      --custom-role-offset-x: -3.333%;
+    }
+
+    .role-card .custom-role-preview img.custom-role-layer {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      width: 100%;
+      max-height: none;
+      height: auto;
+      object-fit: contain;
+      transform: none;
+    }
+
+    .role-card .custom-role-preview img.custom-role-layer:not(.custom-role-original) {
+      left: var(--custom-role-offset-x);
+    }
+
+    .role-card .custom-role-preview img.custom-role-original {
+      z-index: 0;
+    }
+
+    .role-card .custom-role-preview img.custom-role-hair {
+      top: 0;
+      z-index: 6;
+    }
+
+    .role-card .custom-role-preview img.custom-role-brow {
+      top: 23.8%;
+      z-index: 7;
+    }
+
+    .role-card .custom-role-preview img.custom-role-eye {
+      top: 26.78%;
+      z-index: 7;
+    }
+
+    .role-card .custom-role-preview img.custom-role-blush {
+      top: 31.97%;
+      z-index: 7;
+    }
+
+    .role-card .custom-role-preview img.custom-role-mouth {
+      top: 31.42%;
+      z-index: 7;
+    }
+
+    .role-card .custom-role-preview img.custom-role-clothesTop {
+      top: 39.07%;
+      z-index: 3;
+    }
+
+    .role-card .custom-role-preview img.custom-role-clothesBottom {
+      top: 39.07%;
+      z-index: 2;
+    }
+
+    .role-card[aria-busy="true"] {
+      cursor: wait;
+      opacity: 0.72;
+    }
+
+    .create-role-card {
+      color: var(--active-text);
+      font-size: clamp(64px, 8vw, 104px);
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    .delete-custom-role {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      z-index: 4;
+      border: 0;
+      border-radius: 8px;
+      background: #253B74;
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 8px 14px;
+      font: inherit;
+      font-size: 14px;
+      box-shadow: 0 10px 20px rgba(37, 59, 116, 0.22);
+    }
+
+    @media (max-width: 1023px) {
+      .role-page {
+        padding: 112px 32px 56px;
+      }
+
+      .role-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(100%, 680px);
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        overflow-y: auto;
+      }
+
+      .role-page {
+        min-height: 100vh;
+        padding: 104px 18px 40px;
+      }
+
+      .back-arrow {
+        top: 20px;
+        left: 18px;
+        width: 46px;
+        height: 46px;
+      }
+
+      .back-arrow i {
+        font-size: 26px;
+      }
+
+      .main-actions {
+        top: 20px;
+        right: 18px;
+        gap: 8px;
+      }
+
+      .action-button {
+        width: 44px;
+        height: 44px;
+      }
+
+      .main-watermark {
+        right: 18px;
+        bottom: 24px;
+        width: 76vw;
+      }
+
+      .role-grid {
+        grid-template-columns: 1fr;
+        width: min(100%, 306px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="role-page" aria-label="Choose reading role">
+    <a class="back-arrow" href="index.html" aria-label="返回上一页" data-back-arrow>
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+    </a>
+
+    <div class="main-actions" aria-label="Page controls">
+      <button class="action-button" type="button" aria-label="Switch language">
+        <i class="fa-solid fa-language" aria-hidden="true"></i>
+      </button>
+      <button class="action-button" type="button" aria-label="Switch dark mode">
+        <i class="fa-regular fa-moon" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="main-watermark" aria-hidden="true">
+      <img src="watermark.png" alt="" />
+    </div>
+
+    <section class="role-grid" aria-label="Role options">
+      <button class="role-card" type="button" data-persona-id="persona_lu_xun" aria-label="Lu Xun literary guide">
+        <img src="celebrity_Luxun.png" alt="" />
+      </button>
+      <button class="role-card" type="button" data-persona-id="persona_zhang_ailing" aria-label="Eileen Chang literary guide">
+        <img src="celebrity_EileenChang.png" alt="" />
+      </button>
+      <button class="role-card" type="button" data-persona-id="persona_mark_twain" aria-label="Mark Twain literary guide">
+        <img src="celebrity_MarkTwain.png" alt="" />
+      </button>
+      <button class="role-card" type="button" data-persona-id="neutral" aria-label="Neutral literary guide">
+        <img src="character_user.png" alt="" />
+      </button>
+      <button class="role-card create-role-card" type="button" aria-label="Create new role">
+        <span aria-hidden="true">+</span>
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const fallbackBookId = decodeURIComponent("%E4%B8%80%E5%8F%AA%E7%89%B9%E7%AB%8B%E7%8B%AC%E8%A1%8C%E7%9A%84%E7%8C%AA-%E7%8E%8B%E5%B0%8F%E6%B3%A2");
+    const params = new URLSearchParams(window.location.search);
+    const roleMode = params.get("mode") === "reader" ? "reader" : "profile";
+    const requestedBookId = params.get("book_id") || fallbackBookId;
+    const returnTarget = params.get("return") || (roleMode === "reader" ? "aPig.html" : "index.html");
+    const profilePages = {
+      persona_lu_xun: "Luxun.html",
+    };
+    document.querySelector("[data-back-arrow]").href = returnTarget;
+
+    function openPersonaProfile(personaId) {
+      const profilePage = profilePages[personaId];
+      if (profilePage) {
+        window.location.href = profilePage;
+      }
+    }
+
+    async function startReadingWithPersona(personaId, card) {
+      const bookId = requestedBookId;
+      const customRoleId = card.dataset.customRoleId || "";
+      card.setAttribute("aria-busy", "true");
+
+      try {
+        const response = await fetch(`/api/persona-agents/${encodeURIComponent(personaId)}`);
+        if (!response.ok && personaId !== "neutral") {
+          throw new Error(`persona ${personaId} is not available`);
+        }
+
+        window.localStorage.setItem("mingle:selectedPersonaId", personaId);
+        window.localStorage.setItem("mingle:selectedBookId", bookId);
+        if (customRoleId) {
+          window.localStorage.setItem("mingle:selectedCustomRoleId", customRoleId);
+        } else {
+          window.localStorage.removeItem("mingle:selectedCustomRoleId");
+        }
+        const customRoleParam = customRoleId ? `&custom_role_id=${encodeURIComponent(customRoleId)}` : "";
+        window.location.href = `read.html?book_id=${encodeURIComponent(bookId)}&persona_id=${encodeURIComponent(personaId)}${customRoleParam}`;
+      } catch (error) {
+        console.error(error);
+        card.removeAttribute("aria-busy");
+      }
+    }
+
+    async function chooseLiteraryGuide(card) {
+      const personaId = card.dataset.personaId;
+      if (roleMode === "reader") {
+        await startReadingWithPersona(personaId, card);
+        return;
+      }
+      openPersonaProfile(personaId);
+    }
+
+    document.querySelectorAll(".role-card[data-persona-id]").forEach((card) => {
+      card.addEventListener("click", () => chooseLiteraryGuide(card));
+    });
+
+    function renderCustomRoles() {
+      const grid = document.querySelector(".role-grid");
+      const createCard = document.querySelector(".create-role-card");
+      const customRoles = JSON.parse(window.localStorage.getItem("mingle:customRoles") || "[]");
+      document.querySelectorAll("[data-custom-role-id]").forEach((node) => node.remove());
+      customRoles.forEach((role) => {
+        const button = document.createElement("button");
+        button.className = "role-card";
+        button.type = "button";
+        button.dataset.customRoleId = role.id;
+        button.dataset.personaId = "neutral";
+        button.setAttribute("aria-label", role.name || "自定义形象");
+        button.innerHTML = role.preview || `<img src="character_user.png" alt="" />`;
+        button.addEventListener("click", (event) => {
+          if (event.target.closest(".delete-custom-role")) return;
+          chooseLiteraryGuide(button);
+        });
+        button.addEventListener("contextmenu", (event) => {
+          event.preventDefault();
+          document.querySelectorAll(".delete-custom-role").forEach((node) => node.remove());
+          const deleteButton = document.createElement("button");
+          deleteButton.className = "delete-custom-role";
+          deleteButton.type = "button";
+          deleteButton.textContent = "删除";
+          deleteButton.addEventListener("click", (deleteEvent) => {
+            deleteEvent.stopPropagation();
+            const latestRoles = JSON.parse(window.localStorage.getItem("mingle:customRoles") || "[]");
+            const nextRoles = latestRoles.filter((item) => item.id !== role.id);
+            window.localStorage.setItem("mingle:customRoles", JSON.stringify(nextRoles));
+            if (window.localStorage.getItem("mingle:selectedCustomRoleId") === role.id) {
+              window.localStorage.removeItem("mingle:selectedCustomRoleId");
+            }
+            renderCustomRoles();
+          });
+          button.appendChild(deleteButton);
+        });
+        grid.insertBefore(button, createCard);
+      });
+    }
+
+    document.addEventListener("click", (event) => {
+      if (event.target.closest(".delete-custom-role")) return;
+      document.querySelectorAll(".delete-custom-role").forEach((node) => node.remove());
+    });
+
+    document.querySelector(".create-role-card").addEventListener("click", () => {
+      const target = new URL("personalization.html", window.location.href);
+      target.searchParams.set("mode", roleMode);
+      if (requestedBookId) {
+        target.searchParams.set("book_id", requestedBookId);
+      }
+      if (returnTarget) {
+        target.searchParams.set("return", returnTarget);
+      }
+      window.location.href = `${target.pathname}${target.search}`;
+    });
+    renderCustomRoles();
+  </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mingle-reading.local/backend/assets/schemas/raw_text.schema.json",
+  "title": "Mingle Reading Raw Text Record",
+  "type": "object",
+  "required": [
+    "record_id",
+    "book_id",
+    "title",
+    "language",
+    "source_type",
+    "copyright_status",
+    "source_uri",
+    "ingest_date",
+    "content"
+  ],
+  "properties": {
+    "record_id": { "type": "string" },
+    "book_id": { "type": "string" },
+    "title": { "type": "string" },
+    "author": { "type": "string" },
+    "language": { "type": "string" },
+    "source_type": {
+      "type": "string",
+      "enum": ["public_domain_book", "open_license_book", "licensed_book", "project_demo_book"]
+    },
+    "source_format": { "type": "string", "enum": ["epub", "txt", "docx", "pdf", "json", "other"] },
+    "copyright_status": {
+      "type": "string",
+      "enum": ["public_domain", "open_license", "licensed", "internal_demo_only", "unknown"]
+    },
+    "source_uri": { "type": "string" },
+    "license_note": { "type": "string" },
+    "ingest_date": { "type": "string", "format": "date" },
+    "chapter_titles": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "content": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

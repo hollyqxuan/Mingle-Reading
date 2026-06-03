@@ -1,0 +1,16 @@
+{
+  "record_id": "raw_book_the_pig_like_maverick_v001",
+  "book_id": "book_the_pig_like_maverick",
+  "title": "The Pig Like Maverick",
+  "author": "Wang Xiaobo",
+  "language": "zh",
+  "source_type": "project_demo_book",
+  "source_format": "txt",
+  "copyright_status": "internal_demo_only",
+  "source_uri": "internal://demo/the_pig_like_maverick.txt",
+  "license_note": "Demo metadata only. Do not redistribute full text.",
+  "ingest_date": "2026-05-13",
+  "chapter_titles": ["chapter 1"],
+  "content": "对生活做种种设置是人特有的品性。猪只有自由奔跑这一件事，却让人反过来照见规训本身。",
+  "notes": "Short synthetic demo snippet for schema illustration."
+}

@@ -1,0 +1,329 @@
+{
+  "persona_id": "persona_lu_xun",
+  "display_name": "Lu Xun",
+  "collection_policy": {
+    "goal": "Build a large-catalog persona source inventory for temporal graph grounding, with enough coverage for works, voice, and fact-check references.",
+    "priority_order": [
+      "public_domain_author_work",
+      "public_domain_voice_source",
+      "authority_reference_metadata_only",
+      "open_scholarship_metadata_only"
+    ],
+    "selection_rules": [
+      "Prefer public-domain full-text sources from Wikisource for works and voice evidence.",
+      "Prefer metadata-only authority pages for biography and criticism when full text is copyrighted.",
+      "Favor sources that expose chronology, self-description, literary method, social diagnosis, and rhetorical stance.",
+      "Keep titles, dates, and source URLs explicit so downstream graph builders can attach provenance and time anchors."
+    ],
+    "intended_graph_use": [
+      "work-to-theme edges",
+      "voice-to-style edges",
+      "source-to-stance evidence edges",
+      "time-anchored chronology and evolution nodes"
+    ]
+  },
+  "counts": {
+    "total_sources": 28,
+    "works": 12,
+    "voice_sources": 12,
+    "biography_and_critical": 4,
+    "meets_minimums": {
+      "total_sources_gte_20": true,
+      "works_gte_10": true,
+      "voice_sources_gte_10": true
+    }
+  },
+  "works": [
+    {
+      "source_id": "src_lu_xun_work_nahan__v001",
+      "title": "呐喊",
+      "source_type": "author_work",
+      "year_or_period": "1923",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E5%90%B6%E5%96%8A",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Core fiction collection for Lu Xun's anti-feudal diagnosis, crowd psychology, and compressed narrative irony; also anchors the iron-house metaphor through its preface."
+    },
+    {
+      "source_id": "src_lu_xun_work_panghuang__v001",
+      "title": "彷徨",
+      "source_type": "author_work",
+      "year_or_period": "1926",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E5%BD%B7%E5%BE%A8",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Essential for late-May-Fourth disillusion, failed reform figures, and Lu Xun's colder, more interior treatment of paralysis and loneliness."
+    },
+    {
+      "source_id": "src_lu_xun_work_gushi_xinbian__v001",
+      "title": "故事新编",
+      "source_type": "author_work",
+      "year_or_period": "1935-1936",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E6%95%85%E4%BA%8B%E6%96%B0%E7%B7%A8",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Shows Lu Xun's mythic and historical rewriting mode, useful for extracting satire-through-revision and his late narrative play with classical material."
+    },
+    {
+      "source_id": "src_lu_xun_work_yecao__v001",
+      "title": "野草",
+      "source_type": "author_work",
+      "year_or_period": "1927",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E9%87%8E%E8%8D%89",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Primary source for Lu Xun's symbolic prose-poem mode, existential tension, darkness imagery, and the blend of negation with stubborn resistance."
+    },
+    {
+      "source_id": "src_lu_xun_work_zhaohuaxishi__v001",
+      "title": "朝花夕拾",
+      "source_type": "author_work",
+      "year_or_period": "1928",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E6%9C%9D%E8%8F%AF%E5%A4%95%E6%8B%BE",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Needed for autobiographical memory, mentor figures, childhood reconstruction, and Lu Xun's gentler but still diagnostic retrospective voice."
+    },
+    {
+      "source_id": "src_lu_xun_work_fen__v001",
+      "title": "坟",
+      "source_type": "author_work",
+      "year_or_period": "1926",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E5%A2%B3",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Major essay collection for extracting early intellectual positions on culture, history, parenthood, superstition, and social reform."
+    },
+    {
+      "source_id": "src_lu_xun_work_huagaiji__v001",
+      "title": "华盖集",
+      "source_type": "author_work",
+      "year_or_period": "1926",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E8%8F%AF%E8%93%8B%E9%9B%86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Captures Lu Xun's attack mode in杂文 form, especially his quick shifts from polemic to parable and his treatment of youth, language, and hypocrisy."
+    },
+    {
+      "source_id": "src_lu_xun_work_huagaijixubian__v001",
+      "title": "华盖集续编",
+      "source_type": "author_work",
+      "year_or_period": "1926",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E8%8F%AF%E8%93%8B%E9%9B%86%E7%BA%8C%E7%B7%A8",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for the sharpened public-intellectual voice after political pressure intensified, including memorial writing and tactical satire."
+    },
+    {
+      "source_id": "src_lu_xun_work_eryiji__v001",
+      "title": "而已集",
+      "source_type": "author_work",
+      "year_or_period": "1928",
+      "source_url": "https://zh.wikisource.org/wiki/%E8%80%8C%E5%B7%B2%E9%9B%86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Good source for middle-period essay voice, especially social observation, reading practice, and how he turns local detail into broad critique."
+    },
+    {
+      "source_id": "src_lu_xun_work_sanxianji__v001",
+      "title": "三闲集",
+      "source_type": "author_work",
+      "year_or_period": "1932",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E4%B8%89%E9%96%92%E9%9B%86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Adds essays from the 1927-1929 transition period and is important for Hong Kong, Shanghai, and literary politics in Lu Xun's public persona."
+    },
+    {
+      "source_id": "src_lu_xun_work_erxinji__v001",
+      "title": "二心集",
+      "source_type": "author_work",
+      "year_or_period": "1932",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E4%BA%8C%E5%BF%83%E9%9B%86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Critical for left-wing debates, translation views, answers to editors and students, and the increasingly explicit relation between literature and politics."
+    },
+    {
+      "source_id": "src_lu_xun_work_qiejietingzawen__v001",
+      "title": "且介亭杂文",
+      "source_type": "author_work",
+      "year_or_period": "1934-1935",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E4%B8%94%E4%BB%8B%E4%BA%AD%E9%9B%9C%E6%96%87",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Late Lu Xun at high density: cultural criticism, rhetorical compression, irony under pressure, and several prefaces and responses central to persona modeling."
+    }
+  ],
+  "voice_sources": [
+    {
+      "source_id": "src_lu_xun_voice_nahan_preface__v001",
+      "title": "《呐喊》自序",
+      "source_type": "author_work",
+      "year_or_period": "1922-12-03",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E5%90%B6%E5%96%8A",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Foundational self-account of turning from medicine to literature, the iron-house metaphor, and the claim that literature should alter spirit rather than merely entertain."
+    },
+    {
+      "source_id": "src_lu_xun_voice_how_i_started_novels__v001",
+      "title": "我怎么做起小说来？",
+      "source_type": "author_work",
+      "year_or_period": "1933-03-05",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E6%88%91%E6%80%8E%E9%BA%BC%E5%81%9A%E8%B5%B7%E5%B0%8F%E8%AA%AA%E4%BE%86%EF%BC%9F",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Direct statement of fiction method: write for life, select social sick points, cut ornament, and compress language until every part carries force."
+    },
+    {
+      "source_id": "src_lu_xun_voice_yecao_tici__v001",
+      "title": "《野草》题辞",
+      "source_type": "author_work",
+      "year_or_period": "1927",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E9%87%8E%E8%8D%89",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Key to Lu Xun's dark lyric self-positioning, especially the coexistence of despair, resistance, and refusal of consoling transcendence."
+    },
+    {
+      "source_id": "src_lu_xun_voice_zhaohuaxishi_xiaoyin__v001",
+      "title": "《朝花夕拾》小引",
+      "source_type": "author_work",
+      "year_or_period": "1927",
+      "source_url": "https://zh.wikisource.org/wiki/%E6%9C%9D%E8%8A%B1%E5%A4%95%E6%8B%BE/%E5%B0%8F%E5%BC%95",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Important for memory, retrospection, tonal softening, and the way recollection is never free from historical disturbance."
+    },
+    {
+      "source_id": "src_lu_xun_voice_forgotten_memorial__v001",
+      "title": "为了忘却的记念",
+      "source_type": "author_work",
+      "year_or_period": "1933",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E7%82%BA%E4%BA%86%E5%BF%98%E5%8D%BB%E7%9A%84%E8%A8%98%E5%BF%B5",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Anchors political grief, martyr memory, and the mix of tenderness and severity that later becomes central to a lead-reader persona."
+    },
+    {
+      "source_id": "src_lu_xun_voice_reading_talks__v001",
+      "title": "读书杂谈",
+      "source_type": "author_work",
+      "year_or_period": "1928",
+      "source_url": "https://zh.wikisource.org/wiki/%E8%80%8C%E5%B7%B2%E9%9B%86",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Useful for extracting how Lu Xun frames reading as training in judgment rather than passive admiration, which is directly relevant to guided reading behavior."
+    },
+    {
+      "source_id": "src_lu_xun_voice_new_lit_series_preface__v001",
+      "title": "《中国新文学大系》小说二集序",
+      "source_type": "author_work",
+      "year_or_period": "1935-03-02",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E3%80%8A%E4%B8%AD%E5%9C%8B%E6%96%B0%E6%96%87%E5%AD%B8%E5%A4%A7%E7%B3%BB%E3%80%8B%E5%B0%8F%E8%AA%AA%E4%BA%8C%E9%9B%86%E5%BA%8F",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Essential for Lu Xun's self-placement within modern Chinese literature, his canon judgment, and his historical narrative of vernacular fiction."
+    },
+    {
+      "source_id": "src_lu_xun_voice_liangdishu_preface__v001",
+      "title": "《两地书》序言",
+      "source_type": "author_work",
+      "year_or_period": "1932-12-16",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E5%85%A9%E5%9C%B0%E6%9B%B8/%E5%BA%8F%E8%A8%80",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Brings in letters, friendship, editorial care, and emotional register beyond polemic, helping the persona avoid becoming one-note severity."
+    },
+    {
+      "source_id": "src_lu_xun_voice_answer_beidou__v001",
+      "title": "答北斗杂志社问",
+      "source_type": "author_work",
+      "year_or_period": "1931-12-27",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E7%AD%94%E5%8C%97%E6%96%97%E9%9B%9C%E8%AA%8C%E7%A4%BE%E5%95%8F",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "A compact craft manifesto on how to write fiction, extremely valuable for style rules, revision habits, and anti-ornament preferences."
+    },
+    {
+      "source_id": "src_lu_xun_voice_answer_wenyi_news__v001",
+      "title": "答文艺新闻社问",
+      "source_type": "author_work",
+      "year_or_period": "1931-09-21",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E7%AD%94%E6%96%87%E8%97%9D%E6%96%B0%E8%81%9E%E7%A4%BE%E5%95%8F",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Short but useful for political stance, anti-imperial framing, and the way Lu Xun answers public questions with compressed moral and geopolitical judgment."
+    },
+    {
+      "source_id": "src_lu_xun_voice_answer_students_mag__v001",
+      "title": "答中学生杂志社问",
+      "source_type": "author_work",
+      "year_or_period": "1931",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E7%AD%94%E4%B8%AD%E5%AD%B8%E7%94%9F%E9%9B%9C%E8%AA%8C%E7%A4%BE%E5%95%8F",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Crucial for extracting advice voice, especially the emphasis on freedom of speech and the refusal to offer empty uplift under repression."
+    },
+    {
+      "source_id": "src_lu_xun_voice_nahan_czech_preface__v001",
+      "title": "《呐喊》捷克译本序言",
+      "source_type": "author_work",
+      "year_or_period": "1936-07-21",
+      "source_url": "https://zh.wikisource.org/zh-hans/%E3%80%8A%E5%90%B6%E5%96%8A%E3%80%8B%E6%8D%B7%E5%85%8B%E8%AD%AF%E6%9C%AC%E5%BA%8F%E8%A8%80",
+      "copyright_status": "public_domain",
+      "redistributable": true,
+      "why_it_matters": "Late statement on international readership, literary contact across suffering nations, and Lu Xun's belief that literature can bridge estrangement without sentimentality."
+    }
+  ],
+  "biography_and_critical": [
+    {
+      "source_id": "src_lu_xun_britannica_bio__v001",
+      "title": "Lu Xun | Chinese Writer & Revolutionary Thinker | Britannica",
+      "source_type": "biography_reference",
+      "year_or_period": "modern reference page",
+      "source_url": "https://www.britannica.com/biography/Lu-Xun",
+      "copyright_status": "copyrighted_reference_metadata_only",
+      "redistributable": false,
+      "why_it_matters": "Authority reference for verified life dates, movement context, major works, Shanghai years, and the later vocabulary around resistance and despair."
+    },
+    {
+      "source_id": "src_lu_xun_encyclopedia_bio__v001",
+      "title": "Lu Xun | Encyclopedia.com",
+      "source_type": "biography_reference",
+      "year_or_period": "2018 page update",
+      "source_url": "https://www.encyclopedia.com/arts/encyclopedias-almanacs-transcripts-and-maps/lu-xun",
+      "copyright_status": "copyrighted_reference_metadata_only",
+      "redistributable": false,
+      "why_it_matters": "Useful as a compact bibliographic scaffold for works, translations, and English reference titles that can support cross-lingual catalog expansion."
+    },
+    {
+      "source_id": "src_lu_xun_mclc_bibliography__v001",
+      "title": "Lu Xun | MCLC Resource Center",
+      "source_type": "critical_reference",
+      "year_or_period": "bibliography page",
+      "source_url": "https://u.osu.edu/mclc/bibliographies/lit/lu-xun/",
+      "copyright_status": "open_web_metadata",
+      "redistributable": true,
+      "why_it_matters": "A strong expansion hub for future scholarship, letters, fiction criticism, poetry, and translation references without forcing early over-collection."
+    },
+    {
+      "source_id": "src_lu_xun_cui_remembrance__v001",
+      "title": "The 'Symbol of Angst' and the Poetics of Remembrance: Lu Xun and Chinese Literary Modernity",
+      "source_type": "critical_reference",
+      "year_or_period": "2016",
+      "source_url": "https://scholars.unh.edu/lang_facpub/393/",
+      "copyright_status": "copyrighted_reference_metadata_only",
+      "redistributable": false,
+      "why_it_matters": "Adds a modern critical lens on memory, temporality, and literary self-positioning that can later inform higher-level graph abstractions and persona commentary."
+    }
+  ],
+  "notes": [
+    "This catalog is intentionally metadata-first: it inventories sources suitable for later source-file creation, evidence slicing, and temporal graph ingestion.",
+    "The works bucket prioritizes standalone collections that can serve as stable graph roots, while voice_sources prioritizes pieces that expose first-person method, stance, editorial voice, or direct advice.",
+    "Several voice sources are housed inside larger collections; the collection URL is preserved when the direct subpage is not separately indexed or when the collection page is the more stable public-domain landing page.",
+    "No copyrighted full text is reproduced here; biography and criticism sources are included as metadata-only references unless the host page is openly redistributable.",
+    "Next-step gaps are still present: the catalog does not yet split each source into evidence units, quote spans, or graph-ready style/stance claims."
+  ]
+}

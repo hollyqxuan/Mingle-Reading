@@ -1,0 +1,412 @@
+[slide 1]
+Mingle Reading
+Date: May 9, 2026
+Prepared by:
+Jiaxuan
+Qu,
+Ziqian
+Ai,
+Wentao
+Lin,
+Shenjia
+Lou,
+Jiongning
+Zhao,
+Lechun
+Li, Xinyi Zhou
+Group 7
+Opening Report
+—— A Character-Guided Immersive Reading System Powered by LLM Agents
+[slide 2]
+Contents
+01.
+Research Background & Motivation
+02.
+Project Objectives & Content
+03.
+Innovation Points & Features
+04.
+Technical Feasibility Analysis
+05.
+Schedule & Division of Labor
+[slide 3]
+Research Background
+& Motivation
+[slide 4]
+Core Pain Points in Digital Reading
+High Abandonment Rate
+96% of college students give up on classics due to lack of explanation or
+chapter summaries.
+Short Attention Span
+Average reading time per e-book is less than 3.5 hours; completion rate
+remains below 15%.
+Complexity Barrier
+Abandonment rate exceeds 80% for works with complex narratives or rich
+historical contexts.
+Comprehension Struggle
+50% of students struggle to understand deep textual connotations without
+assistance.
+Focus Loss
+58.33% of readers find it difficult to maintain focus during long-form reading
+sessions.
+Desire for Connection
+Readers desire a personified, opinionated companion, not just a dictionary or
+generic AI summary.
+[slide 5]
+Reader Demand Analysis
+Guiding Deep Thinking (35%)
+Highest priority, readers want AI to stimulate critical thinking.
+Proactive Highlighting & Interpretation
+Readers want AI to identify and highlight noteworthy passages.
+Personified Reading Companion
+Desire for opinionated interaction, not cold dictionary-style
+queries.
+Current Limitation
+Existing features are mostly passive, lacking proactive
+guidance mechanisms.
+Distribution of Desired AI Reading Assistance Features
+[slide 6]
+Traditional Reading vs. Character-Guided Immersive Reading
+Dimension
+Traditional Digital Reading
+Character-Guided Immersive Reading
+Interaction Mode
+Passive & Linear: One-way text consumption, 50% feel lack of guidance
+Active & Dialogic: Real-time AI character interaction as digital thought partners
+Cognitive Depth
+Surface-level: 75% forget content shortly after reading
+Deep Processing: AI stores memories and prompts critical thinking
+Engagement Level
+Low Persistence: 58.33% easily distracted
+High Immersion: Personality and emotion engines provide companion experience
+Persona & Emotion
+Absent: Characters remain flat text, no emotional resonance
+Dynamic & Embodied: Agents have distinct personalities, memory, and emotions
+Reader's Role
+Consumer: Passive recipient in algorithm 'Trapped System'
+Co-Narrator: Active participant exploring deep connotations through dialogue
+[slide 7]
+Domestic Development Status
+WeChat Reading:
+AI narration with multiple voices and basic summaries, but no role-playing or character-guided interaction.
+Dedao
+App:
+Reading assistant generates mind maps and key quotes, limited to
+information organization.
+China Literature &
+Zhangyue
+:
+IP+AI features using RAG, but limited to knowledge base
+Q&A without consistent personas.
+Critical Gaps:
+Omniscient perspective issues cause spoilers; no proactive highlighting or
+persona-consistent summaries.
+Policy Support:
+National strategy promotes 'new scenarios for digital cultural
+consumption, significant market opportunity.
+[slide 8]
+International Development Status
+Amazon Kindle:
+AI Book Review generates neutral summaries
+without character identity or emotional resonance.
+Google
+NotebookLM
+:
+Converts documents to podcast dialogues,
+but no real-time in-page interaction support.
+ScholarAI
+Plugin:
+Explains academic paragraphs with generic
+scholarly tone, for academic research only.
+Character.AI:
+Offers virtual personas but cannot bind to specific
+books or sense highlighted text contextually.
+Common Problem:
+Manual copy-and-paste required, no leading reader experiences. Inconvenient for continuous reading , breaking
+immersive reading flow
+.
+[slide 9]
+Project Objectives
+& Content
+[slide 10]
+Develop Lead Reader Agents-driven companion system, transform solitary
+reading into cross-temporal dialogue with distinctive tone and knowledge.
+Real-time non-intrusive interaction including active highlighting for Q&A,
+proactive annotations via comment bubbles, chapter-end synthesis
+discussions.
+System records preferences and history, adapts interactions accordingly,
+democratize masterclass-level guidance at affordable cost for every reader.
+Project Objectives
+Reconstruct Deeply Immersive Reading
+Dynamic Context-Aware Interpretation
+Personalized Intellectual Companionship
+[slide 11]
+Target Users
+[slide 13]
+User Experience
+THE INSPIRATION (Muse as Noun)
+Our AI Lead Readers​ are not instructors, but your personal Muses—inspiring companions drawn from history, literature, and imagination.
+THE EXPERIENCE (Muse as Verb)
+We transform reading from a passive act into an active state of musing: deep engagement, flow, and bubbling inspiration.
+PHILOSOPHY IN ACTION
+Product Ecosystem:​ All Lead Readers are branded as Muses.
+Immersive Interactions:
+Mingle Talk:​ The live conversational sidebar.
+Mingle Spark:​ Contextual highlights & insight pop-ups.
+Core Slogan:​ "Don't just read. Muse."
+ENGINEERED FOR IMMERSION
+A full-stack system built on a stable, low-latency foundation. Features a distraction-free reader, precise reading lifecycle tracking, and flawless multi-modal AI interaction—so the technology disappears, and the musing​ begins.
+Brand Philosophy: From "Reading" to "Musing"
+[slide 14]
+Innovation Points
+[slide 15]
+Innovation Points
+Author's Mind as Companion:
+Annotations carry distinctive intellectual character of chosen
+masters (Lu
+Xun's
+social pathology dissection, Wilde's aesthetic
+critique).
+Characters Whisper Unspoken Thoughts:
+Proactive first-person bubble annotations at narrative tension
+peaks, bringing subtext to surface.
+01. Reading Experience
+02. Technical Implementation
+Dual-Layer Anti-Spoiler Mechanism:
+Hard data gate excludes future chapters before retrieval; soft
+prompt-level cognitive boundary restricts agent knowledge.
+Lightweight Persona Skill Distillation:
+Extract author's analytical framework into structured reasoning chain within system prompt, zero fine-tuning required.
+[slide 16]
+Innovation Points
+Reading-Position-Aware Trigger:
+Monitors position against emotional peaks, triggers restrained
+character whispers at meaningful moments to enhance immersion
+without disruption.
+No-Training Architecture:
+Reuses
+SageRead
+open-source skeleton, relies on prompt
+engineering + RAG, zero fine-tuning, runs efficiently on 8GB
+consumer GPU.
+03. Technical Innovations
+04. Project Features
+Ultra-Low-Cost Migration:
+Lightweight components & public-domain knowledge bases enable any author to equip a companion in hours.
+Immersion Ethic:
+Dual-layer anti-spoiler design with sparse proactive bubbles respects the reader's autonomous discovery process.
+Native Dual-Mode Design:
+Serves comparative literature classrooms (switch perspectives) and
+dedicated book lovers (deep character study)
+.
+[slide 17]
+Technical Feasibility Analysis
+[slide 18]
+Development Foundation
+Frontend Skeleton -
+SageRead
+Based
+Open-Source Skeleton:
+SageRead
+project (TypeScript three-column interface) with EPUB parsing and virtual DOM
+rendering.
+Core Complexity Handled:
+Responsive columns, smooth
+scroll tracking, annotation sidebar management.
+Three Extensions:
+Floating Bubble layer, custom RAG
+backend, real-time reading-progress stream.
+Efficiency:
+Production-grade base compresses delivery
+timeline, team focuses on AI components.
+LLM Inference - Commercial API Strategy
+Inference Solution:
+Commercial APIs (GPT-4o, DeepSeek-V3) for strong instruction-following and long-context reliability.
+Cost Model:
+Pay-per-use pricing sustainable, removes GPU
+scheduling overhead.
+Exception:
+MEGa
+memory module
+LoRA
+training on rented
+cloud GPU (e.g.,
+AutoDL
+).
+[slide 19]
+Dataset Construction & Evaluation Baseline
+Structured RAG Corpus
+Lead Reader Agents:
+Distinct knowledge pools
+from public-domain works, critical biographies,
+historical letters
+Book Character Agents:
+Raw EPUB/TXT files
+parsed using semantic paragraph-level chunking
+strategy
+Granular metadata schema injected into every text
+chunk via automated data pipeline
+Metadata includes: chapter index, section index,
+token offset, entity tags
+Precise locational metadata enables deterministic
+database-level pre-filtering
+Bubble-triggered Dataset
+A multi-dimensional scoring rubric:
+evaluating interpersonal intensity (the presence of conflict or profound dialogue),
+psychological complexity (instances of character hesitation, realization, or deception),
+and symbolic density (the introduction of key thematic motifs)
+Red-Teaming Benchmarks
+Spoiler-Trap Dataset:
+Adversarial QA pairs
+designed to trick agent into revealing future plot
+points
+Evaluation metric: System must achieve 0%
+Spoilage Leakage Rate to validate dual-layer anti-spoiler mechanism
+Persona Fidelity Benchmark:
+Character-specific
+and author
+-
+specific interpretive queries dataset
+Outputs evaluated against baseline LLM responses
+using LLM-as-a
+-
+judge framework
+Scoring dimensions: analytical depth, logical
+structure, stylistic adherence
+[slide 20]
+Retrieval-Augmented Generation Pipeline
+Ingestion Pipeline
+Vector Store
+Lead Reader Knowledge Base
+Character Companion Knowledge Base
+Inference Process
+Context Injection
+[slide 21]
+Persona Simulation & Long-Term Memory
+Prompt-Level Skill Distillation
+System Prompt:
+Encodes author's voice plus step-by-step reasoning pattern as structured inference scaffold.
+Lu
+Xun
+Scaffold:
+(1) Identify mundane social detail, (2) Expose deep-rooted cultural pathology, (3) Connect to recurring historical pattern.
+Eileen Chang Scaffold:
+(1) Locate gap between speech and implied feeling, (2) Name specific variety of modern urban
+loneliness, (3) Frame in cool clinical register.
+Character Agent & Context
+Character Agent Design:
+System prompt establishes psychological profile including goals, fears, characteristic speech register.
+RAG Pipeline:
+Supplies passage-level context from book at reader's current position for retrieval-conditioned architecture.
+MEGa
+Long-Term Memory
+Adapter Modules:
+Encodes individual memories into dedicated gated
+LoRA
+adapter modules.
+Gating Signal:
+Semantic-similarity-based global gating signal selectively activates modules most relevant to current context.
+Incremental Training:
+Triggered after each session on rented cloud GPU, adapter weights load efficiently alongside API inference pipeline.
+Oscar Wilde Scaffold:
+(1) Surface conventional moral framing, (2) Construct paradox exposing hidden philistinism, (3)
+Resolve into aesthetically polished aphorism.
+[slide 22]
+Anti-Spoiler Mechanism & Proactive Bubble Trigger
+Dual-Layer Anti-Spoiler System
+Data-Layer Filtering:
+Every chunk tagged with positional metadata (chapter
+index, section index, token offset).
+Hard scalar pre-filter restricts candidate set to chunks with chapter index ≤
+reader's current chapter.
+Filter enforced at database level before any similarity computation—deterministic
+guarantee.
+Both
+ChromaDB
+and
+Qdrant
+implement metadata pre-filter natively, no custom
+infrastructure required.
+Prompt-Layer Constraint:
+System prompt includes explicit high-priority
+instruction on narrative awareness boundary.
+Character has no awareness of events beyond reader's current chapter, cannot
+draw on external plot knowledge.
+Reader's current chapter position from
+SageRead
+frontend serves as
+single
+source
+of truth for both layers.
+Proactive Bubble Trigger Algorithm
+During knowledge base construction, each chunk scored for emotional salience
+by base LLM.
+Trigger condition:
+Reader pauses at high-salience passage beyond configurable
+dwell-time threshold (15-30 seconds).
+Output constrained to short first-person inner monologue expressing character’s
+experience at that moment.
+Grounded in RAG context available up to reader's current chapter, held
+deliberately brief.
+Design principle:
+Strict restraint—interventions rare and well-timed, feels like
+character confiding naturally.
+[slide 23]
+References
+[1] Tom Brown, Benjamin Mann, Nick Ryder, et al. Language Models are Few-Shot Learners. In Advances in Neural Information Processing Systems, Vol. 33, pp. 1877-1901. 2020.
+[2] Xu, R., Wang, X., Chen, J., Yuan, S., Yuan, X., Liang, J., Chen, Z., Dong, X., & Xiao, Y. (2024). Character is destiny: Can role-playing language agents make persona-driven decisions?
+arXiv
+preprintarXiv:2404.12138.
+https://doi.org/10.48550/arXiv.2404.12138
+[3] Pan, X.,
+Hahami
+, E., Zhang, Z., &
+Sompolinsky
+, H. (2025). Memorization and knowledge injection in gated LLMs.
+arXiv
+preprintarXiv:2504.21239.
+https://doi.org/10.48550/arXiv.2504.21239
+[4] Character is Destiny: Can Large Language Models Simulate Persona-Driven Decisions in Role-Playing(2024,
+arXiv
+/ACL)arXiv:2404.12138 [cs.AI].
+https://doi.org/10.48550/arXiv.2404.12138
+[5] Memorization and Knowledge Injection in Gated LLMs. arXiv:2504.21239 [cs.CL]. https://doi.org/10.48550/arXiv.2504.21239
+[slide 24]
+Schedule
+& Division of Labor
+[slide 25]
+Schedule
+[slide 26]
+Division of Labor
+Name
+Role
+Responsibility
+Jiaxuan
+Qu
+Full-Stack Engineer
+Implements page rendering, text highlighting, interactive chat bubbles, and dynamic UI components. Builds web servers, designs APIs, and integrates AI service calls.
+Ziqian
+Ai
+Data Engineer
+Focuses on metadata annotation, knowledge graph construction, and the creation/management of evaluation datasets for AI response quality and spoiler prevention.
+Wentao
+Lin
+Algorithm Engineer
+Develops Retrieval-Augmented Generation (RAG) systems and optimizes prompt engineering to create the "reading guide" AI agents (e.g., historical figures, authors, or book characters).
+Shenjia
+Lou
+Data Engineer
+Designs and builds scalable data pipelines for automated book ingestion, cleaning, and semantic chunking, and manages the vector database infrastructure for RAG retrieval.
+Jiongning
+Zhao
+Algorithm Engineer
+Implements memory mechanisms for AI agents, ensuring they recall only the content the user has read (no spoilers) to maintain context-aware interactions.
+Lechun
+Li
+Front-end Designer
+Creates intuitive and visually appealing user interfaces and seamless interactive experiences for the reading platform.
+Xinyi Zhou
+Product Manager
+Defining product strategy, analyzing user needs and market trends to ensure the product's creative and commercial alignment.
+[slide 27]
+Thank You!

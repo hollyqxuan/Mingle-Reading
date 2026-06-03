@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mingle-reading.local/backend/assets/schemas/highlight_qa.schema.json",
+  "title": "Mingle Reading Highlight QA Sample",
+  "type": "object",
+  "required": [
+    "sample_id",
+    "book_id",
+    "chapter_id",
+    "reader_progress",
+    "highlight",
+    "question",
+    "task_type",
+    "gold_answer",
+    "support_chunk_ids"
+  ],
+  "properties": {
+    "sample_id": { "type": "string" },
+    "book_id": { "type": "string" },
+    "chapter_id": { "type": "string" },
+    "reader_progress": {
+      "type": "object",
+      "required": ["current_chapter_index", "visible_chunk_ids"],
+      "properties": {
+        "current_chapter_index": { "type": "integer", "minimum": 0 },
+        "visible_chunk_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "highlight": {
+      "type": "object",
+      "required": ["text", "char_start", "char_end"],
+      "properties": {
+        "text": { "type": "string" },
+        "char_start": { "type": "integer", "minimum": 0 },
+        "char_end": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "question": { "type": "string" },
+    "task_type": {
+      "type": "string",
+      "enum": ["explain", "comment", "compare", "emotion_reflect", "theme_trace"]
+    },
+    "persona_id": { "type": ["string", "null"] },
+    "gold_answer": { "type": "string" },
+    "support_chunk_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rubric": {
+      "type": "object",
+      "properties": {
+        "faithfulness": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "persona_consistency": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "anti_spoiler_safety": { "type": "integer", "minimum": 0, "maximum": 5 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

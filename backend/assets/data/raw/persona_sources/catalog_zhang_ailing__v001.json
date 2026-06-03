@@ -1,0 +1,342 @@
+{
+  "persona_id": "persona_zhang_ailing",
+  "display_name": "Zhang Ailing",
+  "collection_policy": {
+    "strategy": "metadata_only_conservative_copyright",
+    "accessed_on": "2026-05-13",
+    "goal": "Build a large-source persona catalog for downstream temporal graph construction without storing copyrighted full text.",
+    "inclusion_rules": [
+      "Keep only bibliographic metadata, edition metadata, collection membership, and paraphrased why-it-matters notes.",
+      "Prioritize sources that help reconstruct Zhang Ailing's stable literary voice, autobiographical self-framing, and work timeline.",
+      "Allow collection-level or catalog-level URLs when a work or essay is verifiably listed there but lacks a clean standalone metadata page."
+    ],
+    "exclusion_rules": [
+      "Do not copy or store copyrighted body text, long quotations, or interview transcripts.",
+      "Do not treat user reviews as evidence; use catalog pages only for bibliographic confirmation when needed.",
+      "Mark all non-public-domain modern materials as metadata-only even if short snippets appear on source pages."
+    ]
+  },
+  "counts": {
+    "total_sources": 30,
+    "works": 12,
+    "voice_sources": 13,
+    "biography_and_critical": 5,
+    "thresholds": {
+      "total_sources_at_least_20": true,
+      "works_at_least_10": true,
+      "voice_sources_at_least_10": true
+    }
+  },
+  "works": [
+    {
+      "source_id": "src_zhang_ailing_work_legend_1944_v001",
+      "title": "传奇",
+      "source_type": "work_collection",
+      "year_or_period": "1944; revised 1946; modern catalog page accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/35498437/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Early fiction collection that anchors Zhang Ailing's 1940s breakout period and groups several core narrative works into one provenance node."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_first_brazier_1943_v001",
+      "title": "沉香屑：第一炉香",
+      "source_type": "novella",
+      "year_or_period": "1943; collection metadata accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1082162/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Key Hong Kong-set novella for tracking Zhang Ailing's treatment of desire, transaction, colonial atmosphere, and feminine compromise."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_second_brazier_1943_v001",
+      "title": "沉香屑：第二炉香",
+      "source_type": "novella",
+      "year_or_period": "1943; collection metadata accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1082162/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Pairs with The First Brazier to show how Zhang Ailing revisits seduction, calculation, and social surfaces through linked atmospheric design."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_love_in_a_fallen_city_1943_v001",
+      "title": "倾城之恋 / Love in a Fallen City",
+      "source_type": "novella",
+      "year_or_period": "1943; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Love_in_a_Fallen_City_%28novella%29",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "One of the strongest anchors for her war-time urban romance mode and for persona prompts around intimacy under historical instability."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_golden_cangue_1943_v001",
+      "title": "金锁记 / The Golden Cangue",
+      "source_type": "novella",
+      "year_or_period": "1943; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/The_Golden_Cangue",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Canonical evidence for Zhang Ailing's psychological cruelty, kinship entrapment, and metallic-cold symbolic style."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_red_rose_white_rose_1944_v001",
+      "title": "红玫瑰与白玫瑰 / Red Rose, White Rose",
+      "source_type": "novella",
+      "year_or_period": "1944; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Red_Rose%2C_White_Rose_%28novella%29",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Central for modeling her recurring split between fantasy and domesticity, and for male-female self-deception patterns in the graph."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_half_lifelong_romance_1948_v001",
+      "title": "半生缘 / Half a Lifelong Romance",
+      "source_type": "novel",
+      "year_or_period": "1948; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Half_a_Lifelong_Romance",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Long-form relationship tragedy that helps encode Zhang Ailing's slow-burn realism and the endurance of missed timing."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_naked_earth_1954_v001",
+      "title": "赤地之恋 / Naked Earth",
+      "source_type": "novel",
+      "year_or_period": "1954; bibliography page accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Eileen_Chang",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Important for the Hong Kong and Cold War period, showing how her narrative voice shifts when political pressure becomes more explicit."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_rice_sprout_song_1955_v001",
+      "title": "秧歌 / The Rice Sprout Song",
+      "source_type": "novel",
+      "year_or_period": "1955; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/The_Rice_Sprout_Song",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Documents how Zhang Ailing handles famine, violence, and rural observation without abandoning her interest in ordinary lives."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_rouge_of_the_north_1967_v001",
+      "title": "怨女 / The Rouge of the North",
+      "source_type": "novel",
+      "year_or_period": "1967; bibliography page accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Eileen_Chang",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Later reworking of The Golden Cangue that is useful for temporal graph edges about revision, self-adaptation, and late style."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_lust_caution_1979_v001",
+      "title": "色，戒 / Lust, Caution",
+      "source_type": "novella",
+      "year_or_period": "1979; accessed 2026-05-13",
+      "source_url": "https://en.wikipedia.org/wiki/Lust%2C_Caution_%28novella%29",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Late novella that sharpens the relation between erotic risk, espionage, memory, and compromise."
+    },
+    {
+      "source_id": "src_zhang_ailing_work_little_reunions_2009_v001",
+      "title": "小团圆",
+      "source_type": "novel",
+      "year_or_period": "completed 1970s; posthumously published 2009; accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/3616310/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Autobiographical late novel that links personal history, self-myth, and retrospective emotional patterning."
+    }
+  ],
+  "voice_sources": [
+    {
+      "source_id": "src_zhang_ailing_voice_written_on_water_1945_v001",
+      "title": "流言 / Written on Water",
+      "source_type": "essay_collection",
+      "year_or_period": "1945; modern catalog page accessed 2026-05-13",
+      "source_url": "https://zh.wikipedia.org/wiki/%E6%B5%81%E8%A8%80_%28%E6%9B%B8%E7%B1%8D%29",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Primary voice corpus for Zhang Ailing's essayistic tone, self-positioning, urban observation, and aphoristic turns."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_tian_cai_meng_1940s_v001",
+      "title": "天才梦",
+      "source_type": "autobiographical_essay",
+      "year_or_period": "1940s essay; listed in later collections; accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1141666/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "One of the clearest self-framing pieces for her ambition, self-consciousness, and literary self-myth."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_si_yu_1940s_v001",
+      "title": "私语",
+      "source_type": "autobiographical_essay",
+      "year_or_period": "1940s essay; accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1141666/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Useful for intimate register, family memory, and the cool-confessional mode that later persona outputs should emulate."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_own_writing_1940s_v001",
+      "title": "自己的文章",
+      "source_type": "literary_essay",
+      "year_or_period": "1940s essay; collection metadata accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1412884/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Direct evidence for her writing self-awareness and how she narrates her own craft decisions."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_on_writing_1940s_v001",
+      "title": "论写作",
+      "source_type": "literary_essay",
+      "year_or_period": "1940s essay; collected in Zhang Kan and related editions; accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1033843/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Provides craft-facing evidence for persona reasoning about style, prose control, and aesthetic priorities."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_honest_words_on_fallen_city_1990s_ed_v001",
+      "title": "关于《倾城之恋》的老实话",
+      "source_type": "afterword_or_self_commentary",
+      "year_or_period": "essay on earlier fiction; collection page accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1082160/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Links a major fictional work to Zhang Ailing's own retrospective framing, which is highly valuable for voice-grounded commentary."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_dui_zhao_ji_1994_v001",
+      "title": "对照记",
+      "source_type": "autobiographical_picture_text",
+      "year_or_period": "1994 original work; edition page accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/2027002/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Late autobiographical self-curation source that helps model memory, distance, and selective disclosure."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_zhang_kan_collection_1976_v001",
+      "title": "张看",
+      "source_type": "essay_and_self_commentary_collection",
+      "year_or_period": "1976 original collection; accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/1033843/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "A high-yield collection for stitching together daily observation, literary commentary, and self-authored framing notes."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_zhang_kan_preface_1983_v001",
+      "title": "《张看》自序",
+      "source_type": "preface",
+      "year_or_period": "listed in 惘然记 editions; accessed 2026-05-13",
+      "source_url": "https://zh.wikipedia.org/wiki/%E6%83%98%E7%84%B6%E8%A8%98",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Concise self-positioning document for how Zhang Ailing retrospectively explains one of her own prose collections."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_xu_ji_preface_1988_v001",
+      "title": "《续集》自序",
+      "source_type": "preface",
+      "year_or_period": "1988 collection front matter; metadata page accessed 2026-05-13",
+      "source_url": "https://zh.wikipedia.org/wiki/%E6%83%98%E7%84%B6%E8%A8%98",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Important for tracking how she narrates her post-Shanghai writing period and positions dispersed overseas work."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_lian_huan_tao_chuang_shi_ji_preface_1983_v001",
+      "title": "《连环套》《创世纪》前言",
+      "source_type": "preface",
+      "year_or_period": "listed in 惘然记 editions; accessed 2026-05-13",
+      "source_url": "https://zh.wikipedia.org/wiki/%E6%83%98%E7%84%B6%E8%A8%98",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Useful bridge between work-level bibliographic nodes and self-commentary nodes in the temporal context graph."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_talk_about_reading_1980s_v001",
+      "title": "谈看书",
+      "source_type": "literary_essay",
+      "year_or_period": "later-period essay; listed in 惘然记; accessed 2026-05-13",
+      "source_url": "https://zh.wikipedia.org/wiki/%E6%83%98%E7%84%B6%E8%A8%98",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Supports a readerly persona layer: how she talks about reading habits, taste, and literary judgment."
+    },
+    {
+      "source_id": "src_zhang_ailing_voice_yixiangji_2010_ed_v001",
+      "title": "异乡记",
+      "source_type": "travelogue_or_autobiographical_prose",
+      "year_or_period": "written mid-20th century; posthumous edition metadata accessed 2026-05-13",
+      "source_url": "https://book.douban.com/subject/5336240/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Adds first-hand observational prose outside the metropolitan salon frame and helps diversify voice features for graph construction."
+    }
+  ],
+  "biography_and_critical": [
+    {
+      "source_id": "src_zhang_ailing_britannica_001",
+      "title": "Zhang Ailing | Chinese Novelist & Essayist | Britannica",
+      "source_type": "biography_reference",
+      "year_or_period": "biographical overview; accessed 2026-05-13",
+      "source_url": "https://www.britannica.com/biography/Zhang-Ailing",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Reliable high-level timeline anchor for life stages, migrations, and public identity."
+    },
+    {
+      "source_id": "src_zhang_ailing_encyclopedia_001",
+      "title": "Chang, Eileen (1920-1995) | Encyclopedia.com",
+      "source_type": "biography_reference",
+      "year_or_period": "biographical encyclopedia entry; accessed 2026-05-13",
+      "source_url": "https://www.encyclopedia.com/women/encyclopedias-almanacs-transcripts-and-maps/chang-eileen-1920-1995",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Strengthens family-background, migration, and literary-reception metadata without requiring direct text reuse."
+    },
+    {
+      "source_id": "src_zhang_ailing_usc_critical_001",
+      "title": "Da Roza, Re-imagining the site of the feminine: A rediscovery of Zhang Ailing's fictional works",
+      "source_type": "critical_reference",
+      "year_or_period": "2003 dissertation summary; USC page accessed 2026-05-13",
+      "source_url": "https://china.usc.edu/da-roza-re-imagining-site-feminine-rediscovery-zhang-ailings-fictional-works-2003",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Good source for encoding gendered reading frames, the city, and Zhang Ailing's cool but not flat emotional register."
+    },
+    {
+      "source_id": "src_zhang_ailing_cityscape_001",
+      "title": "On the Description of Cityscape in Novels Written by Zhang Ailing (Eileen Chang)",
+      "source_type": "critical_reference",
+      "year_or_period": "2021; abstract metadata accessed 2026-05-13",
+      "source_url": "https://doi.org/10.54691/bcpssh.v14i.274",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Directly supports graph attributes around city textures, objects, architecture, and sensory detail."
+    },
+    {
+      "source_id": "src_zhang_ailing_autobio_photography_mclc_001",
+      "title": "Photography and Autobiography: Zhang Ailing's Looking at Each Other",
+      "source_type": "critical_reference",
+      "year_or_period": "scholarly article abstract page; accessed 2026-05-13",
+      "source_url": "https://u.osu.edu/mclc/journal/abstracts/pang/",
+      "copyright_status": "metadata_only_open",
+      "redistributable": true,
+      "why_it_matters": "Useful for linking image, memory, self-staging, and autobiography in late-persona graph nodes."
+    }
+  ],
+  "notes": [
+    "This catalog intentionally separates works from voice-supporting materials because later temporal graph construction will likely use different node and edge templates for fiction, self-commentary, and critical framing.",
+    "Several voice entries point to collection-level metadata pages rather than standalone essay pages. This is a deliberate compromise so the repository can preserve provenance while staying within a strict metadata-only policy.",
+    "A next pass should shard collection-level voice sources into finer evidence units with fields such as era, voice_traits, relation_to_work_ids, and usable_graph_edge_templates.",
+    "This file does not update the registry yet; it is a collection catalog only, scoped to Zhang Ailing as requested."
+  ]
+}

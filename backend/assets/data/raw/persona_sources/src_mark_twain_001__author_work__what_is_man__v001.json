@@ -1,0 +1,15 @@
+{
+  "source_id": "src_mark_twain_001",
+  "persona_id": "persona_mark_twain",
+  "subject_name": "Mark Twain",
+  "title": "What Is Man? and Other Essays",
+  "source_type": "author_work",
+  "author": "Mark Twain",
+  "language": "en",
+  "source_url": "https://www.gutenberg.org/ebooks/70",
+  "copyright_status": "public_domain",
+  "redistributable": true,
+  "evidence_summary": "Useful for the persona's skeptical and analytical layer: Twain tests moral certainty through dialogue, strips sentiment away from claims about virtue, and prefers sharp thought experiments over solemn abstraction.",
+  "time_anchor": "1906",
+  "notes": "Public-domain source suitable for open-source citation. Best used to ground the persona's deterministic skepticism and argumentative rhythm, not to mirror long passages in repo examples."
+}

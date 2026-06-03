@@ -1,0 +1,25 @@
+{
+  "manifest_id": "release_manifest_demo_v001",
+  "generated_on": "2026-05-13",
+  "release_scope": "open_demo_scaffold",
+  "included_asset_ids": [
+    "src_lu_xun_demo_001",
+    "persona_lu_xun__v001",
+    "highlight_qa_demo_pig_v001",
+    "chapter_evolution_demo_pig_v001",
+    "anti_spoiler_eval_demo_pig_v001"
+  ],
+  "excluded_asset_ids": [
+    {
+      "asset_id": "raw_book_the_pig_like_maverick_v001",
+      "reason": "Book source remains demo-only even though the stored content is synthetic and short."
+    }
+  ],
+  "policy_flags": {
+    "redistributable_required": true,
+    "license_status_required": true,
+    "collection_status_required": true,
+    "metadata_only_allowed_for_non_open_books": true
+  },
+  "notes": "Use this manifest as the handoff boundary when another agent packages public release artifacts."
+}

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#555"/>
+    </marker>
+    <marker id="arrowG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#27ae60"/>
+    </marker>
+    <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e74c3c"/>
+    </marker>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2c3e50"/><stop offset="100%" stop-color="#34495e"/>
+    </linearGradient>
+    <linearGradient id="gQA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3498db"/><stop offset="100%" stop-color="#2980b9"/>
+    </linearGradient>
+    <linearGradient id="gChar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e67e22"/><stop offset="100%" stop-color="#d35400"/>
+    </linearGradient>
+    <filter id="sh" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.12"/>
+    </filter>
+    <filter id="shL" x="-1%" y="-1%" width="102%" height="102%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1200" height="60" fill="url(#hdr)"/>
+  <text x="600" y="28" text-anchor="middle" fill="#ecf0f1" font-size="19" font-weight="bold" font-family="sans-serif">MingleReading Agent 工作流程</text>
+  <text x="600" y="48" text-anchor="middle" fill="#bdc3c7" font-size="12" font-family="sans-serif">名家伴读 (QA)  ·  角色扮演 (Character Role-play)</text>
+
+  <!-- COMMON INPUT -->
+  <rect x="350" y="75" width="500" height="45" rx="8" fill="#f0f3f4" stroke="#7f8c8d" stroke-width="2" filter="url(#sh)"/>
+  <text x="600" y="96" text-anchor="middle" fill="#2c3e50" font-size="14" font-weight="bold" font-family="sans-serif">用户发起请求</text>
+  <text x="600" y="113" text-anchor="middle" fill="#666" font-size="11" font-family="sans-serif">输入：提问内容 + 当前已读章节 + 选中文本 + 书籍ID</text>
+
+  <line x1="600" y1="120" x2="600" y2="142" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 1 -->
+  <rect x="350" y="142" width="500" height="38" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="2" filter="url(#shL)"/>
+  <text x="600" y="158" text-anchor="middle" fill="#333" font-size="13" font-weight="bold" font-family="sans-serif">第一步 · 剧透检测</text>
+  <text x="600" y="174" text-anchor="middle" fill="#666" font-size="11" font-family="sans-serif">关键词匹配：用户是否在询问尚未阅读的剧情？</text>
+
+  <line x1="600" y1="180" x2="600" y2="205" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Branch -->
+  <rect x="350" y="205" width="500" height="25" rx="6" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="600" y="222" text-anchor="middle" fill="#1e8449" font-size="11" font-family="sans-serif">安全通过 → 继续　　│　　触发剧透 → 拒绝回答</text>
+
+  <line x1="600" y1="230" x2="600" y2="258" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <rect x="350" y="258" width="500" height="38" rx="8" fill="#e8f8f5" stroke="#1abc9c" stroke-width="2" filter="url(#shL)"/>
+  <text x="600" y="274" text-anchor="middle" fill="#333" font-size="13" font-weight="bold" font-family="sans-serif">第二步 · 加载知识图谱</text>
+  <text x="600" y="290" text-anchor="middle" fill="#666" font-size="11" font-family="sans-serif">从磁盘读取该书的完整四层结构（章节/节拍/实体/关系）</text>
+
+  <!-- SPLIT -->
+  <line x1="400" y1="296" x2="250" y2="360" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="800" y1="296" x2="950" y2="360" stroke="#555" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== LEFT: QA ===== -->
+  <rect x="30" y="360" width="550" height="345" rx="8" fill="#ebf5fb" stroke="#3498db" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="30" y="360" width="550" height="34" rx="8" fill="url(#gQA)"/>
+  <rect x="30" y="380" width="550" height="14" fill="url(#gQA)"/>
+  <text x="60" y="383" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">路径 A — 名家伴读 (QA)</text>
+
+  <!-- Step A3 -->
+  <rect x="50" y="405" width="510" height="80" rx="6" fill="white" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="65" y="423" fill="#2980b9" font-size="13" font-weight="bold" font-family="sans-serif">第三步 · 混合检索 (双向)</text>
+  <text x="65" y="443" fill="#555" font-size="12" font-family="sans-serif">文本路径：关键词遍历所有可见段落 → 词袋相似度评分</text>
+  <text x="65" y="462" fill="#555" font-size="12" font-family="sans-serif">图谱路径：从实体名/关系类型等六个维度并行匹配</text>
+  <text x="65" y="481" fill="#555" font-size="12" font-family="sans-serif">→ 双向结果合并去重，按相关性排序，取 Top-K</text>
+
+  <line x1="300" y1="485" x2="300" y2="505" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step A4 -->
+  <rect x="50" y="505" width="510" height="45" rx="6" fill="white" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="65" y="523" fill="#2980b9" font-size="13" font-weight="bold" font-family="sans-serif">第四步 · 图谱知识格式化</text>
+  <text x="65" y="543" fill="#555" font-size="12" font-family="sans-serif">将检索到的结构化事实、相关实体摘要拼装为 LLM 可读的知识块</text>
+
+  <line x1="300" y1="550" x2="300" y2="570" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step A5 -->
+  <rect x="50" y="570" width="510" height="55" rx="6" fill="#fef9e7" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="65" y="588" fill="#f39c12" font-size="13" font-weight="bold" font-family="sans-serif">第五步 · 名家风格注入 (仅限名家模式)</text>
+  <text x="65" y="608" fill="#555" font-size="12" font-family="sans-serif">从本地鲁迅/马克吐温知识库中检索相关风格片段（词袋匹配）</text>
+  <text x="65" y="628" fill="#555" font-size="12" font-family="sans-serif">片段混入系统提示词，引导 LLM 以特定声气回复</text>
+
+  <line x1="300" y1="625" x2="300" y2="645" stroke="#3498db" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step A6 LLM -->
+  <rect x="50" y="645" width="510" height="50" rx="6" fill="#d4efdf" stroke="#27ae60" stroke-width="2"/>
+  <text x="300" y="666" text-anchor="middle" fill="#1e8449" font-size="13" font-weight="bold" font-family="sans-serif">LLM 生成回复</text>
+  <text x="300" y="686" text-anchor="middle" fill="#555" font-size="12" font-family="sans-serif">系统提示词：角色描述 + 可见性约束</text>
+
+  <!-- ===== RIGHT: CHAR ===== -->
+  <rect x="620" y="360" width="550" height="345" rx="8" fill="#fef5e7" stroke="#e67e22" stroke-width="2.5" filter="url(#sh)"/>
+  <rect x="620" y="360" width="550" height="34" rx="8" fill="url(#gChar)"/>
+  <rect x="620" y="380" width="550" height="14" fill="url(#gChar)"/>
+  <text x="650" y="383" fill="white" font-size="15" font-weight="bold" font-family="sans-serif">路径 B — 角色扮演 (Character)</text>
+
+  <!-- Step B3 -->
+  <rect x="640" y="405" width="510" height="80" rx="6" fill="white" stroke="#d35400" stroke-width="1.5"/>
+  <text x="655" y="423" fill="#d35400" font-size="13" font-weight="bold" font-family="sans-serif">第三步 · 实体中心检索 (精准定位)</text>
+  <text x="655" y="443" fill="#555" font-size="12" font-family="sans-serif">角色名 → 匹配实体ID（规范名 + 别名）</text>
+  <text x="655" y="462" fill="#555" font-size="12" font-family="sans-serif">拉取该实体的全部关系 (不作截断)：血缘、互动、位置...</text>
+  <text x="655" y="481" fill="#555" font-size="12" font-family="sans-serif">聚合邻居实体 + 原始文本证据 (每条关系引用原文)</text>
+
+  <line x1="900" y1="485" x2="900" y2="505" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step B4 -->
+  <rect x="640" y="505" width="510" height="45" rx="6" fill="white" stroke="#d35400" stroke-width="1.5"/>
+  <text x="655" y="523" fill="#d35400" font-size="13" font-weight="bold" font-family="sans-serif">第四步 · 角色画像生成 (带缓存)</text>
+  <text x="655" y="543" fill="#555" font-size="12" font-family="sans-serif">原文证据 + 图谱关系 → LLM 生成人物摘要、核心特征、关系列表</text>
+
+  <line x1="900" y1="550" x2="900" y2="570" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step B5 -->
+  <rect x="640" y="570" width="510" height="60" rx="6" fill="white" stroke="#d35400" stroke-width="1.5"/>
+  <text x="655" y="588" fill="#d35400" font-size="13" font-weight="bold" font-family="sans-serif">第五步 · 分组格式化</text>
+  <text x="655" y="608" fill="#555" font-size="12" font-family="sans-serif">Family (血缘) → Interactions (互动) → Other (其他)</text>
+  <text x="655" y="628" fill="#555" font-size="12" font-family="sans-serif">每条关系附带原文引用，LLM 可直接借助原文佐证</text>
+
+  <line x1="900" y1="630" x2="900" y2="650" stroke="#e67e22" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step B6 LLM -->
+  <rect x="640" y="650" width="510" height="45" rx="6" fill="#d4efdf" stroke="#27ae60" stroke-width="2"/>
+  <text x="900" y="668" text-anchor="middle" fill="#1e8449" font-size="13" font-weight="bold" font-family="sans-serif">LLM 以角色身份回复</text>
+  <text x="900" y="686" text-anchor="middle" fill="#555" font-size="12" font-family="sans-serif">系统提示词："你现在扮演XXX。只能基于可见章节中的事实回答"</text>
+
+  <!-- ===== COMPARISON TABLE ===== -->
+  <rect x="30" y="720" width="1140" height="230" rx="8" fill="#f9f9f9" stroke="#ccc" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="60" y="745" fill="#2c3e50" font-size="14" font-weight="bold" font-family="sans-serif">两条路径的核心差异</text>
+  <line x1="30" y1="755" x2="1170" y2="755" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Header row -->
+  <rect x="45" y="765" width="200" height="25" fill="#34495e"/>
+  <text x="145" y="782" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif" font-weight="bold">维度</text>
+  <rect x="245" y="765" width="450" height="25" fill="url(#gQA)"/>
+  <text x="470" y="782" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif" font-weight="bold">名家伴读 (QA)</text>
+  <rect x="695" y="765" width="450" height="25" fill="url(#gChar)"/>
+  <text x="920" y="782" text-anchor="middle" fill="white" font-size="11" font-family="sans-serif" font-weight="bold">角色扮演 (Character)</text>
+
+  <rect x="45" y="790" width="200" height="22" fill="white"/>
+  <text x="145" y="805" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">检索哲学</text>
+  <text x="470" y="805" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">"我不知道你会问什么 → 多路并行找最相关的几条"</text>
+  <text x="920" y="805" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">"我知道你在问谁 → 把这个人所有的信息都拿来"</text>
+
+  <rect x="45" y="812" width="200" height="22" fill="#f4f6f6"/>
+  <text x="145" y="827" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">结果截断</text>
+  <text x="470" y="827" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">Top-K 截断 (默认6条) — 由相关性评分决定</text>
+  <text x="920" y="827" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">无截断 — 全部关系按类型分组返回</text>
+
+  <rect x="45" y="834" width="200" height="22" fill="white"/>
+  <text x="145" y="849" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">额外上下文</text>
+  <text x="470" y="849" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">名家风格片段 (鲁迅/马克吐温知识库)</text>
+  <text x="920" y="849" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">角色画像缓存 (按书+角色+章节缓存)</text>
+
+  <rect x="45" y="856" width="200" height="22" fill="#f4f6f6"/>
+  <text x="145" y="871" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">关系分组</text>
+  <text x="470" y="871" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">结构化事实列表 (无分组)</text>
+  <text x="920" y="871" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">Family / Interactions / Other / 原文证据</text>
+
+  <rect x="45" y="878" width="200" height="22" fill="white"/>
+  <text x="145" y="893" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">回复风格</text>
+  <text x="470" y="893" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">分析式 (分点、证据链、引用)</text>
+  <text x="920" y="893" text-anchor="middle" fill="#555" font-size="11" font-family="sans-serif">第一人称角色扮演 (语气、记忆、情感)</text>
+
+  <rect x="45" y="900" width="200" height="22" fill="#f4f6f6"/>
+  <text x="145" y="915" text-anchor="middle" fill="#333" font-size="11" font-family="sans-serif">剧透防护</text>
+  <text x="470" y="915" text-anchor="middle" fill="#27ae60" font-size="11" font-family="sans-serif">✓ 两阶段 (关键词门控 + 章节可见性)</text>
+  <text x="920" y="915" text-anchor="middle" fill="#27ae60" font-size="11" font-family="sans-serif">✓ 两阶段 (关键词门控 + 章节可见性)</text>
+
+  <text x="600" y="985" text-anchor="middle" fill="#999" font-size="10" font-family="sans-serif">MingleReading Agent Workflow · 2026-05-23</text>
+</svg>
